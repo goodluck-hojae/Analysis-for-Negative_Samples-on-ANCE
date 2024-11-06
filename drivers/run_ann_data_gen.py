@@ -162,7 +162,8 @@ def InferenceEmbeddingFromStreamDataLoader(
                       disable=args.local_rank not in [-1,
                                                       0],
                       position=0,
-                      leave=True):
+                      leave=True,
+                      miniters=1000):
 
         idxs = batch[3].detach().numpy()  # [#B]
 

@@ -1,4 +1,6 @@
 import sys
+import os
+local_rank = int(os.environ.get('LOCAL_RANK', 0))
 sys.path += ["../"]
 import pandas as pd
 from transformers import glue_compute_metrics as compute_metrics, glue_output_modes as output_modes, glue_processors as processors
@@ -49,7 +51,7 @@ def train(args, model, tokenizer, f, train_fn):
 
     args.train_batch_size = args.per_gpu_train_batch_size * max(1, args.n_gpu)
     real_batch_size = args.train_batch_size * args.gradient_accumulation_steps * \
-        (torch.distributed.get_world_size() if args.local_rank != -1 else 1)
+        (torch.distributed.get_world_size() if local_rank != -1 else 1)
 
     if args.max_steps > 0:
         t_total = args.max_steps
@@ -117,10 +119,10 @@ def train(args, model, tokenizer, f, train_fn):
         model = torch.nn.DataParallel(model)
 
     # Distributed training (should be after apex fp16 initialization)
-    if args.local_rank != -1:
+    if local_rank != -1:
         model = torch.nn.parallel.DistributedDataParallel(
             model, device_ids=[
-                args.local_rank], output_device=args.local_rank, find_unused_parameters=True,
+                local_rank], output_device=local_rank, find_unused_parameters=True,
         )
 
     # Train!
@@ -132,7 +134,7 @@ def train(args, model, tokenizer, f, train_fn):
         "  Total train batch size (w. parallel, distributed & accumulation) = %d",
         args.train_batch_size
         * args.gradient_accumulation_steps
-        * (torch.distributed.get_world_size() if args.local_rank != -1 else 1),
+        * (torch.distributed.get_world_size() if local_rank != -1 else 1),
     )
     logger.info("  Gradient Accumulation steps = %d",
                 args.gradient_accumulation_steps)
@@ -165,14 +167,14 @@ def train(args, model, tokenizer, f, train_fn):
     tr_loss, logging_loss = 0.0, 0.0
     model.zero_grad()
     train_iterator = trange(
-        epochs_trained, int(args.num_train_epochs), desc="Epoch", disable=args.local_rank not in [-1, 0],
+        epochs_trained, int(args.num_train_epochs), desc="Epoch", disable=local_rank not in [-1, 0],
     )
     set_seed(args)  # Added here for reproductibility
     for m_epoch in train_iterator:
         f.seek(0)
         sds = StreamingDataset(f,train_fn)
         epoch_iterator = DataLoader(sds, batch_size=args.per_gpu_train_batch_size, num_workers=1)
-        for step, batch in tqdm(enumerate(epoch_iterator),desc="Iteration",disable=args.local_rank not in [-1,0]):
+        for step, batch in tqdm(enumerate(epoch_iterator),desc="Iteration",disable=local_rank not in [-1,0]):
 
             # Skip past any already trained steps if resuming training
             if steps_trained_in_current_epoch > 0:
@@ -275,7 +277,7 @@ def train(args, model, tokenizer, f, train_fn):
             train_iterator.close()
             break
 
-    if args.local_rank == -1 or torch.distributed.get_rank() == 0:
+    if local_rank == -1 or torch.distributed.get_rank() == 0:
         tb_writer.close()
 
     return global_step, tr_loss / global_step
@@ -290,7 +292,7 @@ def load_stuff(model_type, args):
     args.num_labels = num_labels
 
     # Load pretrained model and tokenizer
-    if args.local_rank not in [-1, 0]:
+    if local_rank not in [-1, 0]:
         # Make sure only the first process in distributed training will download model & vocab
         torch.distributed.barrier()
 
@@ -318,7 +320,7 @@ def load_stuff(model_type, args):
     #model = configObj.model_class(config,model_argobj=model_args)
     
 
-    if args.local_rank == 0:
+    if local_rank == 0:
         # Make sure only the first process in distributed training will download model & vocab
         torch.distributed.barrier()
 
@@ -575,6 +577,7 @@ def get_arguments():
     parser.add_argument(
         "--fp16",
         action="store_true",
+        default=False,
         help="Whether to use 16-bit (mixed) precision (through NVIDIA apex) instead of 32-bit",
     )
 
@@ -603,7 +606,7 @@ def get_arguments():
     parser.add_argument(
         "--local_rank", 
         type=int, 
-        default=-1,
+        default=0,
         help="For distributed training: local_rank",
     )
 
@@ -650,13 +653,13 @@ def set_env(args):
         ptvsd.wait_for_attach()
 
     # Setup CUDA, GPU & distributed training
-    if args.local_rank == -1 or args.no_cuda:
+    if local_rank == -1 or args.no_cuda:
         device = torch.device(
             "cuda" if torch.cuda.is_available() and not args.no_cuda else "cpu")
         args.n_gpu = torch.cuda.device_count()
     else:  # Initializes the distributed backend which will take care of sychronizing nodes/GPUs
-        torch.cuda.set_device(args.local_rank)
-        device = torch.device("cuda", args.local_rank)
+        torch.cuda.set_device(local_rank)
+        device = torch.device("cuda", local_rank)
         torch.distributed.init_process_group(backend="nccl")
         args.n_gpu = 1
     args.device = device
@@ -665,14 +668,14 @@ def set_env(args):
     logging.basicConfig(
         format="%(asctime)s - %(levelname)s - %(name)s -   %(message)s",
         datefmt="%m/%d/%Y %H:%M:%S",
-        level=logging.INFO if args.local_rank in [-1, 0] else logging.WARN,
+        level=logging.INFO if local_rank in [-1, 0] else logging.WARN,
     )
     logger.warning(
         "Process rank: %s, device: %s, n_gpu: %s, distributed training: %s, 16-bits training: %s",
-        args.local_rank,
+        local_rank,
         device,
         args.n_gpu,
-        bool(args.local_rank != -1),
+        bool(local_rank != -1),
         args.fp16,
     )
 

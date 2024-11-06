@@ -364,7 +364,6 @@ def GetTripletTrainingDataProcessingFn(args, query_cache, passage_cache):
 
 def get_arguments():
     parser = argparse.ArgumentParser()
-
     parser.add_argument(
         "--data_dir",
         default=None,
