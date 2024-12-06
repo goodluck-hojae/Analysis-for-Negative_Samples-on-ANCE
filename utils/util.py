@@ -259,7 +259,14 @@ class EmbeddingCache:
         with open(base_path + '_meta', 'r') as f:
             meta = json.load(f)
             self.dtype = np.dtype(meta['type'])
-            self.total_number = meta['total_number']
+            self.total_number = int( meta['total_number'])
+            # if 'passage' in base_path :
+            #     self.total_number = int( meta['total_number'] * 0.1) + 1800
+            # elif 'dev' in base_path:
+            #     self.total_number = int( meta['total_number'])
+            # else:
+            #     self.total_number = int( meta['total_number'] * 0.1) 
+            print(self.total_number, seed)
             self.record_size = int(
                 meta['embedding_size']) * self.dtype.itemsize + 4
         if seed >= 0:
