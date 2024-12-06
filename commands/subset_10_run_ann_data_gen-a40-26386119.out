@@ -1,0 +1,93 @@
+python -m torch.distributed.launch --master_port=29501 --nproc_per_node=4 ../drivers/run_ann_data_gen.py --training_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/checkpoints_4_bottom_neg --init_model_dir /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 --model_type rdot_nll --output_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_bottom_neg --cache_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_bottom_negcache/ --data_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/preprocessed_data --max_seq_length 512 --per_gpu_eval_batch_size 256 --topk_training 200 --negative_sample 20 --ann_chunk_factor 20 --bottom_neg true
+/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/distributed/launch.py:178: FutureWarning: The module torch.distributed.launch is deprecated
+and will be removed in future. Use torchrun.
+Note that --use_env is set by default in torchrun.
+If your script expects `--local_rank` argument to be set, please
+change it to read from `os.environ['LOCAL_RANK']` instead. See 
+https://pytorch.org/docs/stable/distributed.html#launch-utility for 
+further instructions
+
+  warnings.warn(
+WARNING:torch.distributed.run:
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+11/26/2024 00:01:13 - WARNING - __main__ -   Process rank: 1, device: cuda:1, n_gpu: 1, distributed training: True
+11/26/2024 00:01:13 - WARNING - __main__ -   Process rank: 3, device: cuda:3, n_gpu: 1, distributed training: True
+11/26/2024 00:01:13 - WARNING - __main__ -   Process rank: 0, device: cuda:0, n_gpu: 1, distributed training: True
+11/26/2024 00:01:13 - WARNING - __main__ -   Process rank: 2, device: cuda:2, n_gpu: 1, distributed training: True
+11/26/2024 00:01:13 - INFO - __main__ -   starting output number 1
+11/26/2024 00:01:13 - INFO - __main__ -   Loading query_2_pos_docid
+Using mean: False
+11/26/2024 00:01:13 - INFO - __main__ -   Loading dev query_2_pos_docid
+11/26/2024 00:01:13 - INFO - __main__ -   52887
+11/26/2024 00:01:13 - INFO - __main__ -   start generate ann data number 1
+11/26/2024 00:01:13 - INFO - __main__ -   next checkpoint at /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+11/26/2024 00:01:13 - INFO - transformers.configuration_utils -   loading configuration file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/config.json
+11/26/2024 00:01:13 - INFO - transformers.configuration_utils -   Model config {
+  "architectures": [
+    "RobertaForMaskedLM"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "bos_token_id": 0,
+  "eos_token_id": 2,
+  "finetuning_task": "MSMarco",
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "id2label": {
+    "0": "LABEL_0",
+    "1": "LABEL_1"
+  },
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "is_decoder": false,
+  "label2id": {
+    "LABEL_0": 0,
+    "LABEL_1": 1
+  },
+  "layer_norm_eps": 1e-05,
+  "max_position_embeddings": 514,
+  "model_type": "roberta",
+  "num_attention_heads": 12,
+  "num_hidden_layers": 12,
+  "num_labels": 2,
+  "output_attentions": false,
+  "output_hidden_states": false,
+  "output_past": true,
+  "pad_token_id": 1,
+  "pruned_heads": {},
+  "torchscript": false,
+  "type_vocab_size": 1,
+  "use_bfloat16": false,
+  "vocab_size": 50265
+}
+
+11/26/2024 00:01:13 - INFO - transformers.tokenization_utils -   Model name '/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000' not found in model shortcut name list (roberta-base, roberta-large, roberta-large-mnli, distilroberta-base, roberta-base-openai-detector, roberta-large-openai-detector). Assuming '/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000' is a path or url to a directory containing tokenizer files.
+11/26/2024 00:01:13 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/vocab.json
+11/26/2024 00:01:13 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/merges.txt
+11/26/2024 00:01:13 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/added_tokens.json
+11/26/2024 00:01:13 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/special_tokens_map.json
+11/26/2024 00:01:13 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/tokenizer_config.json
+Using mean: False
+11/26/2024 00:01:13 - INFO - transformers.modeling_utils -   loading weights file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/pytorch_model.bin
+Using mean: False
+Using mean: False
+11/26/2024 00:01:59 - INFO - __main__ -   Inference parameters Namespace(ann_chunk_factor=20, ann_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/ann_data', ann_measure_topk_mrr=True, bottom_neg=True, cache_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_bottom_negcache/', config_name='', data_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/preprocessed_data', device=device(type='cuda', index=0), end_output_num=-1, inference=False, init_model_dir='/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000', last_checkpoint_dir='', limit_total_number=100000, load_gen=False, local_rank=0, max_doc_character=10000, max_query_length=64, max_seq_length=512, model_name_or_path='/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000', model_type='rdot_nll', n_gpu=1, negative_sample=20, no_cuda=False, only_keep_latest_embedding_file=False, output_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_bottom_neg', per_gpu_eval_batch_size=256, rank=0, server_ip='', server_port='', tokenizer_name='', topk_training=200, training_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/checkpoints_4_bottom_neg', world_size=4)
+11/26/2024 00:01:59 - INFO - __main__ -   ***** inference of dev query *****
+6980 -1
+6980 -1
+6980 -1
+6980 -1
+11/26/2024 00:01:59 - INFO - __main__ -   ***** Running ANN Embedding Inference *****
+11/26/2024 00:01:59 - INFO - __main__ -     Batch size = 256
+Inferencing: 0it [00:00, ?it/s]Inferencing: 7it [00:02,  2.60it/s]
+11/26/2024 00:02:02 - INFO - __main__ -   merging embeddings
+884182 -1
+884182 -1
+884182 -1
+11/26/2024 00:02:02 - INFO - __main__ -   ***** inference of passages *****
+884182 -1
+11/26/2024 00:02:02 - INFO - __main__ -   ***** Running ANN Embedding Inference *****
+11/26/2024 00:02:02 - INFO - __main__ -     Batch size = 256
+Inferencing: 0it [00:00, ?it/s]Inferencing: 0it [00:17, ?it/s]Inferencing: 7it [00:18,  2.60s/it]Inferencing: 8it [00:20,  2.62s/it]Inferencing: 9it [00:23,  2.63s/it]Inferencing: 10it [00:26,  2.62s/it]Inferencing: 11it [00:28,  2.65s/it]Inferencing: 12it [00:31,  2.67s/it]Inferencing: 13it [00:34,  2.68s/it]Inferencing: 14it [00:37,  2.70s/it]Inferencing: 15it [00:39,  2.69s/it]Inferencing: 16it [00:42,  2.68s/it]Inferencing: 17it [00:45,  2.68s/it]Inferencing: 18it [00:47,  2.68s/it]Inferencing: 19it [00:50,  2.69s/it]Inferencing: 20it [00:53,  2.70s/it]Inferencing: 21it [00:55,  2.70s/it]Inferencing: 22it [00:58,  2.71s/it]Inferencing: 23it [01:01,  2.72s/it]Inferencing: 24it [01:04,  2.73s/it]Inferencing: 25it [01:06,  2.73s/it]Inferencing: 26it [01:09,  2.73s/it]Inferencing: 27it [01:12,  2.74s/it]Inferencing: 28it [01:15,  2.72s/it]Inferencing: 29it [01:17,  2.70s/it]Inferencing: 30it [01:20,  2.69s/it]Inferencing: 31it [01:23,  2.70s/it]Inferencing: 32it [01:25,  2.69s/it]Inferencing: 33it [01:28,  2.69s/it]Inferencing: 34it [01:31,  2.70s/it]Inferencing: 35it [01:33,  2.67s/it]Inferencing: 36it [01:36,  2.68s/it]Inferencing: 37it [01:39,  2.70s/it]Inferencing: 38it [01:41,  2.69s/it]Inferencing: 39it [01:44,  2.70s/it]Inferencing: 40it [01:47,  2.70s/it]Inferencing: 41it [01:49,  2.66s/it]Inferencing: 42it [01:52,  2.69s/it]Inferencing: 43it [01:55,  2.67s/it]Inferencing: 44it [01:57,  2.66s/it]Inferencing: 45it [02:00,  2.69s/it]Inferencing: 46it [02:03,  2.66s/it]Inferencing: 47it [02:05,  2.65s/it]Inferencing: 48it [02:08,  2.68s/it]
