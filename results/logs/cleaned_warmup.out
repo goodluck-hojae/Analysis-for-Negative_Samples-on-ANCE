@@ -1,0 +1,628 @@
+Sat Nov 23 07:33:04 2024       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 550.90.07              Driver Version: 550.90.07      CUDA Version: 12.4     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA A100-SXM4-80GB          On  |   00000000:1B:00.0 Off |                    0 |
+| N/A   31C    P0             62W /  500W |       1MiB /  81920MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+|   1  NVIDIA A100-SXM4-80GB          On  |   00000000:DD:00.0 Off |                    0 |
+| N/A   30C    P0             64W /  500W |       1MiB /  81920MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+sbatch_warmup.sh
+CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
+To initialize your shell, run
+    $ conda init <SHELL_NAME>
+Currently supported shells are:
+  - bash
+  - fish
+  - tcsh
+  - xonsh
+  - zsh
+  - powershell
+See 'conda init --help' for more information and options.
+IMPORTANT: You may need to close and restart your shell after running 'conda init'.
+python3 -m torch.distributed.launch --nproc_per_node=2 ../drivers/run_warmup.py --train_model_type rdot_nll --model_name_or_path roberta-base --task_name MSMarco --do_train --evaluate_during_training --data_dir /datasets/ai/msmarco/passage --max_seq_length 128 --per_gpu_eval_batch_size=256 --per_gpu_train_batch_size=32 --learning_rate 2e-4 --logging_steps 1000 --num_train_epochs 2.0 --output_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained --warmup_steps 1000 --overwrite_output_dir --save_steps 30000 --gradient_accumulation_steps 1 --expected_train_size 35000000 --logging_steps_per_eval 20 --fp16 --optimizer lamb --log_dir ~/tensorboard//logs/OSpass
+/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/distributed/launch.py:178: FutureWarning: The module torch.distributed.launch is deprecated
+and will be removed in future. Use torchrun.
+Note that --use_env is set by default in torchrun.
+If your script expects `--local_rank` argument to be set, please
+change it to read from `os.environ['LOCAL_RANK']` instead. See 
+https://pytorch.org/docs/stable/distributed.html#launch-utility for 
+further instructions
+  warnings.warn(
+WARNING:torch.distributed.run:
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+11/23/2024 07:33:14 - WARNING - __main__ -   Process rank: 0, device: cuda:0, n_gpu: 1, distributed training: True, 16-bits training: True
+11/23/2024 07:33:14 - WARNING - __main__ -   Process rank: 1, device: cuda:1, n_gpu: 1, distributed training: True, 16-bits training: True
+11/23/2024 07:33:14 - INFO - transformers.configuration_utils -   loading configuration file https://s3.amazonaws.com/models.huggingface.co/bert/roberta-base-config.json from cache at /home/hojaeson_umass_edu/.cache/torch/transformers/e1a2a406b5a05063c31f4dfdee7608986ba7c6393f7f79db5e69dcd197208534.117c81977c5979de8c088352e74ec6e70f5c66096c28b61d3c50101609b39690
+11/23/2024 07:33:14 - INFO - transformers.configuration_utils -   Model config {
+  "architectures": [
+    "RobertaForMaskedLM"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "bos_token_id": 0,
+  "eos_token_id": 2,
+  "finetuning_task": "msmarco",
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "id2label": {
+    "0": "LABEL_0",
+    "1": "LABEL_1"
+  },
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "is_decoder": false,
+  "label2id": {
+    "LABEL_0": 0,
+    "LABEL_1": 1
+  },
+  "layer_norm_eps": 1e-05,
+  "max_position_embeddings": 514,
+  "model_type": "roberta",
+  "num_attention_heads": 12,
+  "num_hidden_layers": 12,
+  "num_labels": 2,
+  "output_attentions": false,
+  "output_hidden_states": false,
+  "output_past": true,
+  "pad_token_id": 1,
+  "pruned_heads": {},
+  "torchscript": false,
+  "type_vocab_size": 1,
+  "use_bfloat16": false,
+  "vocab_size": 50265
+}
+11/23/2024 07:33:14 - INFO - transformers.tokenization_utils -   loading file https://s3.amazonaws.com/models.huggingface.co/bert/roberta-base-vocab.json from cache at /home/hojaeson_umass_edu/.cache/torch/transformers/d0c5776499adc1ded22493fae699da0971c1ee4c2587111707a4d177d20257a2.ef00af9e673c7160b4d41cfda1f48c5f4cba57d5142754525572a846a1ab1b9b
+11/23/2024 07:33:14 - INFO - transformers.tokenization_utils -   loading file https://s3.amazonaws.com/models.huggingface.co/bert/roberta-base-merges.txt from cache at /home/hojaeson_umass_edu/.cache/torch/transformers/b35e7cd126cd4229a746b5d5c29a749e8e84438b14bcdb575950584fe33207e8.70bec105b4158ed9a1747fea67a43f5dee97855c64d62b6ec3742f4cfdb5feda
+11/23/2024 07:33:14 - INFO - transformers.modeling_utils -   loading weights file https://s3.amazonaws.com/models.huggingface.co/bert/roberta-base-pytorch_model.bin from cache at /home/hojaeson_umass_edu/.cache/torch/transformers/228756ed15b6d200d7cb45aaef08c087e2706f54cb912863d2efe07c89584eb7.49b88ba7ec2c26a7558dda98ca3884c3b80fa31cf43a1b1f23aef3ff81ba344e
+Using mean: False
+11/23/2024 07:33:19 - INFO - transformers.modeling_utils -   Weights of RobertaDot_NLL_LN not initialized from pretrained model: ['classifier.dense.weight', 'classifier.dense.bias', 'classifier.out_proj.weight', 'classifier.out_proj.bias', 'embeddingHead.weight', 'embeddingHead.bias', 'norm.weight', 'norm.bias']
+11/23/2024 07:33:19 - INFO - transformers.modeling_utils -   Weights from pretrained model not used in RobertaDot_NLL_LN: ['lm_head.bias', 'lm_head.dense.weight', 'lm_head.dense.bias', 'lm_head.layer_norm.weight', 'lm_head.layer_norm.bias', 'lm_head.decoder.weight']
+11/23/2024 07:33:23 - INFO - __main__ -   Training/evaluation parameters Namespace(adam_epsilon=1e-08, cache_dir='', config_name='', data_dir='/datasets/ai/msmarco/passage', device=device(type='cuda', index=0), do_eval=False, do_lower_case=False, do_train=True, eval_all_checkpoints=False, eval_type='full', evaluate_during_training=True, expected_train_size=35000000, fp16=True, fp16_opt_level='O1', gradient_accumulation_steps=1, learning_rate=0.0002, load_optimizer_scheduler=False, local_rank=0, log_dir='/home/hojaeson_umass_edu/tensorboard//logs/OSpass', logging_steps=1000, logging_steps_per_eval=20, max_grad_norm=1.0, max_seq_length=128, max_steps=-1, model_name_or_path='roberta-base', n_gpu=1, no_cuda=False, num_labels=2, num_train_epochs=2.0, optimizer='lamb', output_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained', output_mode='classification', overwrite_cache=False, overwrite_output_dir=True, per_gpu_eval_batch_size=256, per_gpu_train_batch_size=32, save_steps=30000, scheduler='linear', seed=42, server_ip='', server_port='', task_name='msmarco', tokenizer_name='', train_model_type='rdot_nll', warmup_steps=1000, weight_decay=0.0)
+/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/apex/__init__.py:68: DeprecatedFeatureWarning: apex.amp is deprecated and will be removed by the end of February 2023. Use [PyTorch AMP](https://pytorch.org/docs/stable/amp.html)
+  warnings.warn(msg, DeprecatedFeatureWarning)
+Selected optimization level O1:  Insert automatic casts around Pytorch functions and Tensor methods.
+Defaults for this optimization level are:
+enabled                : True
+opt_level              : O1
+cast_model_type        : None
+patch_torch_functions  : True
+keep_batchnorm_fp32    : None
+master_weights         : None
+loss_scale             : dynamic
+Processing user overrides (additional kwargs that are not None)...
+After processing overrides, optimization options are:
+enabled                : True
+opt_level              : O1
+cast_model_type        : None
+patch_torch_functions  : True
+keep_batchnorm_fp32    : None
+master_weights         : None
+loss_scale             : dynamic
+Warning:  multi_tensor_applier fused unscale kernel is unavailable, possibly because apex was installed without --cuda_ext --cpp_ext. Using Python fallback.  Original ImportError was: ModuleNotFoundError("No module named 'amp_C'")
+11/23/2024 07:33:23 - INFO - __main__ -   ***** Running training *****
+11/23/2024 07:33:23 - INFO - __main__ -     Num Epochs = 2
+11/23/2024 07:33:23 - INFO - __main__ -     Instantaneous batch size per GPU = 32
+11/23/2024 07:33:23 - INFO - __main__ -     Total train batch size (w. parallel, distributed & accumulation) = 64
+11/23/2024 07:33:23 - INFO - __main__ -     Gradient Accumulation steps = 1
+11/23/2024 07:33:23 - INFO - __main__ -     Total optimization steps = 1093750
+Epoch:   0%|          | 0/2 [00:00<?, ?it/s]
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 32768.0
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 32768.0
+/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/optim/lr_scheduler.py:124: UserWarning: Seems like `optimizer.step()` has been overridden after learning rate scheduler initialization. Please, make sure to call `optimizer.step()` before `lr_scheduler.step()`. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  warnings.warn("Seems like `optimizer.step()` has been overridden after learning rate scheduler "
+/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/optim/lr_scheduler.py:124: UserWarning: Seems like `optimizer.step()` has been overridden after learning rate scheduler initialization. Please, make sure to call `optimizer.step()` before `lr_scheduler.step()`. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  warnings.warn("Seems like `optimizer.step()` has been overridden after learning rate scheduler "
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 16384.0
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 8192.0
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 4096.0
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 2048.0
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 512.0
+	add_(Number alpha, Tensor other)
+Consider using one of the following signatures instead:
+	add_(Tensor other, *, Number alpha) (Triggered internally at  ../torch/csrc/utils/python_arg_parser.cpp:1055.)
+  return orig_fn(arg0, *args, **kwargs)
+/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/apex/amp/wrap.py:101: UserWarning: This overload of add_ is deprecated:
+	add_(Number alpha, Tensor other)
+Consider using one of the following signatures instead:
+	add_(Tensor other, *, Number alpha) (Triggered internally at  ../torch/csrc/utils/python_arg_parser.cpp:1055.)
+  return orig_fn(arg0, *args, **kwargs)
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 256.0
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 128.0
+  warnings.warn("To get the last learning rate computed by the scheduler, "
+/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/optim/lr_scheduler.py:249: UserWarning: To get the last learning rate computed by the scheduler, please use `get_last_lr()`.
+  warnings.warn("To get the last learning rate computed by the scheduler, "
+learning_rate <class 'float'>
+loss <class 'float'>
+{"learning_rate": 0.0002, "loss": 2.528865836037323, "step": 1000}
+loss <class 'float'>
+{"learning_rate": 0.00019981697552047588, "loss": 0.15595170551515183, "step": 2000}
+loss <class 'float'>
+{"learning_rate": 0.00019963395104095172, "loss": 0.13139645823999307, "step": 3000}
+loss <class 'float'>
+{"learning_rate": 0.0001994509265614276, "loss": 0.11987359910295345, "step": 4000}
+loss <class 'float'>
+{"learning_rate": 0.00019926790208190347, "loss": 0.10548745682637672, "step": 5000}
+loss <class 'float'>
+{"learning_rate": 0.00019908487760237934, "loss": 0.11348558564728592, "step": 6000}
+loss <class 'float'>
+{"learning_rate": 0.00019890185312285518, "loss": 0.10446045723115094, "step": 7000}
+loss <class 'float'>
+{"learning_rate": 0.00019871882864333105, "loss": 0.10564096187334508, "step": 8000}
+loss <class 'float'>
+{"learning_rate": 0.00019853580416380692, "loss": 0.10000406888127326, "step": 9000}
+loss <class 'float'>
+{"learning_rate": 0.0001983527796842828, "loss": 0.09688673987181391, "step": 10000}
+loss <class 'float'>
+{"learning_rate": 0.00019816975520475864, "loss": 0.10222489622188732, "step": 11000}
+loss <class 'float'>
+{"learning_rate": 0.0001979867307252345, "loss": 0.0930526595741976, "step": 12000}
+loss <class 'float'>
+{"learning_rate": 0.00019780370624571035, "loss": 0.09113668397435686, "step": 13000}
+loss <class 'float'>
+{"learning_rate": 0.00019762068176618625, "loss": 0.09398545312019996, "step": 14000}
+loss <class 'float'>
+{"learning_rate": 0.0001974376572866621, "loss": 0.08359898997656273, "step": 15000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 4096.0
+loss <class 'float'>
+{"learning_rate": 0.00019725463280713797, "loss": 0.09012021702027415, "step": 16000}
+loss <class 'float'>
+{"learning_rate": 0.0001970716083276138, "loss": 0.09048911164992023, "step": 17000}
+loss <class 'float'>
+{"learning_rate": 0.00019688858384808968, "loss": 0.08603262339753565, "step": 18000}
+loss <class 'float'>
+{"learning_rate": 0.00019670555936856555, "loss": 0.08729831469478086, "step": 19000}
+(6980, 768) (6980,)
+(6980, 768) (6980,)
+(4420912, 768)
+(4420911, 768)
+(6980, 20) (6980, 20)
+0.28048386546595605
+(6980, 200) (6980, 200)
+0.2522891936144078
+Reranking/Full ranking mrr: 0.28048386546595605/0.2522891936144078
+/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained
+learning_rate <class 'float'>
+loss <class 'float'>
+{"learning_rate": 0.00019652253488904142, "loss": 0.08190233894222183, "step": 20000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 8192.0
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 4096.0
+loss <class 'float'>
+{"learning_rate": 0.00019633951040951727, "loss": 0.0847539390574675, "step": 21000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 2048.0
+loss <class 'float'>
+{"learning_rate": 0.00019615648592999314, "loss": 0.08245520692873105, "step": 22000}
+loss <class 'float'>
+{"learning_rate": 0.000195973461450469, "loss": 0.07741461811977206, "step": 23000}
+loss <class 'float'>
+{"learning_rate": 0.00019579043697094488, "loss": 0.08142071209457936, "step": 24000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 2048.0
+loss <class 'float'>
+{"learning_rate": 0.00019560741249142073, "loss": 0.07561947895532103, "step": 25000}
+loss <class 'float'>
+{"learning_rate": 0.0001954243880118966, "loss": 0.08561792020188295, "step": 26000}
+loss <class 'float'>
+{"learning_rate": 0.00019524136353237247, "loss": 0.07505718525242264, "step": 27000}
+loss <class 'float'>
+{"learning_rate": 0.00019505833905284834, "loss": 0.07872223903622944, "step": 28000}
+loss <class 'float'>
+{"learning_rate": 0.00019487531457332418, "loss": 0.0849782730176521, "step": 29000}
+11/23/2024 09:53:49 - INFO - transformers.modeling_utils -   Model weights saved in /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained/checkpoint-30000/pytorch_model.bin
+11/23/2024 09:53:49 - INFO - __main__ -   Saving model checkpoint to /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained/checkpoint-30000
+11/23/2024 09:53:50 - INFO - __main__ -   Saving optimizer and scheduler states to /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained/checkpoint-30000
+learning_rate <class 'float'>
+loss <class 'float'>
+{"learning_rate": 0.00019469229009380005, "loss": 0.07244701662384614, "step": 30000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 8192.0
+loss <class 'float'>
+{"learning_rate": 0.00019450926561427593, "loss": 0.0780615307664848, "step": 31000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 4096.0
+loss <class 'float'>
+{"learning_rate": 0.00019432624113475177, "loss": 0.07763912960138987, "step": 32000}
+loss <class 'float'>
+{"learning_rate": 0.00019414321665522767, "loss": 0.07686055047612171, "step": 33000}
+loss <class 'float'>
+{"learning_rate": 0.0001939601921757035, "loss": 0.07116250773987849, "step": 34000}
+loss <class 'float'>
+{"learning_rate": 0.00019377716769617938, "loss": 0.06579249661727227, "step": 35000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 8192.0
+loss <class 'float'>
+{"learning_rate": 0.00019359414321665523, "loss": 0.0741958573044103, "step": 36000}
+loss <class 'float'>
+{"learning_rate": 0.0001934111187371311, "loss": 0.06999659308711124, "step": 37000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 8192.0
+loss <class 'float'>
+{"learning_rate": 0.00019322809425760697, "loss": 0.07224585976885282, "step": 38000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 4096.0
+loss <class 'float'>
+{"learning_rate": 0.00019304506977808284, "loss": 0.07410353640504763, "step": 39000}
+(6980, 768) (6980,)
+(6980, 768) (6980,)
+(4420911, 768)
+(4420912, 768)
+(6980, 20) (6980, 20)
+0.28795839587028577
+(6980, 200) (6980, 200)
+0.2613244189748475
+Reranking/Full ranking mrr: 0.28795839587028577/0.2613244189748475
+/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained
+learning_rate <class 'float'>
+loss <class 'float'>
+{"learning_rate": 0.00019286204529855868, "loss": 0.0689082020574624, "step": 40000}
+loss <class 'float'>
+{"learning_rate": 0.00019267902081903456, "loss": 0.07355339724128135, "step": 41000}
+loss <class 'float'>
+{"learning_rate": 0.0001924959963395104, "loss": 0.07186881248402642, "step": 42000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 4096.0
+loss <class 'float'>
+{"learning_rate": 0.0001923129718599863, "loss": 0.06782730775262462, "step": 43000}
+loss <class 'float'>
+{"learning_rate": 0.00019212994738046214, "loss": 0.06946011043235194, "step": 44000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 4096.0
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 2048.0
+loss <class 'float'>
+{"learning_rate": 0.000191946922900938, "loss": 0.06418174187259865, "step": 45000}
+loss <class 'float'>
+{"learning_rate": 0.00019176389842141386, "loss": 0.06909140560464584, "step": 46000}
+loss <class 'float'>
+{"learning_rate": 0.00019158087394188973, "loss": 0.0694836950951867, "step": 47000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 2048.0
+loss <class 'float'>
+{"learning_rate": 0.0001913978494623656, "loss": 0.07125152487855667, "step": 48000}
+loss <class 'float'>
+{"learning_rate": 0.00019121482498284147, "loss": 0.06672172650600987, "step": 49000}
+loss <class 'float'>
+{"learning_rate": 0.00019103180050331731, "loss": 0.06337171846058481, "step": 50000}
+loss <class 'float'>
+{"learning_rate": 0.00019084877602379319, "loss": 0.06658616917079052, "step": 51000}
+loss <class 'float'>
+{"learning_rate": 0.00019066575154426906, "loss": 0.06160201801089715, "step": 52000}
+loss <class 'float'>
+{"learning_rate": 0.00019048272706474493, "loss": 0.06619379976357595, "step": 53000}
+loss <class 'float'>
+{"learning_rate": 0.0001902997025852208, "loss": 0.07082564566077781, "step": 54000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 8192.0
+loss <class 'float'>
+{"learning_rate": 0.00019011667810569664, "loss": 0.0614948740014097, "step": 55000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 4096.0
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 2048.0
+loss <class 'float'>
+{"learning_rate": 0.0001899336536261725, "loss": 0.06451286518459165, "step": 56000}
+loss <class 'float'>
+{"learning_rate": 0.00018975062914664838, "loss": 0.06426935921331824, "step": 57000}
+loss <class 'float'>
+{"learning_rate": 0.00018956760466712426, "loss": 0.06398921479946694, "step": 58000}
+loss <class 'float'>
+{"learning_rate": 0.0001893845801876001, "loss": 0.0630979042131512, "step": 59000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 4096.0
+11/23/2024 12:13:59 - INFO - transformers.modeling_utils -   Model weights saved in /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained/checkpoint-60000/pytorch_model.bin
+11/23/2024 12:13:59 - INFO - __main__ -   Saving model checkpoint to /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained/checkpoint-60000
+11/23/2024 12:14:00 - INFO - __main__ -   Saving optimizer and scheduler states to /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained/checkpoint-60000
+(6980, 768) (6980,)
+(6980, 768) (6980,)
+(4420912, 768)
+(4420911, 768)
+(6980, 20) (6980, 20)
+0.29409025787965454
+(6980, 200) (6980, 200)
+0.26899872652021517
+Reranking/Full ranking mrr: 0.29409025787965454/0.26899872652021517
+/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained
+learning_rate <class 'float'>
+loss <class 'float'>
+{"learning_rate": 0.00018920155570807597, "loss": 0.06338280309161928, "step": 60000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 2048.0
+loss <class 'float'>
+{"learning_rate": 0.00018901853122855181, "loss": 0.061302341293609064, "step": 61000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 1024.0
+loss <class 'float'>
+{"learning_rate": 0.0001888355067490277, "loss": 0.05878562498743122, "step": 62000}
+loss <class 'float'>
+{"learning_rate": 0.00018865248226950356, "loss": 0.06382643947318138, "step": 63000}
+loss <class 'float'>
+{"learning_rate": 0.00018846945778997943, "loss": 0.06346204182874499, "step": 64000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 1024.0
+loss <class 'float'>
+{"learning_rate": 0.00018828643331045527, "loss": 0.05805851330695441, "step": 65000}
+loss <class 'float'>
+{"learning_rate": 0.00018810340883093114, "loss": 0.06124238990437152, "step": 66000}
+loss <class 'float'>
+{"learning_rate": 0.00018792038435140701, "loss": 0.059367191822548196, "step": 67000}
+loss <class 'float'>
+{"learning_rate": 0.00018773735987188289, "loss": 0.0613781937943786, "step": 68000}
+loss <class 'float'>
+{"learning_rate": 0.00018755433539235873, "loss": 0.057326093179501186, "step": 69000}
+loss <class 'float'>
+{"learning_rate": 0.0001873713109128346, "loss": 0.055155211495481124, "step": 70000}
+loss <class 'float'>
+{"learning_rate": 0.00018718828643331044, "loss": 0.0632052658860448, "step": 71000}
+loss <class 'float'>
+{"learning_rate": 0.00018700526195378634, "loss": 0.05451985230347054, "step": 72000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 4096.0
+loss <class 'float'>
+{"learning_rate": 0.0001868222374742622, "loss": 0.056341658213389566, "step": 73000}
+loss <class 'float'>
+{"learning_rate": 0.00018663921299473806, "loss": 0.06074688087981849, "step": 74000}
+loss <class 'float'>
+{"learning_rate": 0.0001864561885152139, "loss": 0.055826722314023754, "step": 75000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 4096.0
+loss <class 'float'>
+{"learning_rate": 0.00018627316403568977, "loss": 0.06402796312981081, "step": 76000}
+loss <class 'float'>
+{"learning_rate": 0.00018609013955616564, "loss": 0.057517301770451015, "step": 77000}
+loss <class 'float'>
+{"learning_rate": 0.00018590711507664151, "loss": 0.0592883235213194, "step": 78000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 4096.0
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 2048.0
+loss <class 'float'>
+{"learning_rate": 0.00018572409059711739, "loss": 0.05811085450645987, "step": 79000}
+(6980, 768) (6980,)
+(6980, 768) (6980,)
+(4420911, 768)
+(4420912, 768)
+(6980, 20) (6980, 20)
+0.29748459316868936
+(6980, 200) (6980, 200)
+0.2700159184972929
+Reranking/Full ranking mrr: 0.29748459316868936/0.2700159184972929
+/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained
+learning_rate <class 'float'>
+loss <class 'float'>
+{"learning_rate": 0.00018554106611759323, "loss": 0.057274364253036766, "step": 80000}
+loss <class 'float'>
+{"learning_rate": 0.0001853580416380691, "loss": 0.05946251659022528, "step": 81000}
+loss <class 'float'>
+{"learning_rate": 0.00018517501715854497, "loss": 0.054806403465230684, "step": 82000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 4096.0
+loss <class 'float'>
+{"learning_rate": 0.00018499199267902084, "loss": 0.055788218883244554, "step": 83000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 2048.0
+loss <class 'float'>
+{"learning_rate": 0.0001848089681994967, "loss": 0.05349106735271198, "step": 84000}
+loss <class 'float'>
+{"learning_rate": 0.00018462594371997256, "loss": 0.05473827206173519, "step": 85000}
+loss <class 'float'>
+{"learning_rate": 0.0001844429192404484, "loss": 0.05668034798751068, "step": 86000}
+loss <class 'float'>
+{"learning_rate": 0.0001842598947609243, "loss": 0.05354822360195612, "step": 87000}
+loss <class 'float'>
+{"learning_rate": 0.00018407687028140014, "loss": 0.059170840705759474, "step": 88000}
+loss <class 'float'>
+{"learning_rate": 0.00018389384580187602, "loss": 0.05204065736543998, "step": 89000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 4096.0
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 2048.0
+11/23/2024 15:26:52 - INFO - transformers.modeling_utils -   Model weights saved in /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained/checkpoint-90000/pytorch_model.bin
+11/23/2024 15:26:52 - INFO - __main__ -   Saving model checkpoint to /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained/checkpoint-90000
+11/23/2024 15:26:54 - INFO - __main__ -   Saving optimizer and scheduler states to /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained/checkpoint-90000
+learning_rate <class 'float'>
+loss <class 'float'>
+{"learning_rate": 0.00018371082132235186, "loss": 0.05389607218896526, "step": 90000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 1024.0
+loss <class 'float'>
+{"learning_rate": 0.00018352779684282773, "loss": 0.05470091225294709, "step": 91000}
+loss <class 'float'>
+{"learning_rate": 0.0001833447723633036, "loss": 0.05249467552832357, "step": 92000}
+loss <class 'float'>
+{"learning_rate": 0.00018316174788377947, "loss": 0.05415323411288591, "step": 93000}
+loss <class 'float'>
+{"learning_rate": 0.00018297872340425532, "loss": 0.05238184927216389, "step": 94000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 2048.0
+loss <class 'float'>
+{"learning_rate": 0.0001827956989247312, "loss": 0.05323408420194755, "step": 95000}
+loss <class 'float'>
+{"learning_rate": 0.00018261267444520706, "loss": 0.0565369809384465, "step": 96000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 2048.0
+loss <class 'float'>
+{"learning_rate": 0.00018242964996568293, "loss": 0.04843571602836346, "step": 97000}
+loss <class 'float'>
+{"learning_rate": 0.00018224662548615877, "loss": 0.05653112106317713, "step": 98000}
+loss <class 'float'>
+{"learning_rate": 0.00018206360100663465, "loss": 0.053555434354517276, "step": 99000}
+(6980, 768) (6980,)
+(6980, 768) (6980,)
+(4420911, 768)
+(4420912, 768)
+(6980, 20) (6980, 20)
+0.300876597534906
+(6980, 200) (6980, 200)
+0.27378058625551344
+Reranking/Full ranking mrr: 0.300876597534906/0.27378058625551344
+/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained
+learning_rate <class 'float'>
+loss <class 'float'>
+{"learning_rate": 0.0001818805765271105, "loss": 0.0517483085210115, "step": 100000}
+loss <class 'float'>
+{"learning_rate": 0.0001816975520475864, "loss": 0.054862243795876564, "step": 101000}
+loss <class 'float'>
+{"learning_rate": 0.00018151452756806223, "loss": 0.047560272619783066, "step": 102000}
+loss <class 'float'>
+{"learning_rate": 0.0001813315030885381, "loss": 0.05714606696684132, "step": 103000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 8192.0
+loss <class 'float'>
+{"learning_rate": 0.00018114847860901397, "loss": 0.05278321944069467, "step": 104000}
+loss <class 'float'>
+{"learning_rate": 0.00018096545412948982, "loss": 0.05329488584694445, "step": 105000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 8192.0
+loss <class 'float'>
+{"learning_rate": 0.0001807824296499657, "loss": 0.051287996203707734, "step": 106000}
+loss <class 'float'>
+{"learning_rate": 0.00018059940517044156, "loss": 0.05080808017889831, "step": 107000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 4096.0
+loss <class 'float'>
+{"learning_rate": 0.00018041638069091743, "loss": 0.05275599441920349, "step": 108000}
+loss <class 'float'>
+{"learning_rate": 0.00018023335621139328, "loss": 0.051424474672028736, "step": 109000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 2048.0
+loss <class 'float'>
+{"learning_rate": 0.00018005033173186915, "loss": 0.04820356051239651, "step": 110000}
+loss <class 'float'>
+{"learning_rate": 0.00017986730725234502, "loss": 0.0519338712419285, "step": 111000}
+loss <class 'float'>
+{"learning_rate": 0.0001796842827728209, "loss": 0.04935079437191053, "step": 112000}
+loss <class 'float'>
+{"learning_rate": 0.00017950125829329673, "loss": 0.048222712769324064, "step": 113000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 4096.0
+loss <class 'float'>
+{"learning_rate": 0.0001793182338137726, "loss": 0.05061233260743757, "step": 114000}
+loss <class 'float'>
+{"learning_rate": 0.00017913520933424845, "loss": 0.04732302225994863, "step": 115000}
+loss <class 'float'>
+{"learning_rate": 0.00017895218485472435, "loss": 0.04751328958191152, "step": 116000}
+loss <class 'float'>
+{"learning_rate": 0.0001787691603752002, "loss": 0.05030105749837639, "step": 117000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 4096.0
+loss <class 'float'>
+{"learning_rate": 0.00017858613589567606, "loss": 0.052980351015394264, "step": 118000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 2048.0
+loss <class 'float'>
+{"learning_rate": 0.0001784031114161519, "loss": 0.04904651594766801, "step": 119000}
+11/23/2024 17:47:06 - INFO - transformers.modeling_utils -   Model weights saved in /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained/checkpoint-120000/pytorch_model.bin
+11/23/2024 17:47:07 - INFO - __main__ -   Saving model checkpoint to /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained/checkpoint-120000
+11/23/2024 17:47:08 - INFO - __main__ -   Saving optimizer and scheduler states to /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained/checkpoint-120000
+(6980, 768) (6980,)
+(6980, 768) (6980,)
+(4420911, 768)
+(4420912, 768)
+(6980, 20) (6980, 20)
+0.30414546095419925
+(6980, 200) (6980, 200)
+0.2764488675126202
+Reranking/Full ranking mrr: 0.30414546095419925/0.2764488675126202
+/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained
+learning_rate <class 'float'>
+loss <class 'float'>
+{"learning_rate": 0.00017822008693662778, "loss": 0.04656833462512077, "step": 120000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 2048.0
+loss <class 'float'>
+{"learning_rate": 0.00017803706245710365, "loss": 0.05001466520364192, "step": 121000}
+loss <class 'float'>
+{"learning_rate": 0.00017785403797757952, "loss": 0.046878025346401044, "step": 122000}
+loss <class 'float'>
+{"learning_rate": 0.00017767101349805536, "loss": 0.05213070532623533, "step": 123000}
+loss <class 'float'>
+{"learning_rate": 0.00017748798901853123, "loss": 0.04730351122470529, "step": 124000}
+loss <class 'float'>
+{"learning_rate": 0.00017730496453900708, "loss": 0.05047236721317131, "step": 125000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 4096.0
+loss <class 'float'>
+{"learning_rate": 0.00017712194005948298, "loss": 0.04869731143267745, "step": 126000}
+loss <class 'float'>
+{"learning_rate": 0.00017693891557995882, "loss": 0.04709055668082147, "step": 127000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 4096.0
+loss <class 'float'>
+{"learning_rate": 0.0001767558911004347, "loss": 0.051363648780963556, "step": 128000}
+loss <class 'float'>
+{"learning_rate": 0.00017657286662091056, "loss": 0.04523389566260266, "step": 129000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 4096.0
+loss <class 'float'>
+{"learning_rate": 0.00017638984214138643, "loss": 0.05085113657823604, "step": 130000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 2048.0
+loss <class 'float'>
+{"learning_rate": 0.00017620681766186228, "loss": 0.04932013324256332, "step": 131000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 1024.0
+loss <class 'float'>
+{"learning_rate": 0.00017602379318233815, "loss": 0.04558351115469486, "step": 132000}
+loss <class 'float'>
+{"learning_rate": 0.00017584076870281402, "loss": 0.04904783197637334, "step": 133000}
+loss <class 'float'>
+{"learning_rate": 0.00017565774422328986, "loss": 0.04874737840171838, "step": 134000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 1024.0
+loss <class 'float'>
+{"learning_rate": 0.00017547471974376576, "loss": 0.04540770311498454, "step": 135000}
+loss <class 'float'>
+{"learning_rate": 0.0001752916952642416, "loss": 0.04672408059430745, "step": 136000}
+loss <class 'float'>
+{"learning_rate": 0.00017510867078471748, "loss": 0.04381945364805324, "step": 137000}
+loss <class 'float'>
+{"learning_rate": 0.00017492564630519332, "loss": 0.04717198179398838, "step": 138000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 2048.0
+loss <class 'float'>
+{"learning_rate": 0.0001747426218256692, "loss": 0.04526140214818588, "step": 139000}
+(6980, 768) (6980,)
+(6980, 768) (6980,)
+(4420911, 768)
+(4420912, 768)
+(6980, 20) (6980, 20)
+0.304877996088597
+(6980, 200) (6980, 200)
+0.2814174284804643
+Reranking/Full ranking mrr: 0.304877996088597/0.2814174284804643
+/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained
+learning_rate <class 'float'>
+loss <class 'float'>
+{"learning_rate": 0.00017455959734614506, "loss": 0.046015587096677336, "step": 140000}
+loss <class 'float'>
+{"learning_rate": 0.00017437657286662093, "loss": 0.04622632150450772, "step": 141000}
+loss <class 'float'>
+{"learning_rate": 0.00017419354838709678, "loss": 0.0466049195318119, "step": 142000}
+loss <class 'float'>
+{"learning_rate": 0.00017401052390757265, "loss": 0.046574411635952856, "step": 143000}
+loss <class 'float'>
+{"learning_rate": 0.0001738274994280485, "loss": 0.04549096625265338, "step": 144000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 8192.0
+loss <class 'float'>
+{"learning_rate": 0.0001736444749485244, "loss": 0.04589074370170602, "step": 145000}
+loss <class 'float'>
+{"learning_rate": 0.00017346145046900023, "loss": 0.05193086346250857, "step": 146000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 8192.0
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 4096.0
+loss <class 'float'>
+{"learning_rate": 0.0001732784259894761, "loss": 0.04315537116670566, "step": 147000}
+loss <class 'float'>
+{"learning_rate": 0.00017309540150995195, "loss": 0.04154657305679029, "step": 148000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 2048.0
+loss <class 'float'>
+{"learning_rate": 0.00017291237703042782, "loss": 0.04531853660870911, "step": 149000}
+11/23/2024 20:59:54 - INFO - transformers.modeling_utils -   Model weights saved in /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained/checkpoint-150000/pytorch_model.bin
+11/23/2024 20:59:54 - INFO - __main__ -   Saving model checkpoint to /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained/checkpoint-150000
+11/23/2024 20:59:55 - INFO - __main__ -   Saving optimizer and scheduler states to /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained/checkpoint-150000
+learning_rate <class 'float'>
+loss <class 'float'>
+{"learning_rate": 0.0001727293525509037, "loss": 0.04839080184638988, "step": 150000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 2048.0
+loss <class 'float'>
+{"learning_rate": 0.00017254632807137956, "loss": 0.04433771059947503, "step": 151000}
+loss <class 'float'>
+{"learning_rate": 0.0001723633035918554, "loss": 0.04731878761170992, "step": 152000}
+loss <class 'float'>
+{"learning_rate": 0.00017218027911233128, "loss": 0.0450075775677069, "step": 153000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 2048.0
+loss <class 'float'>
+{"learning_rate": 0.00017199725463280715, "loss": 0.04254912925822282, "step": 154000}
+loss <class 'float'>
+{"learning_rate": 0.00017181423015328302, "loss": 0.04744130392921943, "step": 155000}
+loss <class 'float'>
+{"learning_rate": 0.00017163120567375886, "loss": 0.04701099955636528, "step": 156000}
+Gradient overflow.  Skipping step, loss scaler 0 reducing loss scale to 2048.0
+loss <class 'float'>
+{"learning_rate": 0.00017144818119423474, "loss": 0.0414329540632516, "step": 157000}
+loss <class 'float'>
+{"learning_rate": 0.0001712651567147106, "loss": 0.04390893534343741, "step": 158000}
+loss <class 'float'>
+{"learning_rate": 0.00017108213223518645, "loss": 0.043509977241445084, "step": 159000}
+(6980, 768) (6980,)
+(6980, 768) (6980,)
+(4420912, 768)
+(4420911, 768)
+(6980, 20) (6980, 20)
+0.31030029108109286
+(6980, 200) (6980, 200)
+0.28172067585391286
+Reranking/Full ranking mrr: 0.31030029108109286/0.28172067585391286
+/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained
