@@ -34,9 +34,11 @@ Run the following scripts for the experiments:
 - `commands/subset_10_train-a40_bottom_neg_only.sh`
 - `commands/subset_10_train-a40_random.sh`
 
-![warm_up_mrr](https://github.com/user-attachments/assets/08cd1ae1-4a04-4a61-95e9-af9a7ea9ae6d)
-![ndcg_comparison](https://github.com/user-attachments/assets/87250c8c-504b-4c6e-9617-c9ffb5b99ac3)
+### Warm-Up MRR
+<img src="https://github.com/user-attachments/assets/08cd1ae1-4a04-4a61-95e9-af9a7ea9ae6d" alt="warm_up_mrr" width="500">
 
+### NDCG Comparison
+<img src="https://github.com/user-attachments/assets/87250c8c-504b-4c6e-9617-c9ffb5b99ac3" alt="ndcg_comparison" width="500">
 
 ## SLURM Configurations
 Use these SLURM batch scripts to submit jobs for different experiment setups:
