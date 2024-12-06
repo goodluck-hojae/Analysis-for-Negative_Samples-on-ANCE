@@ -294,8 +294,6 @@ def GetProcessingFn(args, query=False):
 
         query2id_tensor = torch.tensor(
             [f[0] for f in passage_collection], dtype=torch.long)
-        # all_input_ids_a = torch.tensor(
-        #     [f[1] for f in passage_collection], dtype=torch.int)
         all_input_ids_a = torch.tensor(np.array([f[1] for f in passage_collection]), dtype=torch.int)
         all_attention_mask_a = torch.tensor(
             [f[2] for f in passage_collection], dtype=torch.bool)
@@ -369,9 +367,6 @@ def GetTripletTrainingDataProcessingFn(args, query_cache, passage_cache):
             args, query=False)(
             passage_cache[pos_pid], pos_pid)[0]
 
-        # print('args.top_neg', args.top_neg)
-        # print(top_neg_pids)
-        # print(bottom_neg_pids)
         if args.top_neg > 0:
             if args.top_neg == 1:
                 neg_pids = top_neg_pids
