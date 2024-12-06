@@ -113,17 +113,26 @@ def write_query_rel(args, pid2offset, query_file, positive_id_file, out_query_fi
                 docid = int(docid[1:])
             else:
                 docid = int(docid)
-            out_id.write(str(qid2offset[topicid]) +
-                         "\t" +
-                         str(pid2offset[docid]) +
-                         "\t" +
-                         rel +
-                         "\n")
-            out_line_count += 1
+            # We add this condition to create the subset of dataset, without this dataset, it does not easily establish the relationship on the subset.
+            if docid in pid2offset: 
+                out_id.write(str(qid2offset[topicid]) +
+                            "\t" +
+                            str(pid2offset[docid]) +
+                            "\t" +
+                            rel +
+                            "\n")
+                out_line_count += 1
         print("Total lines written: " + str(out_line_count))
-
+        
 
 def preprocess(args):
+    
+#             out_id.write(str(qid2offset[topicid]) +
+#                          "\t" +
+#                          str(pid2offset[docid]) +
+#                          "\t" +
+#                          rel +
+#                          "\n")
 
     pid2offset = {}
     if args.data_type == 0:
@@ -285,8 +294,9 @@ def GetProcessingFn(args, query=False):
 
         query2id_tensor = torch.tensor(
             [f[0] for f in passage_collection], dtype=torch.long)
-        all_input_ids_a = torch.tensor(
-            [f[1] for f in passage_collection], dtype=torch.int)
+        # all_input_ids_a = torch.tensor(
+        #     [f[1] for f in passage_collection], dtype=torch.int)
+        all_input_ids_a = torch.tensor(np.array([f[1] for f in passage_collection]), dtype=torch.int)
         all_attention_mask_a = torch.tensor(
             [f[2] for f in passage_collection], dtype=torch.bool)
         all_token_type_ids_a = torch.tensor(
@@ -339,9 +349,16 @@ def GetTripletTrainingDataProcessingFn(args, query_cache, passage_cache):
         line_arr = line.split('\t')
         qid = int(line_arr[0])
         pos_pid = int(line_arr[1])
-        neg_pids = line_arr[2].split(',')
-        neg_pids = [int(neg_pid) for neg_pid in neg_pids]
-
+        if args.top_neg > 0:
+            top_neg, bottom_neg = line_arr[2].split('-')
+            top_neg_pids = top_neg.split(',')
+            top_neg_pids = [int(neg_pid) for neg_pid in top_neg_pids]
+            bottom_neg_pids = bottom_neg.split(',')
+            bottom_neg_pids = [int(neg_pid) for neg_pid in bottom_neg_pids]
+        else:
+            neg_pids = line_arr[2].split(',')
+            neg_pids = [int(neg_pid) for neg_pid in neg_pids]
+        
         all_input_ids_a = []
         all_attention_mask_a = []
 
@@ -352,13 +369,23 @@ def GetTripletTrainingDataProcessingFn(args, query_cache, passage_cache):
             args, query=False)(
             passage_cache[pos_pid], pos_pid)[0]
 
+        # print('args.top_neg', args.top_neg)
+        # print(top_neg_pids)
+        # print(bottom_neg_pids)
+        if args.top_neg > 0:
+            if args.top_neg == 1:
+                neg_pids = top_neg_pids
+            elif args.top_neg == 2:
+                neg_pids = bottom_neg_pids
+            
+        # data 4th are ids
         for neg_pid in neg_pids:
             neg_data = GetProcessingFn(
                 args, query=False)(
                 passage_cache[neg_pid], neg_pid)[0]
             yield (query_data[0], query_data[1], query_data[2], pos_data[0], pos_data[1], pos_data[2],
-                   neg_data[0], neg_data[1], neg_data[2])
-
+                   neg_data[0], neg_data[1], neg_data[2], query_data[3], pos_data[3], neg_data[3] ) #################
+            
     return fn
 
 
