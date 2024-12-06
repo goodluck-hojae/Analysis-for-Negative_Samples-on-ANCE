@@ -12,3 +12,35 @@ hardness significantly influences training dynamics and model performance.
 Using a subset of MS MARCO, we conduct experiments
 comparing different ranking segments for negative sampling to
 understand their impact on training efficiency and model effectiveness.
+
+# Reproducing Results
+
+The logs are located in `results` directory with the following files
+- `subset_10_train-a40-26398175-ann_data_4.out`
+- `subset_10_train-a40-26398212-ann_data_4_bottom_neg.out`
+- `subset_10_train-a40-26449628-ann_data_4_random.out`
+- `subset_10_train-a40-26456768-ann_data_4_bottom_neg_only.out`
+
+
+To reproduce the results in the `results` directory, execute the provided commands. The experiments were conducted using a SLURM cluster, so ensure your SLURM settings are configured correctly.
+The logs are co
+## Commands
+Run the following scripts for the experiments:
+
+- `commands/subset_10_train-a40.sh`
+- `commands/subset_10_train-a40_bottom_neg.sh`
+- `commands/subset_10_train-a40_bottom_neg_only.sh`
+- `commands/subset_10_train-a40_random.sh`
+
+![warm_up_mrr](https://github.com/user-attachments/assets/08cd1ae1-4a04-4a61-95e9-af9a7ea9ae6d)
+![ndcg_comparison](https://github.com/user-attachments/assets/87250c8c-504b-4c6e-9617-c9ffb5b99ac3)
+
+
+## SLURM Configurations
+Use these SLURM batch scripts to submit jobs for different experiment setups:
+
+- `sbatch_train_index-a40_subset_10.sh`
+- `sbatch_train_index-a40_subset_10_bottom_neg.sh`
+- `sbatch_train_index-a40_subset_10_bottom_neg_only.sh`
+- `sbatch_train_index-a40_subset_10_random.sh`
+
