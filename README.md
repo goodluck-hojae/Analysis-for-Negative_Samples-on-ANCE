@@ -67,10 +67,11 @@ Run the following scripts for the experiments:
 
 ## SLURM Configurations
 Use these SLURM batch scripts to submit jobs for different experiment setups:
-
 - `drivers/10/sbatch_train_index-a40_subset_10.sh`
 - `drivers/10/sbatch_train_index-a40_subset_10_bottom_neg.sh`
 - `drivers/10/sbatch_train_index-a40_subset_10_bottom_neg_only.sh`
 - `drivers/10/sbatch_train_index-a40_subset_10_random.sh`
 - `drivers/sbatch_warmup.sh`
 
+## Report
+Please refer the details, CS646_Final_Project.pdf
