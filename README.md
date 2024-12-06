@@ -77,9 +77,8 @@ The experiments were conducted using a SLURM cluster, so please refer the hardwa
 ## Report
 Please refer the details, CS646_Final_Project.pdf
 
-For any questions or further information, please contact:
 
 ## Contact
-Hojae Son: hojaeson@umass.edu
-
-Deepesh Suranjandass: dsuranjandas@umass.edu
+For any questions or further information, please contact:
+- Hojae Son: hojaeson@umass.edu
+- Deepesh Suranjandass: dsuranjandas@umass.edu
