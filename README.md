@@ -13,20 +13,22 @@ Using a subset of MS MARCO, we conduct experiments
 comparing different ranking segments for negative sampling to
 understand their impact on training efficiency and model effectiveness.
 
-# Reproducing Results
+# Reproducing Results with 10% subset data
 
+### To download raw dataset, please refer commands/data_download.sh script
+### To create subset, please refer data/create_subset.py 
 The logs are located in `results` directory with the following files
+- `warmup-26334398.out`
 - `subset_10_train-a40-26398175-ann_data_4.out`
 - `subset_10_train-a40-26398212-ann_data_4_bottom_neg.out`
 - `subset_10_train-a40-26449628-ann_data_4_random.out`
 - `subset_10_train-a40-26456768-ann_data_4_bottom_neg_only.out`
 
-
 To reproduce the results in the `results` directory, execute the provided commands. The experiments were conducted using a SLURM cluster, so ensure your SLURM settings are configured correctly.
-The logs are co
+
 ## Commands
 Run the following scripts for the experiments:
-
+- `commands/run_train_warmup.sh`
 - `commands/subset_10_train-a40.sh`
 - `commands/subset_10_train-a40_bottom_neg.sh`
 - `commands/subset_10_train-a40_bottom_neg_only.sh`
@@ -39,8 +41,9 @@ Run the following scripts for the experiments:
 ## SLURM Configurations
 Use these SLURM batch scripts to submit jobs for different experiment setups:
 
-- `sbatch_train_index-a40_subset_10.sh`
-- `sbatch_train_index-a40_subset_10_bottom_neg.sh`
-- `sbatch_train_index-a40_subset_10_bottom_neg_only.sh`
-- `sbatch_train_index-a40_subset_10_random.sh`
+- `drivers/10/sbatch_train_index-a40_subset_10.sh`
+- `drivers/10/sbatch_train_index-a40_subset_10_bottom_neg.sh`
+- `drivers/10/sbatch_train_index-a40_subset_10_bottom_neg_only.sh`
+- `drivers/10/sbatch_train_index-a40_subset_10_random.sh`
+- `drivers/sbatch_warmup.sh`
 
