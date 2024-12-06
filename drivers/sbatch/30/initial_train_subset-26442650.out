@@ -1,0 +1,129 @@
+Thu Nov 28 03:16:10 2024       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 550.90.07              Driver Version: 550.90.07      CUDA Version: 12.4     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA A100-SXM4-80GB          On  |   00000000:BD:00.0 Off |                    0 |
+| N/A   29C    P0             64W /  500W |       1MiB /  81920MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+|   1  NVIDIA A100-SXM4-80GB          On  |   00000000:CD:00.0 Off |                    0 |
+| N/A   29C    P0             63W /  500W |       1MiB /  81920MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+sbatch_initial_train_subset_30.sh
+Loading conda
+python -m torch.distributed.launch --nproc_per_node=2 drivers/run_ann_data_gen.py --training_dir /home/hojaeson_umass_edu/hojae_workspace/project/ance/data/30/checkpoints --init_model_dir /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 --model_type rdot_nll --output_dir /home/hojaeson_umass_edu/hojae_workspace/project/ance/data/30/ann_data_2 --cache_dir /home/hojaeson_umass_edu/hojae_workspace/project/ance/data/30/cache --data_dir /home/hojaeson_umass_edu/hojae_workspace/project/ance/data/30/preprocessed_data --max_seq_length 512 --per_gpu_eval_batch_size 2048 --topk_training 200 --negative_sample 20 --server_port 12345 --end_output_num -1 --ann_chunk_factor 12 --ann_dir /home/hojaeson_umass_edu/hojae_workspace/project/ance/data/30/ann_data_2
+/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/distributed/launch.py:178: FutureWarning: The module torch.distributed.launch is deprecated
+and will be removed in future. Use torchrun.
+Note that --use_env is set by default in torchrun.
+If your script expects `--local_rank` argument to be set, please
+change it to read from `os.environ['LOCAL_RANK']` instead. See 
+https://pytorch.org/docs/stable/distributed.html#launch-utility for 
+further instructions
+
+  warnings.warn(
+WARNING:torch.distributed.run:
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+Process rank: 1, device: cuda:1, n_gpu: 1, distributed training: True
+11/28/2024 03:16:29 - WARNING - __main__ -   Process rank: 1, device: cuda:1, n_gpu: 1, distributed training: True
+Process rank: 0, device: cuda:0, n_gpu: 1, distributed training: True
+11/28/2024 03:16:29 - WARNING - __main__ -   Process rank: 0, device: cuda:0, n_gpu: 1, distributed training: True
+starting output number 0
+11/28/2024 03:16:30 - INFO - __main__ -   starting output number 0
+Loading query_2_pos_docid
+11/28/2024 03:16:30 - INFO - __main__ -   Loading query_2_pos_docid
+Loading dev query_2_pos_docid
+11/28/2024 03:16:30 - INFO - __main__ -   Loading dev query_2_pos_docid
+156678
+11/28/2024 03:16:30 - INFO - __main__ -   156678
+start generate ann data number 0
+11/28/2024 03:16:30 - INFO - __main__ -   start generate ann data number 0
+next checkpoint at /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+11/28/2024 03:16:30 - INFO - __main__ -   next checkpoint at /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+11/28/2024 03:16:30 - INFO - transformers.configuration_utils -   loading configuration file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/config.json
+11/28/2024 03:16:30 - INFO - transformers.configuration_utils -   Model config {
+  "architectures": [
+    "RobertaForMaskedLM"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "bos_token_id": 0,
+  "eos_token_id": 2,
+  "finetuning_task": "MSMarco",
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "id2label": {
+    "0": "LABEL_0",
+    "1": "LABEL_1"
+  },
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "is_decoder": false,
+  "label2id": {
+    "LABEL_0": 0,
+    "LABEL_1": 1
+  },
+  "layer_norm_eps": 1e-05,
+  "max_position_embeddings": 514,
+  "model_type": "roberta",
+  "num_attention_heads": 12,
+  "num_hidden_layers": 12,
+  "num_labels": 2,
+  "output_attentions": false,
+  "output_hidden_states": false,
+  "output_past": true,
+  "pad_token_id": 1,
+  "pruned_heads": {},
+  "torchscript": false,
+  "type_vocab_size": 1,
+  "use_bfloat16": false,
+  "vocab_size": 50265
+}
+
+11/28/2024 03:16:30 - INFO - transformers.tokenization_utils -   Model name '/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000' not found in model shortcut name list (roberta-base, roberta-large, roberta-large-mnli, distilroberta-base, roberta-base-openai-detector, roberta-large-openai-detector). Assuming '/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000' is a path or url to a directory containing tokenizer files.
+11/28/2024 03:16:30 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/vocab.json
+11/28/2024 03:16:30 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/merges.txt
+11/28/2024 03:16:30 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/added_tokens.json
+11/28/2024 03:16:30 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/special_tokens_map.json
+11/28/2024 03:16:30 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/tokenizer_config.json
+Using mean: False
+11/28/2024 03:16:30 - INFO - transformers.modeling_utils -   loading weights file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/pytorch_model.bin
+Using mean: False
+Inference parameters Namespace(ann_chunk_factor=12, ann_dir='/home/hojaeson_umass_edu/hojae_workspace/project/ance/data/30/ann_data_2', ann_measure_topk_mrr=True, bottom_neg=False, bottom_only=False, cache_dir='/home/hojaeson_umass_edu/hojae_workspace/project/ance/data/30/cache', config_name='', data_dir='/home/hojaeson_umass_edu/hojae_workspace/project/ance/data/30/preprocessed_data', device=device(type='cuda', index=0), end_output_num=-1, inference=False, init_model_dir='/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000', last_checkpoint_dir='', limit_total_number=100000, load_gen=False, local_rank=0, max_doc_character=10000, max_query_length=64, max_seq_length=512, model_name_or_path='/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000', model_type='rdot_nll', n_gpu=1, negative_sample=20, no_cuda=False, only_keep_latest_embedding_file=False, output_dir='/home/hojaeson_umass_edu/hojae_workspace/project/ance/data/30/ann_data_2', per_gpu_eval_batch_size=2048, rank=0, server_ip='', server_port='12345', tokenizer_name='', topk_training=200, training_dir='/home/hojaeson_umass_edu/hojae_workspace/project/ance/data/30/checkpoints', world_size=2)
+11/28/2024 03:17:26 - INFO - __main__ -   Inference parameters Namespace(ann_chunk_factor=12, ann_dir='/home/hojaeson_umass_edu/hojae_workspace/project/ance/data/30/ann_data_2', ann_measure_topk_mrr=True, bottom_neg=False, bottom_only=False, cache_dir='/home/hojaeson_umass_edu/hojae_workspace/project/ance/data/30/cache', config_name='', data_dir='/home/hojaeson_umass_edu/hojae_workspace/project/ance/data/30/preprocessed_data', device=device(type='cuda', index=0), end_output_num=-1, inference=False, init_model_dir='/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000', last_checkpoint_dir='', limit_total_number=100000, load_gen=False, local_rank=0, max_doc_character=10000, max_query_length=64, max_seq_length=512, model_name_or_path='/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000', model_type='rdot_nll', n_gpu=1, negative_sample=20, no_cuda=False, only_keep_latest_embedding_file=False, output_dir='/home/hojaeson_umass_edu/hojae_workspace/project/ance/data/30/ann_data_2', per_gpu_eval_batch_size=2048, rank=0, server_ip='', server_port='12345', tokenizer_name='', topk_training=200, training_dir='/home/hojaeson_umass_edu/hojae_workspace/project/ance/data/30/checkpoints', world_size=2)
+***** inference of dev query *****
+11/28/2024 03:17:27 - INFO - __main__ -   ***** inference of dev query *****
+6980 -1
+6980 -1
+***** Running ANN Embedding Inference *****
+11/28/2024 03:17:27 - INFO - __main__ -   ***** Running ANN Embedding Inference *****
+  Batch size = 2048
+11/28/2024 03:17:27 - INFO - __main__ -     Batch size = 2048
+Inferencing: 0it [00:00, ?it/s]Inferencing: 2it [00:03,  1.93s/it]
+merging embeddings
+11/28/2024 03:17:30 - INFO - __main__ -   merging embeddings
+***** inference of passages *****
+11/28/2024 03:17:31 - INFO - __main__ -   ***** inference of passages *****
+2652547 -1
+2652547 -1
+***** Running ANN Embedding Inference *****
+11/28/2024 03:17:31 - INFO - __main__ -   ***** Running ANN Embedding Inference *****
+  Batch size = 2048
+11/28/2024 03:17:31 - INFO - __main__ -     Batch size = 2048
+Inferencing: 0it [00:00, ?it/s]Inferencing: 0it [00:15, ?it/s]Inferencing: 3it [00:21,  7.20s/it]Inferencing: 4it [00:29,  7.27s/it]Inferencing: 5it [00:35,  7.12s/it]Inferencing: 6it [00:42,  7.01s/it]Inferencing: 7it [00:49,  7.00s/it]Inferencing: 8it [00:56,  6.98s/it]Inferencing: 9it [01:03,  7.08s/it]Inferencing: 10it [01:10,  7.05s/it]Inferencing: 11it [01:17,  7.10s/it]Inferencing: 12it [01:24,  7.05s/it]Inferencing: 13it [01:31,  7.01s/it]Inferencing: 14it [01:38,  7.02s/it]Inferencing: 15it [01:45,  6.97s/it]Inferencing: 16it [01:52,  6.97s/it]Inferencing: 17it [01:59,  6.94s/it]Inferencing: 18it [02:06,  6.97s/it]Inferencing: 19it [02:13,  6.99s/it]Inferencing: 20it [02:20,  6.96s/it]Inferencing: 21it [02:27,  6.96s/it]Inferencing: 22it [02:34,  6.97s/it]Inferencing: 23it [02:41,  7.01s/it]Inferencing: 24it [02:48,  7.06s/it]Inferencing: 25it [02:55,  7.01s/it]Inferencing: 26it [03:02,  6.96s/it]Inferencing: 27it [03:09,  6.98s/it]Inferencing: 28it [03:16,  6.93s/it]Inferencing: 29it [03:23,  6.87s/it]Inferencing: 30it [03:30,  6.98s/it]Inferencing: 31it [03:37,  6.98s/it]Inferencing: 32it [03:44,  6.96s/it]Inferencing: 33it [03:51,  7.03s/it]Inferencing: 34it [03:58,  7.00s/it]Inferencing: 35it [04:05,  6.96s/it]Inferencing: 36it [04:12,  7.00s/it]Inferencing: 37it [04:19,  6.96s/it]Inferencing: 38it [04:26,  7.09s/it]Inferencing: 39it [04:33,  7.19s/it]Inferencing: 40it [04:40,  7.06s/it]Inferencing: 41it [04:47,  7.02s/it]Inferencing: 42it [04:54,  6.92s/it]Inferencing: 43it [05:01,  6.94s/it]Inferencing: 44it [05:08,  6.97s/it]Inferencing: 45it [05:15,  7.02s/it]Inferencing: 46it [05:22,  6.96s/it]Inferencing: 47it [05:29,  6.91s/it]Inferencing: 48it [05:36,  6.98s/it]Inferencing: 49it [05:43,  6.95s/it]Inferencing: 50it [05:50,  6.98s/it]slurmstepd-gpu024: error: *** JOB 26442650 ON gpu024 CANCELLED AT 2024-11-28T03:23:28 ***
+Inferencing: 51it [05:57,  7.04s/it]slurmstepd-gpu024: error: container_p_join: open failed for /var/tmp//gpu024/26442650/.ns: No such file or directory
+slurmstepd-gpu024: error: container_g_join(26442650): No such file or directory

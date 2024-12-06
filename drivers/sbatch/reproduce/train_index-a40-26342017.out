@@ -1,0 +1,208 @@
+Sat Nov 23 21:07:50 2024       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 550.90.07              Driver Version: 550.90.07      CUDA Version: 12.4     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA L40S                    On  |   00000000:4A:00.0 Off |                    0 |
+| N/A   28C    P8             33W /  350W |       1MiB /  46068MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   1  NVIDIA L40S                    On  |   00000000:61:00.0 Off |                    0 |
+| N/A   30C    P8             32W /  350W |       1MiB /  46068MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   2  NVIDIA L40S                    On  |   00000000:CA:00.0 Off |                    0 |
+| N/A   28C    P8             33W /  350W |       1MiB /  46068MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   3  NVIDIA L40S                    On  |   00000000:E1:00.0 Off |                    0 |
+| N/A   28C    P8             32W /  350W |       1MiB /  46068MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+sbatch_train_index-a40_reproduce_train.sh
+Loading conda
+python -m torch.distributed.launch --nproc_per_node=4 ../drivers/run_ann.py --model_type rdot_nll --model_name_or_path /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained_bm25 --task_name MSMarco --triplet --data_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/preprocessed_data --ann_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/ann_data_origin_2 --max_seq_length 512 --per_gpu_train_batch_size=16 --gradient_accumulation_steps 4 --learning_rate 1e-6 --output_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/checkpoints_a40/ --warmup_steps 5000 --logging_steps 100 --save_steps 10000 --optimizer lamb --single_warmup
+/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/distributed/launch.py:178: FutureWarning: The module torch.distributed.launch is deprecated
+and will be removed in future. Use torchrun.
+Note that --use_env is set by default in torchrun.
+If your script expects `--local_rank` argument to be set, please
+change it to read from `os.environ['LOCAL_RANK']` instead. See 
+https://pytorch.org/docs/stable/distributed.html#launch-utility for 
+further instructions
+
+  warnings.warn(
+WARNING:torch.distributed.run:
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+11/23/2024 21:08:09 - WARNING - __main__ -   Process rank: 1, device: cuda:1, n_gpu: 1, distributed training: True, 16-bits training: False
+11/23/2024 21:08:09 - WARNING - __main__ -   Process rank: 3, device: cuda:3, n_gpu: 1, distributed training: True, 16-bits training: False
+11/23/2024 21:08:09 - WARNING - __main__ -   Process rank: 0, device: cuda:0, n_gpu: 1, distributed training: True, 16-bits training: False
+11/23/2024 21:08:09 - WARNING - __main__ -   Process rank: 2, device: cuda:2, n_gpu: 1, distributed training: True, 16-bits training: False
+11/23/2024 21:08:09 - INFO - transformers.configuration_utils -   loading configuration file /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained_bm25/config.json
+11/23/2024 21:08:09 - INFO - transformers.configuration_utils -   Model config {
+  "_num_labels": 2,
+  "architectures": [
+    "RobertaDot_NLL_LN"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "bad_words_ids": null,
+  "bos_token_id": 0,
+  "decoder_start_token_id": null,
+  "do_sample": false,
+  "early_stopping": false,
+  "eos_token_id": 2,
+  "eos_token_ids": 0,
+  "finetuning_task": "msmarco",
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "id2label": {
+    "0": "LABEL_0",
+    "1": "LABEL_1"
+  },
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "is_decoder": false,
+  "is_encoder_decoder": false,
+  "label2id": {
+    "LABEL_0": 0,
+    "LABEL_1": 1
+  },
+  "layer_norm_eps": 1e-05,
+  "length_penalty": 1.0,
+  "max_length": 20,
+  "max_position_embeddings": 514,
+  "min_length": 0,
+  "model_type": "roberta",
+  "no_repeat_ngram_size": 0,
+  "num_attention_heads": 12,
+  "num_beams": 1,
+  "num_hidden_layers": 12,
+  "num_labels": 2,
+  "num_return_sequences": 1,
+  "output_attentions": false,
+  "output_hidden_states": false,
+  "output_past": true,
+  "pad_token_id": 1,
+  "prefix": null,
+  "pruned_heads": {},
+  "repetition_penalty": 1.0,
+  "task_specific_params": null,
+  "temperature": 1.0,
+  "top_k": 50,
+  "top_p": 1.0,
+  "torchscript": false,
+  "type_vocab_size": 1,
+  "use_bfloat16": false,
+  "vocab_size": 50265
+}
+
+11/23/2024 21:08:09 - INFO - transformers.tokenization_utils -   Model name '/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained_bm25' not found in model shortcut name list (roberta-base, roberta-large, roberta-large-mnli, distilroberta-base, roberta-base-openai-detector, roberta-large-openai-detector). Assuming '/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained_bm25' is a path or url to a directory containing tokenizer files.
+11/23/2024 21:08:09 - INFO - transformers.tokenization_utils -   Didn't find file /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained_bm25/added_tokens.json. We won't load it.
+11/23/2024 21:08:09 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained_bm25/vocab.json
+11/23/2024 21:08:09 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained_bm25/merges.txt
+11/23/2024 21:08:09 - INFO - transformers.tokenization_utils -   loading file None
+11/23/2024 21:08:09 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained_bm25/special_tokens_map.json
+11/23/2024 21:08:09 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained_bm25/tokenizer_config.json
+11/23/2024 21:08:10 - INFO - transformers.modeling_utils -   loading weights file /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained_bm25/pytorch_model.bin
+Using mean: False
+Using mean: False
+Using mean: False
+Using mean: False
+502939 -1
+8841823 -1
+11/23/2024 21:08:20 - INFO - __main__ -   Training/evaluation parameters Namespace(adam_epsilon=1e-08, ann_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/ann_data_origin_2', cache_dir='', config_name='', data_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/preprocessed_data', device=device(type='cuda', index=0), do_lower_case=False, fp16=False, fp16_opt_level='O1', gradient_accumulation_steps=4, learning_rate=1e-06, load_optimizer_scheduler=False, local_rank=0, log_dir=None, logging_steps=100, max_grad_norm=1.0, max_query_length=64, max_seq_length=512, max_steps=1000000, model_name_or_path='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained_bm25', model_type='rdot_nll', n_gpu=1, no_cuda=False, optimizer='lamb', output_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/checkpoints_a40/', output_mode='classification', per_gpu_train_batch_size=16, rank=0, save_steps=10000, seed=42, server_ip='', server_port='', single_warmup=True, task_name='msmarco', tokenizer_name='', top_neg=0, triplet=True, warmup_steps=5000, weight_decay=0.0, world_size=4)
+502939 -1
+8841823 -1
+502939 -1
+8841823 -1
+502939 -1
+8841823 -1
+11/23/2024 21:08:23 - INFO - __main__ -   ***** Running training *****
+11/23/2024 21:08:23 - INFO - __main__ -     Max steps = 1000000
+11/23/2024 21:08:23 - INFO - __main__ -     Instantaneous batch size per GPU = 16
+11/23/2024 21:08:23 - INFO - __main__ -     Total train batch size (w. parallel, distributed & accumulation) = 256
+11/23/2024 21:08:23 - INFO - __main__ -     Gradient Accumulation steps = 4
+11/23/2024 21:08:23 - INFO - __main__ -     Continuing training from checkpoint, will skip to saved global_step
+11/23/2024 21:08:23 - INFO - __main__ -     Continuing training from global step 0
+11/23/2024 21:08:23 - INFO - __main__ -   Training on new add data at /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/ann_data_origin_2/ann_training_data_0
+11/23/2024 21:08:23 - INFO - __main__ -   Total ann queries: 100584
+dev_ndcg 0.3701026724296168 25
+/work/pi_mserafini_umass_edu/hojae/vector_database/ANCE/commands/../utils/lamb.py:125: UserWarning: This overload of add_ is deprecated:
+	add_(Number alpha, Tensor other)
+Consider using one of the following signatures instead:
+	add_(Tensor other, *, Number alpha) (Triggered internally at  ../torch/csrc/utils/python_arg_parser.cpp:1055.)
+  p.data.add_(-step_size * trust_ratio, adam_step)
+/work/pi_mserafini_umass_edu/hojae/vector_database/ANCE/commands/../utils/lamb.py:125: UserWarning: This overload of add_ is deprecated:
+	add_(Number alpha, Tensor other)
+Consider using one of the following signatures instead:
+	add_(Tensor other, *, Number alpha) (Triggered internally at  ../torch/csrc/utils/python_arg_parser.cpp:1055.)
+  p.data.add_(-step_size * trust_ratio, adam_step)
+/work/pi_mserafini_umass_edu/hojae/vector_database/ANCE/commands/../utils/lamb.py:125: UserWarning: This overload of add_ is deprecated:
+	add_(Number alpha, Tensor other)
+Consider using one of the following signatures instead:
+	add_(Tensor other, *, Number alpha) (Triggered internally at  ../torch/csrc/utils/python_arg_parser.cpp:1055.)
+  p.data.add_(-step_size * trust_ratio, adam_step)
+/work/pi_mserafini_umass_edu/hojae/vector_database/ANCE/commands/../utils/lamb.py:125: UserWarning: This overload of add_ is deprecated:
+	add_(Number alpha, Tensor other)
+Consider using one of the following signatures instead:
+	add_(Tensor other, *, Number alpha) (Triggered internally at  ../torch/csrc/utils/python_arg_parser.cpp:1055.)
+  p.data.add_(-step_size * trust_ratio, adam_step)
+/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/optim/lr_scheduler.py:249: UserWarning: To get the last learning rate computed by the scheduler, please use `get_last_lr()`.
+  warnings.warn("To get the last learning rate computed by the scheduler, "
+/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/optim/lr_scheduler.py:249: UserWarning: To get the last learning rate computed by the scheduler, please use `get_last_lr()`.
+  warnings.warn("To get the last learning rate computed by the scheduler, "
+/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/optim/lr_scheduler.py:249: UserWarning: To get the last learning rate computed by the scheduler, please use `get_last_lr()`.
+  warnings.warn("To get the last learning rate computed by the scheduler, "
+/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/optim/lr_scheduler.py:249: UserWarning: To get the last learning rate computed by the scheduler, please use `get_last_lr()`.
+  warnings.warn("To get the last learning rate computed by the scheduler, "
+11/23/2024 21:12:38 - INFO - __main__ -   {"learning_rate": 2e-08, "loss": 0.4294737702293787, "step": 100}
+11/23/2024 21:16:21 - INFO - __main__ -   {"learning_rate": 4e-08, "loss": 0.4247608674969524, "step": 200}
+11/23/2024 21:19:52 - INFO - __main__ -   {"learning_rate": 6e-08, "loss": 0.4436973721755203, "step": 300}
+11/23/2024 21:23:21 - INFO - __main__ -   {"learning_rate": 8e-08, "loss": 0.42433773653683604, "step": 400}
+11/23/2024 21:26:48 - INFO - __main__ -   {"learning_rate": 1e-07, "loss": 0.4279315113904886, "step": 500}
+11/23/2024 21:30:15 - INFO - __main__ -   {"learning_rate": 1.2e-07, "loss": 0.4246341720956843, "step": 600}
+11/23/2024 21:33:42 - INFO - __main__ -   {"learning_rate": 1.4e-07, "loss": 0.4458753075747518, "step": 700}
+11/23/2024 21:37:09 - INFO - __main__ -   {"learning_rate": 1.6e-07, "loss": 0.41798740790924055, "step": 800}
+11/23/2024 21:40:36 - INFO - __main__ -   {"learning_rate": 1.8e-07, "loss": 0.3671583479305264, "step": 900}
+11/23/2024 21:44:03 - INFO - __main__ -   {"learning_rate": 2e-07, "loss": 0.4780878187494818, "step": 1000}
+11/23/2024 21:47:30 - INFO - __main__ -   {"learning_rate": 2.1999999999999998e-07, "loss": 0.38095921867294236, "step": 1100}
+11/23/2024 21:50:57 - INFO - __main__ -   {"learning_rate": 2.4e-07, "loss": 0.4461325709708035, "step": 1200}
+11/23/2024 21:54:24 - INFO - __main__ -   {"learning_rate": 2.6e-07, "loss": 0.43777238851937, "step": 1300}
+11/23/2024 21:57:50 - INFO - __main__ -   {"learning_rate": 2.8e-07, "loss": 0.43913417135423516, "step": 1400}
+11/23/2024 22:01:17 - INFO - __main__ -   {"learning_rate": 3e-07, "loss": 0.4361771105712978, "step": 1500}
+11/23/2024 22:04:44 - INFO - __main__ -   {"learning_rate": 3.2e-07, "loss": 0.42890259682462784, "step": 1600}
+11/23/2024 22:08:11 - INFO - __main__ -   {"learning_rate": 3.4000000000000003e-07, "loss": 0.4347803837689571, "step": 1700}
+11/23/2024 22:11:38 - INFO - __main__ -   {"learning_rate": 3.6e-07, "loss": 0.4233691371443274, "step": 1800}
+11/23/2024 22:15:05 - INFO - __main__ -   {"learning_rate": 3.7999999999999996e-07, "loss": 0.4004504331634962, "step": 1900}
+11/23/2024 22:18:32 - INFO - __main__ -   {"learning_rate": 4e-07, "loss": 0.43315078523068223, "step": 2000}
+11/23/2024 22:21:59 - INFO - __main__ -   {"learning_rate": 4.1999999999999995e-07, "loss": 0.38459953042271083, "step": 2100}
+11/23/2024 22:25:26 - INFO - __main__ -   {"learning_rate": 4.3999999999999997e-07, "loss": 0.4215649243094958, "step": 2200}
+11/23/2024 22:28:52 - INFO - __main__ -   {"learning_rate": 4.6e-07, "loss": 0.4123741878644796, "step": 2300}
+11/23/2024 22:32:19 - INFO - __main__ -   {"learning_rate": 4.8e-07, "loss": 0.38434080663675557, "step": 2400}
+11/23/2024 22:35:46 - INFO - __main__ -   {"learning_rate": 5e-07, "loss": 0.4424280502338661, "step": 2500}
+11/23/2024 22:39:13 - INFO - __main__ -   {"learning_rate": 5.2e-07, "loss": 0.38462281169428025, "step": 2600}
+11/23/2024 22:42:40 - INFO - __main__ -   {"learning_rate": 5.4e-07, "loss": 0.43161719701602125, "step": 2700}
+11/23/2024 22:46:07 - INFO - __main__ -   {"learning_rate": 5.6e-07, "loss": 0.4053092508914415, "step": 2800}
+11/23/2024 22:49:34 - INFO - __main__ -   {"learning_rate": 5.8e-07, "loss": 0.41382278028992003, "step": 2900}
+11/23/2024 22:53:01 - INFO - __main__ -   {"learning_rate": 6e-07, "loss": 0.4054124501382466, "step": 3000}
+11/23/2024 22:56:27 - INFO - __main__ -   {"learning_rate": 6.2e-07, "loss": 0.43335734398395287, "step": 3100}
+11/23/2024 22:59:54 - INFO - __main__ -   {"learning_rate": 6.4e-07, "loss": 0.4638604707751074, "step": 3200}
+11/23/2024 23:03:21 - INFO - __main__ -   {"learning_rate": 6.6e-07, "loss": 0.40748062745202335, "step": 3300}
+11/23/2024 23:06:48 - INFO - __main__ -   {"learning_rate": 6.800000000000001e-07, "loss": 0.40002284422225787, "step": 3400}
+11/23/2024 23:10:15 - INFO - __main__ -   {"learning_rate": 7e-07, "loss": 0.48416887679719367, "step": 3500}
+slurmstepd-gpu032: error: *** JOB 26342017 ON gpu032 CANCELLED AT 2024-11-23T23:10:48 ***
+slurmstepd-gpu032: error: container_p_join: open failed for /var/tmp//gpu032/26342017/.ns: No such file or directory
+slurmstepd-gpu032: error: container_g_join(26342017): No such file or directory

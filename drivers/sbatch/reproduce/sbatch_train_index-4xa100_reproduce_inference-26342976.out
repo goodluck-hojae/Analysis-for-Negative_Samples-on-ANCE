@@ -1,0 +1,550 @@
+Sun Nov 24 04:09:17 2024       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 550.90.07              Driver Version: 550.90.07      CUDA Version: 12.4     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA A100-SXM4-80GB          On  |   00000000:9D:00.0 Off |                    0 |
+| N/A   37C    P0             66W /  500W |       1MiB /  81920MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+|   1  NVIDIA A100-SXM4-80GB          On  |   00000000:BD:00.0 Off |                    0 |
+| N/A   36C    P0             65W /  500W |       1MiB /  81920MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+|   2  NVIDIA A100-SXM4-80GB          On  |   00000000:CD:00.0 Off |                    0 |
+| N/A   37C    P0             68W /  500W |       1MiB /  81920MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+|   3  NVIDIA A100-SXM4-80GB          On  |   00000000:DD:00.0 Off |                    0 |
+| N/A   35C    P0             60W /  500W |       1MiB /  81920MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+sbatch_train_index-4xa100_reproduce_inference.sh
+Loading conda
+python -m torch.distributed.launch --master_port=29501 --nproc_per_node=4 ../drivers/run_ann_data_gen.py --training_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/checkpoints --init_model_dir /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 --model_type rdot_nll --output_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/ann_data_origin --cache_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/ann_data_origincache/ --data_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/preprocessed_data --max_seq_length 512 --per_gpu_eval_batch_size 2048 --topk_training 200 --negative_sample 20
+/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/distributed/launch.py:178: FutureWarning: The module torch.distributed.launch is deprecated
+and will be removed in future. Use torchrun.
+Note that --use_env is set by default in torchrun.
+If your script expects `--local_rank` argument to be set, please
+change it to read from `os.environ['LOCAL_RANK']` instead. See 
+https://pytorch.org/docs/stable/distributed.html#launch-utility for 
+further instructions
+
+  warnings.warn(
+WARNING:torch.distributed.run:
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+11/24/2024 04:09:41 - WARNING - __main__ -   Process rank: 3, device: cuda:3, n_gpu: 1, distributed training: True
+11/24/2024 04:09:41 - WARNING - __main__ -   Process rank: 2, device: cuda:2, n_gpu: 1, distributed training: True
+11/24/2024 04:09:41 - WARNING - __main__ -   Process rank: 0, device: cuda:0, n_gpu: 1, distributed training: True
+11/24/2024 04:09:41 - WARNING - __main__ -   Process rank: 1, device: cuda:1, n_gpu: 1, distributed training: True
+11/24/2024 04:09:41 - INFO - __main__ -   starting output number 1
+11/24/2024 04:09:41 - INFO - __main__ -   Loading query_2_pos_docid
+11/24/2024 04:09:41 - INFO - __main__ -   Loading dev query_2_pos_docid
+11/24/2024 04:09:41 - INFO - __main__ -   502939
+11/24/2024 04:09:41 - INFO - __main__ -   start generate ann data number 1
+11/24/2024 04:09:41 - INFO - __main__ -   next checkpoint at /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+11/24/2024 04:09:41 - INFO - transformers.configuration_utils -   loading configuration file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/config.json
+11/24/2024 04:09:41 - INFO - transformers.configuration_utils -   Model config {
+  "architectures": [
+    "RobertaForMaskedLM"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "bos_token_id": 0,
+  "eos_token_id": 2,
+  "finetuning_task": "MSMarco",
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "id2label": {
+    "0": "LABEL_0",
+    "1": "LABEL_1"
+  },
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "is_decoder": false,
+  "label2id": {
+    "LABEL_0": 0,
+    "LABEL_1": 1
+  },
+  "layer_norm_eps": 1e-05,
+  "max_position_embeddings": 514,
+  "model_type": "roberta",
+  "num_attention_heads": 12,
+  "num_hidden_layers": 12,
+  "num_labels": 2,
+  "output_attentions": false,
+  "output_hidden_states": false,
+  "output_past": true,
+  "pad_token_id": 1,
+  "pruned_heads": {},
+  "torchscript": false,
+  "type_vocab_size": 1,
+  "use_bfloat16": false,
+  "vocab_size": 50265
+}
+
+11/24/2024 04:09:41 - INFO - transformers.tokenization_utils -   Model name '/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000' not found in model shortcut name list (roberta-base, roberta-large, roberta-large-mnli, distilroberta-base, roberta-base-openai-detector, roberta-large-openai-detector). Assuming '/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000' is a path or url to a directory containing tokenizer files.
+11/24/2024 04:09:41 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/vocab.json
+11/24/2024 04:09:41 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/merges.txt
+11/24/2024 04:09:41 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/added_tokens.json
+11/24/2024 04:09:41 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/special_tokens_map.json
+11/24/2024 04:09:41 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/tokenizer_config.json
+Using mean:Using mean:  FalseFalse
+
+11/24/2024 04:09:41 - INFO - transformers.modeling_utils -   loading weights file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/pytorch_model.bin
+Using mean: False
+Using mean: False
+11/24/2024 04:09:53 - INFO - __main__ -   Inference parameters Namespace(ann_chunk_factor=5, ann_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/ann_data', ann_measure_topk_mrr=True, cache_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/ann_data_origincache/', config_name='', data_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/preprocessed_data', device=device(type='cuda', index=0), end_output_num=-1, inference=False, init_model_dir='/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000', last_checkpoint_dir='', limit_total_number=100000, local_rank=0, max_doc_character=10000, max_query_length=64, max_seq_length=512, model_name_or_path='/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000', model_type='rdot_nll', n_gpu=1, negative_sample=20, no_cuda=False, only_keep_latest_embedding_file=False, output_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/ann_data_origin', per_gpu_eval_batch_size=2048, rank=0, server_ip='', server_port='', tokenizer_name='', top_neg=0, topk_training=200, training_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/checkpoints', world_size=4)
+11/24/2024 04:09:54 - INFO - __main__ -   ***** inference of dev query *****
+6980698069806980    -1-1-1-1
+
+
+
+11/24/2024 04:09:54 - INFO - __main__ -   ***** Running ANN Embedding Inference *****
+11/24/2024 04:09:54 - INFO - __main__ -     Batch size = 2048
+Inferencing: 0it [00:00, ?it/s]Inferencing: 1it [00:02,  2.03s/it]
+11/24/2024 04:09:56 - INFO - __main__ -   merging embeddings
+11/24/2024 04:09:57 - INFO - __main__ -   ***** inference of passages *****
+8841823 -1
+8841823 -1
+8841823 -1
+8841823 -1
+11/24/2024 04:09:57 - INFO - __main__ -   ***** Running ANN Embedding Inference *****
+11/24/2024 04:09:57 - INFO - __main__ -     Batch size = 2048
+Inferencing: 0it [00:00, ?it/s]Inferencing: 0it [00:17, ?it/s]Inferencing: 3it [00:20,  6.87s/it]Inferencing: 4it [00:27,  6.80s/it]Inferencing: 5it [00:33,  6.77s/it]Inferencing: 6it [00:40,  6.74s/it]Inferencing: 7it [00:47,  6.72s/it]Inferencing: 8it [00:53,  6.70s/it]Inferencing: 9it [01:00,  6.69s/it]Inferencing: 10it [01:07,  6.70s/it]Inferencing: 11it [01:14,  6.69s/it]Inferencing: 12it [01:20,  6.68s/it]Inferencing: 13it [01:27,  6.68s/it]Inferencing: 14it [01:34,  6.69s/it]Inferencing: 15it [01:40,  6.68s/it]Inferencing: 16it [01:47,  6.68s/it]Inferencing: 17it [01:54,  6.68s/it]Inferencing: 18it [02:00,  6.68s/it]Inferencing: 19it [02:07,  6.69s/it]Inferencing: 20it [02:14,  6.69s/it]Inferencing: 21it [02:20,  6.68s/it]Inferencing: 22it [02:27,  6.68s/it]Inferencing: 23it [02:34,  6.70s/it]Inferencing: 24it [02:40,  6.69s/it]Inferencing: 25it [02:47,  6.68s/it]Inferencing: 26it [02:54,  6.68s/it]Inferencing: 27it [03:00,  6.68s/it]Inferencing: 28it [03:07,  6.69s/it]Inferencing: 29it [03:14,  6.69s/it]Inferencing: 30it [03:20,  6.68s/it]Inferencing: 31it [03:27,  6.68s/it]Inferencing: 32it [03:34,  6.69s/it]Inferencing: 33it [03:41,  6.69s/it]Inferencing: 34it [03:47,  6.69s/it]Inferencing: 35it [03:54,  6.68s/it]Inferencing: 36it [04:01,  6.68s/it]Inferencing: 37it [04:07,  6.69s/it]Inferencing: 38it [04:14,  6.69s/it]Inferencing: 39it [04:21,  6.68s/it]Inferencing: 40it [04:27,  6.68s/it]Inferencing: 41it [04:34,  6.68s/it]Inferencing: 42it [04:41,  6.69s/it]Inferencing: 43it [04:47,  6.69s/it]Inferencing: 44it [04:54,  6.69s/it]Inferencing: 45it [05:01,  6.68s/it]Inferencing: 46it [05:08,  6.70s/it]Inferencing: 47it [05:14,  6.69s/it]Inferencing: 48it [05:21,  6.69s/it]Inferencing: 49it [05:28,  6.68s/it]Inferencing: 50it [05:34,  6.68s/it]Inferencing: 51it [05:41,  6.70s/it]Inferencing: 52it [05:48,  6.69s/it]Inferencing: 53it [05:54,  6.69s/it]Inferencing: 54it [06:01,  6.69s/it]Inferencing: 55it [06:08,  6.70s/it]Inferencing: 56it [06:14,  6.69s/it]Inferencing: 57it [06:21,  6.68s/it]Inferencing: 58it [06:28,  6.69s/it]Inferencing: 59it [06:34,  6.68s/it]Inferencing: 60it [06:41,  6.70s/it]Inferencing: 61it [06:48,  6.69s/it]Inferencing: 62it [06:55,  6.69s/it]Inferencing: 63it [07:01,  6.68s/it]Inferencing: 64it [07:08,  6.68s/it]Inferencing: 65it [07:15,  6.69s/it]Inferencing: 66it [07:21,  6.68s/it]Inferencing: 67it [07:28,  6.68s/it]Inferencing: 68it [07:35,  6.68s/it]Inferencing: 69it [07:41,  6.70s/it]Inferencing: 70it [07:48,  6.69s/it]Inferencing: 71it [07:55,  6.69s/it]Inferencing: 72it [08:01,  6.69s/it]Inferencing: 73it [08:08,  6.68s/it]Inferencing: 74it [08:15,  6.69s/it]Inferencing: 75it [08:21,  6.69s/it]Inferencing: 76it [08:28,  6.69s/it]Inferencing: 77it [08:35,  6.69s/it]Inferencing: 78it [08:42,  6.69s/it]Inferencing: 79it [08:48,  6.69s/it]Inferencing: 80it [08:55,  6.68s/it]Inferencing: 81it [09:02,  6.69s/it]Inferencing: 82it [09:08,  6.68s/it]Inferencing: 83it [09:15,  6.69s/it]Inferencing: 84it [09:22,  6.69s/it]Inferencing: 85it [09:28,  6.69s/it]Inferencing: 86it [09:35,  6.69s/it]Inferencing: 87it [09:42,  6.68s/it]Inferencing: 88it [09:48,  6.69s/it]Inferencing: 89it [09:55,  6.68s/it]Inferencing: 90it [10:02,  6.68s/it]Inferencing: 91it [10:08,  6.68s/it]Inferencing: 92it [10:15,  6.70s/it]Inferencing: 93it [10:22,  6.69s/it]Inferencing: 94it [10:29,  6.69s/it]Inferencing: 95it [10:35,  6.68s/it]Inferencing: 96it [10:42,  6.69s/it]Inferencing: 97it [10:49,  6.69s/it]Inferencing: 98it [10:55,  6.69s/it]Inferencing: 99it [11:02,  6.68s/it]Inferencing: 100it [11:09,  6.68s/it]Inferencing: 101it [11:15,  6.71s/it]Inferencing: 102it [11:22,  6.70s/it]Inferencing: 103it [11:29,  6.69s/it]Inferencing: 104it [11:35,  6.68s/it]Inferencing: 105it [11:42,  6.68s/it]Inferencing: 106it [11:49,  6.70s/it]Inferencing: 107it [11:55,  6.69s/it]Inferencing: 108it [12:02,  6.69s/it]Inferencing: 109it [12:09,  6.68s/it]Inferencing: 110it [12:16,  6.69s/it]Inferencing: 111it [12:22,  6.69s/it]Inferencing: 112it [12:29,  6.68s/it]Inferencing: 113it [12:36,  6.68s/it]Inferencing: 114it [12:42,  6.68s/it]Inferencing: 115it [12:49,  6.69s/it]Inferencing: 116it [12:56,  6.69s/it]Inferencing: 117it [13:02,  6.68s/it]Inferencing: 118it [13:09,  6.68s/it]Inferencing: 119it [13:16,  6.68s/it]Inferencing: 120it [13:22,  6.69s/it]Inferencing: 121it [13:29,  6.69s/it]Inferencing: 122it [13:36,  6.68s/it]Inferencing: 123it [13:42,  6.68s/it]Inferencing: 124it [13:49,  6.70s/it]Inferencing: 125it [13:56,  6.69s/it]Inferencing: 126it [14:02,  6.69s/it]Inferencing: 127it [14:09,  6.68s/it]Inferencing: 128it [14:16,  6.68s/it]Inferencing: 129it [14:23,  6.70s/it]Inferencing: 130it [14:29,  6.69s/it]Inferencing: 131it [14:36,  6.69s/it]Inferencing: 132it [14:43,  6.68s/it]Inferencing: 133it [14:49,  6.70s/it]Inferencing: 134it [14:56,  6.70s/it]Inferencing: 135it [15:03,  6.69s/it]Inferencing: 136it [15:09,  6.69s/it]Inferencing: 137it [15:16,  6.68s/it]Inferencing: 138it [15:23,  6.70s/it]Inferencing: 139it [15:29,  6.70s/it]Inferencing: 140it [15:36,  6.69s/it]Inferencing: 141it [15:43,  6.69s/it]Inferencing: 142it [15:50,  6.68s/it]Inferencing: 143it [15:56,  6.69s/it]Inferencing: 144it [16:03,  6.69s/it]Inferencing: 145it [16:10,  6.69s/it]Inferencing: 146it [16:16,  6.68s/it]Inferencing: 147it [16:23,  6.70s/it]Inferencing: 148it [16:30,  6.69s/it]Inferencing: 149it [16:36,  6.69s/it]Inferencing: 150it [16:43,  6.69s/it]Inferencing: 151it [16:50,  6.68s/it]Inferencing: 152it [16:56,  6.69s/it]Inferencing: 153it [17:03,  6.69s/it]Inferencing: 154it [17:10,  6.69s/it]Inferencing: 155it [17:17,  6.69s/it]Inferencing: 156it [17:23,  6.70s/it]Inferencing: 157it [17:30,  6.69s/it]Inferencing: 158it [17:37,  6.69s/it]Inferencing: 159it [17:43,  6.69s/it]Inferencing: 160it [17:50,  6.68s/it]Inferencing: 161it [17:57,  6.70s/it]Inferencing: 162it [18:03,  6.69s/it]Inferencing: 163it [18:10,  6.69s/it]Inferencing: 164it [18:17,  6.68s/it]Inferencing: 165it [18:23,  6.69s/it]Inferencing: 166it [18:30,  6.69s/it]Inferencing: 167it [18:37,  6.68s/it]Inferencing: 168it [18:43,  6.68s/it]Inferencing: 169it [18:50,  6.68s/it]Inferencing: 170it [18:57,  6.69s/it]Inferencing: 171it [19:04,  6.69s/it]Inferencing: 172it [19:10,  6.69s/it]Inferencing: 173it [19:17,  6.68s/it]Inferencing: 174it [19:24,  6.68s/it]Inferencing: 175it [19:30,  6.69s/it]Inferencing: 176it [19:37,  6.68s/it]Inferencing: 177it [19:44,  6.69s/it]Inferencing: 178it [19:50,  6.69s/it]Inferencing: 179it [19:57,  6.69s/it]Inferencing: 180it [20:04,  6.69s/it]Inferencing: 181it [20:10,  6.68s/it]Inferencing: 182it [20:17,  6.69s/it]Inferencing: 183it [20:24,  6.68s/it]Inferencing: 184it [20:30,  6.69s/it]Inferencing: 185it [20:37,  6.69s/it]Inferencing: 186it [20:44,  6.69s/it]Inferencing: 187it [20:51,  6.69s/it]Inferencing: 188it [20:57,  6.69s/it]Inferencing: 189it [21:04,  6.69s/it]Inferencing: 190it [21:11,  6.68s/it]Inferencing: 191it [21:17,  6.68s/it]Inferencing: 192it [21:24,  6.68s/it]Inferencing: 193it [21:31,  6.70s/it]Inferencing: 194it [21:37,  6.69s/it]Inferencing: 195it [21:44,  6.68s/it]Inferencing: 196it [21:51,  6.68s/it]Inferencing: 197it [21:57,  6.68s/it]Inferencing: 198it [22:04,  6.69s/it]Inferencing: 199it [22:11,  6.69s/it]Inferencing: 200it [22:17,  6.68s/it]Inferencing: 201it [22:24,  6.68s/it]Inferencing: 202it [22:31,  6.70s/it]Inferencing: 203it [22:38,  6.69s/it]Inferencing: 204it [22:44,  6.69s/it]Inferencing: 205it [22:51,  6.68s/it]Inferencing: 206it [22:58,  6.68s/it]Inferencing: 207it [23:04,  6.69s/it]Inferencing: 208it [23:11,  6.69s/it]Inferencing: 209it [23:18,  6.69s/it]Inferencing: 210it [23:24,  6.68s/it]Inferencing: 211it [23:31,  6.69s/it]Inferencing: 212it [23:38,  6.69s/it]Inferencing: 213it [23:44,  6.68s/it]Inferencing: 214it [23:51,  6.68s/it]Inferencing: 215it [23:58,  6.68s/it]Inferencing: 216it [24:04,  6.69s/it]Inferencing: 217it [24:11,  6.69s/it]Inferencing: 218it [24:18,  6.68s/it]Inferencing: 219it [24:24,  6.68s/it]Inferencing: 220it [24:31,  6.69s/it]Inferencing: 221it [24:38,  6.69s/it]Inferencing: 222it [24:45,  6.69s/it]Inferencing: 223it [24:51,  6.68s/it]Inferencing: 224it [24:58,  6.68s/it]Inferencing: 225it [25:05,  6.70s/it]Inferencing: 226it [25:11,  6.69s/it]Inferencing: 227it [25:18,  6.69s/it]Inferencing: 228it [25:25,  6.68s/it]Inferencing: 229it [25:31,  6.68s/it]Inferencing: 230it [25:38,  6.69s/it]Inferencing: 231it [25:45,  6.69s/it]Inferencing: 232it [25:51,  6.68s/it]Inferencing: 233it [25:58,  6.68s/it]Inferencing: 234it [26:05,  6.69s/it]Inferencing: 235it [26:12,  6.69s/it]Inferencing: 236it [26:18,  6.69s/it]Inferencing: 237it [26:25,  6.68s/it]Inferencing: 238it [26:32,  6.68s/it]Inferencing: 239it [26:38,  6.69s/it]Inferencing: 240it [26:45,  6.70s/it]Inferencing: 241it [26:52,  6.69s/it]Inferencing: 242it [26:58,  6.69s/it]Inferencing: 243it [27:05,  6.69s/it]Inferencing: 244it [27:12,  6.69s/it]Inferencing: 245it [27:18,  6.69s/it]Inferencing: 246it [27:25,  6.69s/it]Inferencing: 247it [27:32,  6.68s/it]Inferencing: 248it [27:38,  6.70s/it]Inferencing: 249it [27:45,  6.69s/it]Inferencing: 250it [27:52,  6.69s/it]Inferencing: 251it [27:59,  6.69s/it]Inferencing: 252it [28:05,  6.68s/it]Inferencing: 253it [28:12,  6.69s/it]Inferencing: 254it [28:19,  6.69s/it]Inferencing: 255it [28:25,  6.69s/it]Inferencing: 256it [28:32,  6.69s/it]Inferencing: 257it [28:39,  6.70s/it]Inferencing: 258it [28:45,  6.69s/it]Inferencing: 259it [28:52,  6.68s/it]Inferencing: 260it [28:59,  6.68s/it]Inferencing: 261it [29:05,  6.68s/it]Inferencing: 262it [29:12,  6.69s/it]Inferencing: 263it [29:19,  6.69s/it]Inferencing: 264it [29:25,  6.68s/it]Inferencing: 265it [29:32,  6.68s/it]Inferencing: 266it [29:39,  6.69s/it]Inferencing: 267it [29:46,  6.69s/it]Inferencing: 268it [29:52,  6.68s/it]Inferencing: 269it [29:59,  6.68s/it]Inferencing: 270it [30:06,  6.68s/it]Inferencing: 271it [30:12,  6.69s/it]Inferencing: 272it [30:19,  6.69s/it]Inferencing: 273it [30:26,  6.69s/it]Inferencing: 274it [30:32,  6.69s/it]Inferencing: 275it [30:39,  6.68s/it]Inferencing: 276it [30:46,  6.69s/it]Inferencing: 277it [30:52,  6.69s/it]Inferencing: 278it [30:59,  6.69s/it]Inferencing: 279it [31:06,  6.69s/it]Inferencing: 280it [31:12,  6.70s/it]Inferencing: 281it [31:19,  6.69s/it]Inferencing: 282it [31:26,  6.69s/it]Inferencing: 283it [31:33,  6.69s/it]Inferencing: 284it [31:39,  6.68s/it]Inferencing: 285it [31:46,  6.69s/it]Inferencing: 286it [31:53,  6.69s/it]Inferencing: 287it [31:59,  6.68s/it]Inferencing: 288it [32:06,  6.69s/it]Inferencing: 289it [32:13,  6.70s/it]Inferencing: 290it [32:19,  6.69s/it]Inferencing: 291it [32:26,  6.69s/it]Inferencing: 292it [32:33,  6.68s/it]Inferencing: 293it [32:39,  6.69s/it]Inferencing: 294it [32:46,  6.69s/it]Inferencing: 295it [32:53,  6.69s/it]Inferencing: 296it [33:00,  6.69s/it]Inferencing: 297it [33:06,  6.68s/it]Inferencing: 298it [33:13,  6.70s/it]Inferencing: 299it [33:20,  6.69s/it]Inferencing: 300it [33:26,  6.69s/it]Inferencing: 301it [33:33,  6.68s/it]Inferencing: 302it [33:40,  6.68s/it]Inferencing: 303it [33:46,  6.70s/it]Inferencing: 304it [33:53,  6.69s/it]Inferencing: 305it [34:00,  6.69s/it]Inferencing: 306it [34:06,  6.68s/it]Inferencing: 307it [34:13,  6.68s/it]Inferencing: 308it [34:20,  6.69s/it]Inferencing: 309it [34:26,  6.69s/it]Inferencing: 310it [34:33,  6.68s/it]Inferencing: 311it [34:40,  6.68s/it]Inferencing: 312it [34:47,  6.69s/it]Inferencing: 313it [34:53,  6.69s/it]Inferencing: 314it [35:00,  6.68s/it]Inferencing: 315it [35:07,  6.68s/it]Inferencing: 316it [35:13,  6.68s/it]Inferencing: 317it [35:20,  6.69s/it]Inferencing: 318it [35:27,  6.69s/it]Inferencing: 319it [35:33,  6.68s/it]Inferencing: 320it [35:40,  6.68s/it]Inferencing: 321it [35:47,  6.70s/it]Inferencing: 322it [35:53,  6.69s/it]Inferencing: 323it [36:00,  6.69s/it]Inferencing: 324it [36:07,  6.68s/it]Inferencing: 325it [36:13,  6.68s/it]Inferencing: 326it [36:20,  6.70s/it]Inferencing: 327it [36:27,  6.69s/it]Inferencing: 328it [36:34,  6.69s/it]Inferencing: 329it [36:40,  6.68s/it]Inferencing: 330it [36:47,  6.68s/it]Inferencing: 331it [36:54,  6.70s/it]Inferencing: 332it [37:00,  6.69s/it]Inferencing: 333it [37:07,  6.69s/it]Inferencing: 334it [37:14,  6.68s/it]Inferencing: 335it [37:20,  6.70s/it]Inferencing: 336it [37:27,  6.70s/it]Inferencing: 337it [37:34,  6.69s/it]Inferencing: 338it [37:40,  6.69s/it]Inferencing: 339it [37:47,  6.68s/it]Inferencing: 340it [37:54,  6.70s/it]Inferencing: 341it [38:00,  6.70s/it]Inferencing: 342it [38:07,  6.69s/it]Inferencing: 343it [38:14,  6.69s/it]Inferencing: 344it [38:21,  6.70s/it]Inferencing: 345it [38:27,  6.69s/it]Inferencing: 346it [38:34,  6.69s/it]Inferencing: 347it [38:41,  6.69s/it]Inferencing: 348it [38:47,  6.69s/it]Inferencing: 349it [38:54,  6.70s/it]Inferencing: 350it [39:01,  6.69s/it]Inferencing: 351it [39:07,  6.69s/it]Inferencing: 352it [39:14,  6.69s/it]Inferencing: 353it [39:21,  6.69s/it]Inferencing: 354it [39:27,  6.69s/it]Inferencing: 355it [39:34,  6.69s/it]Inferencing: 356it [39:41,  6.69s/it]Inferencing: 357it [39:48,  6.69s/it]Inferencing: 358it [39:54,  6.69s/it]Inferencing: 359it [40:01,  6.69s/it]Inferencing: 360it [40:08,  6.69s/it]Inferencing: 361it [40:14,  6.68s/it]Inferencing: 362it [40:21,  6.68s/it]Inferencing: 363it [40:28,  6.70s/it]Inferencing: 364it [40:34,  6.69s/it]Inferencing: 365it [40:41,  6.69s/it]Inferencing: 366it [40:48,  6.68s/it]Inferencing: 367it [40:54,  6.70s/it]Inferencing: 368it [41:01,  6.69s/it]Inferencing: 369it [41:08,  6.70s/it]Inferencing: 370it [41:14,  6.69s/it]Inferencing: 371it [41:21,  6.69s/it]Inferencing: 372it [41:28,  6.69s/it]Inferencing: 373it [41:35,  6.69s/it]Inferencing: 374it [41:41,  6.69s/it]Inferencing: 375it [41:48,  6.69s/it]Inferencing: 376it [41:55,  6.71s/it]Inferencing: 377it [42:01,  6.70s/it]Inferencing: 378it [42:08,  6.69s/it]Inferencing: 379it [42:15,  6.69s/it]Inferencing: 380it [42:21,  6.69s/it]Inferencing: 381it [42:28,  6.70s/it]Inferencing: 382it [42:35,  6.69s/it]Inferencing: 383it [42:42,  6.69s/it]Inferencing: 384it [42:48,  6.69s/it]Inferencing: 385it [42:55,  6.69s/it]Inferencing: 386it [43:02,  6.70s/it]Inferencing: 387it [43:08,  6.70s/it]Inferencing: 388it [43:15,  6.69s/it]Inferencing: 389it [43:22,  6.70s/it]Inferencing: 390it [43:28,  6.71s/it]Inferencing: 391it [43:35,  6.70s/it]Inferencing: 392it [43:42,  6.69s/it]Inferencing: 393it [43:48,  6.69s/it]Inferencing: 394it [43:55,  6.69s/it]Inferencing: 395it [44:02,  6.70s/it]Inferencing: 396it [44:09,  6.70s/it]Inferencing: 397it [44:15,  6.69s/it]Inferencing: 398it [44:22,  6.69s/it]Inferencing: 399it [44:29,  6.71s/it]Inferencing: 400it [44:35,  6.70s/it]Inferencing: 401it [44:42,  6.69s/it]Inferencing: 402it [44:49,  6.69s/it]Inferencing: 403it [44:55,  6.69s/it]Inferencing: 404it [45:02,  6.70s/it]Inferencing: 405it [45:09,  6.70s/it]Inferencing: 406it [45:16,  6.69s/it]Inferencing: 407it [45:22,  6.69s/it]Inferencing: 408it [45:29,  6.69s/it]Inferencing: 409it [45:36,  6.70s/it]Inferencing: 410it [45:42,  6.70s/it]Inferencing: 411it [45:49,  6.69s/it]Inferencing: 412it [45:56,  6.70s/it]Inferencing: 413it [46:02,  6.71s/it]Inferencing: 414it [46:09,  6.70s/it]Inferencing: 415it [46:16,  6.69s/it]Inferencing: 416it [46:22,  6.69s/it]Inferencing: 417it [46:29,  6.69s/it]Inferencing: 418it [46:36,  6.71s/it]Inferencing: 419it [46:43,  6.70s/it]Inferencing: 420it [46:49,  6.69s/it]Inferencing: 421it [46:56,  6.69s/it]Inferencing: 422it [47:03,  6.70s/it]Inferencing: 423it [47:09,  6.70s/it]Inferencing: 424it [47:16,  6.69s/it]Inferencing: 425it [47:23,  6.69s/it]Inferencing: 426it [47:29,  6.69s/it]Inferencing: 427it [47:36,  6.70s/it]Inferencing: 428it [47:43,  6.70s/it]Inferencing: 429it [47:50,  6.69s/it]Inferencing: 430it [47:56,  6.69s/it]Inferencing: 431it [48:03,  6.70s/it]Inferencing: 432it [48:10,  6.70s/it]Inferencing: 433it [48:16,  6.69s/it]Inferencing: 434it [48:23,  6.69s/it]Inferencing: 435it [48:30,  6.69s/it]Inferencing: 436it [48:36,  6.70s/it]Inferencing: 437it [48:43,  6.70s/it]Inferencing: 438it [48:50,  6.70s/it]Inferencing: 439it [48:56,  6.69s/it]Inferencing: 440it [49:03,  6.69s/it]Inferencing: 441it [49:10,  6.70s/it]Inferencing: 442it [49:17,  6.69s/it]Inferencing: 443it [49:23,  6.69s/it]Inferencing: 444it [49:30,  6.69s/it]Inferencing: 445it [49:37,  6.70s/it]Inferencing: 446it [49:43,  6.69s/it]Inferencing: 447it [49:50,  6.69s/it]Inferencing: 448it [49:57,  6.69s/it]Inferencing: 449it [50:03,  6.69s/it]Inferencing: 450it [50:10,  6.70s/it]Inferencing: 451it [50:17,  6.70s/it]Inferencing: 452it [50:23,  6.69s/it]Inferencing: 453it [50:30,  6.69s/it]Inferencing: 454it [50:37,  6.70s/it]Inferencing: 455it [50:44,  6.70s/it]Inferencing: 456it [50:50,  6.70s/it]Inferencing: 457it [50:57,  6.69s/it]Inferencing: 458it [51:04,  6.69s/it]Inferencing: 459it [51:10,  6.70s/it]Inferencing: 460it [51:17,  6.70s/it]Inferencing: 461it [51:24,  6.70s/it]Inferencing: 462it [51:30,  6.69s/it]Inferencing: 463it [51:37,  6.69s/it]Inferencing: 464it [51:44,  6.70s/it]Inferencing: 465it [51:51,  6.70s/it]Inferencing: 466it [51:57,  6.69s/it]Inferencing: 467it [52:04,  6.69s/it]Inferencing: 468it [52:11,  6.71s/it]Inferencing: 469it [52:17,  6.70s/it]Inferencing: 470it [52:24,  6.70s/it]Inferencing: 471it [52:31,  6.69s/it]Inferencing: 472it [52:37,  6.69s/it]Inferencing: 473it [52:44,  6.70s/it]Inferencing: 474it [52:51,  6.74s/it]Inferencing: 475it [52:58,  6.75s/it]Inferencing: 476it [53:04,  6.74s/it]Inferencing: 477it [53:11,  6.74s/it]Inferencing: 478it [53:18,  6.73s/it]Inferencing: 479it [53:25,  6.71s/it]Inferencing: 480it [53:31,  6.70s/it]Inferencing: 481it [53:38,  6.71s/it]Inferencing: 482it [53:45,  6.73s/it]Inferencing: 483it [53:51,  6.71s/it]Inferencing: 484it [53:58,  6.71s/it]Inferencing: 485it [54:05,  6.71s/it]Inferencing: 486it [54:12,  6.73s/it]Inferencing: 487it [54:18,  6.74s/it]Inferencing: 488it [54:25,  6.74s/it]Inferencing: 489it [54:32,  6.73s/it]Inferencing: 490it [54:39,  6.77s/it]Inferencing: 491it [54:45,  6.76s/it]Inferencing: 492it [54:52,  6.76s/it]Inferencing: 493it [54:59,  6.75s/it]Inferencing: 494it [55:06,  6.73s/it]Inferencing: 495it [55:12,  6.71s/it]Inferencing: 496it [55:19,  6.71s/it]Inferencing: 497it [55:26,  6.72s/it]Inferencing: 498it [55:32,  6.72s/it]Inferencing: 499it [55:39,  6.71s/it]Inferencing: 500it [55:46,  6.73s/it]Inferencing: 501it [55:53,  6.71s/it]Inferencing: 502it [55:59,  6.70s/it]Inferencing: 503it [56:06,  6.70s/it]Inferencing: 504it [56:13,  6.70s/it]Inferencing: 505it [56:19,  6.71s/it]Inferencing: 506it [56:26,  6.70s/it]Inferencing: 507it [56:33,  6.70s/it]Inferencing: 508it [56:39,  6.69s/it]Inferencing: 509it [56:46,  6.70s/it]Inferencing: 510it [56:53,  6.71s/it]Inferencing: 511it [57:00,  6.70s/it]Inferencing: 512it [57:06,  6.70s/it]Inferencing: 513it [57:13,  6.70s/it]Inferencing: 514it [57:20,  6.71s/it]Inferencing: 515it [57:27,  6.75s/it]Inferencing: 516it [57:33,  6.74s/it]Inferencing: 517it [57:40,  6.72s/it]Inferencing: 518it [57:47,  6.71s/it]Inferencing: 519it [57:53,  6.72s/it]Inferencing: 520it [58:00,  6.71s/it]Inferencing: 521it [58:07,  6.71s/it]Inferencing: 522it [58:13,  6.70s/it]Inferencing: 523it [58:20,  6.72s/it]Inferencing: 524it [58:27,  6.72s/it]Inferencing: 525it [58:34,  6.72s/it]Inferencing: 526it [58:41,  6.78s/it]Inferencing: 527it [58:47,  6.76s/it]Inferencing: 528it [58:54,  6.77s/it]Inferencing: 529it [59:01,  6.75s/it]Inferencing: 530it [59:07,  6.73s/it]Inferencing: 531it [59:14,  6.72s/it]Inferencing: 532it [59:21,  6.72s/it]Inferencing: 533it [59:28,  6.72s/it]Inferencing: 534it [59:34,  6.71s/it]Inferencing: 535it [59:41,  6.70s/it]Inferencing: 536it [59:48,  6.69s/it]Inferencing: 537it [59:54,  6.70s/it]Inferencing: 538it [1:00:01,  6.70s/it]Inferencing: 539it [1:00:08,  6.71s/it]Inferencing: 540it [1:00:14,  6.71s/it]Inferencing: 541it [1:00:21,  6.70s/it]Inferencing: 542it [1:00:28,  6.71s/it]Inferencing: 543it [1:00:35,  6.70s/it]Inferencing: 544it [1:00:41,  6.70s/it]Inferencing: 545it [1:00:48,  6.70s/it]Inferencing: 546it [1:00:55,  6.71s/it]Inferencing: 547it [1:01:01,  6.70s/it]Inferencing: 548it [1:01:08,  6.70s/it]Inferencing: 549it [1:01:15,  6.70s/it]Inferencing: 550it [1:01:21,  6.70s/it]Inferencing: 551it [1:01:28,  6.71s/it]Inferencing: 552it [1:01:35,  6.70s/it]Inferencing: 553it [1:01:42,  6.70s/it]Inferencing: 554it [1:01:48,  6.70s/it]Inferencing: 555it [1:01:55,  6.71s/it]Inferencing: 556it [1:02:02,  6.70s/it]Inferencing: 557it [1:02:08,  6.70s/it]Inferencing: 558it [1:02:15,  6.69s/it]Inferencing: 559it [1:02:22,  6.69s/it]Inferencing: 560it [1:02:29,  6.75s/it]Inferencing: 561it [1:02:35,  6.73s/it]Inferencing: 562it [1:02:42,  6.71s/it]Inferencing: 563it [1:02:49,  6.71s/it]Inferencing: 564it [1:02:55,  6.72s/it]Inferencing: 565it [1:03:02,  6.75s/it]Inferencing: 566it [1:03:09,  6.80s/it]Inferencing: 567it [1:03:16,  6.76s/it]Inferencing: 568it [1:03:22,  6.74s/it]Inferencing: 569it [1:03:29,  6.74s/it]Inferencing: 570it [1:03:36,  6.73s/it]Inferencing: 571it [1:03:43,  6.71s/it]Inferencing: 572it [1:03:49,  6.70s/it]Inferencing: 573it [1:03:56,  6.70s/it]Inferencing: 574it [1:04:03,  6.72s/it]Inferencing: 575it [1:04:09,  6.71s/it]Inferencing: 576it [1:04:16,  6.70s/it]Inferencing: 577it [1:04:23,  6.71s/it]Inferencing: 578it [1:04:30,  6.72s/it]Inferencing: 579it [1:04:36,  6.71s/it]Inferencing: 580it [1:04:43,  6.72s/it]Inferencing: 581it [1:04:50,  6.72s/it]Inferencing: 582it [1:04:56,  6.71s/it]Inferencing: 583it [1:05:03,  6.72s/it]Inferencing: 584it [1:05:10,  6.72s/it]Inferencing: 585it [1:05:17,  6.71s/it]Inferencing: 586it [1:05:23,  6.71s/it]Inferencing: 587it [1:05:30,  6.72s/it]Inferencing: 588it [1:05:37,  6.71s/it]Inferencing: 589it [1:05:43,  6.71s/it]Inferencing: 590it [1:05:50,  6.71s/it]Inferencing: 591it [1:05:57,  6.70s/it]Inferencing: 592it [1:06:04,  6.71s/it]Inferencing: 593it [1:06:10,  6.70s/it]Inferencing: 594it [1:06:17,  6.70s/it]Inferencing: 595it [1:06:24,  6.69s/it]Inferencing: 596it [1:06:30,  6.69s/it]Inferencing: 597it [1:06:37,  6.71s/it]Inferencing: 598it [1:06:44,  6.70s/it]Inferencing: 599it [1:06:50,  6.70s/it]Inferencing: 600it [1:06:57,  6.69s/it]Inferencing: 601it [1:07:04,  6.70s/it]Inferencing: 602it [1:07:11,  6.70s/it]Inferencing: 603it [1:07:17,  6.70s/it]Inferencing: 604it [1:07:24,  6.69s/it]Inferencing: 605it [1:07:31,  6.69s/it]Inferencing: 606it [1:07:37,  6.70s/it]Inferencing: 607it [1:07:44,  6.70s/it]Inferencing: 608it [1:07:51,  6.70s/it]Inferencing: 609it [1:07:57,  6.69s/it]Inferencing: 610it [1:08:04,  6.70s/it]Inferencing: 611it [1:08:11,  6.70s/it]Inferencing: 612it [1:08:17,  6.69s/it]Inferencing: 613it [1:08:24,  6.70s/it]Inferencing: 614it [1:08:31,  6.69s/it]Inferencing: 615it [1:08:38,  6.71s/it]Inferencing: 616it [1:08:44,  6.70s/it]Inferencing: 617it [1:08:51,  6.70s/it]Inferencing: 618it [1:08:58,  6.70s/it]Inferencing: 619it [1:09:04,  6.69s/it]Inferencing: 620it [1:09:11,  6.71s/it]Inferencing: 621it [1:09:18,  6.70s/it]Inferencing: 622it [1:09:24,  6.69s/it]Inferencing: 623it [1:09:31,  6.69s/it]Inferencing: 624it [1:09:38,  6.70s/it]Inferencing: 625it [1:09:45,  6.70s/it]Inferencing: 626it [1:09:51,  6.70s/it]Inferencing: 627it [1:09:58,  6.69s/it]Inferencing: 628it [1:10:05,  6.69s/it]Inferencing: 629it [1:10:11,  6.71s/it]Inferencing: 630it [1:10:18,  6.72s/it]Inferencing: 631it [1:10:25,  6.73s/it]Inferencing: 632it [1:10:32,  6.72s/it]Inferencing: 633it [1:10:38,  6.72s/it]Inferencing: 634it [1:10:45,  6.71s/it]Inferencing: 635it [1:10:52,  6.71s/it]Inferencing: 636it [1:10:58,  6.70s/it]Inferencing: 637it [1:11:05,  6.70s/it]Inferencing: 638it [1:11:12,  6.71s/it]Inferencing: 639it [1:11:18,  6.70s/it]Inferencing: 640it [1:11:25,  6.70s/it]Inferencing: 641it [1:11:32,  6.70s/it]Inferencing: 642it [1:11:39,  6.71s/it]Inferencing: 643it [1:11:45,  6.70s/it]Inferencing: 644it [1:11:52,  6.70s/it]Inferencing: 645it [1:11:59,  6.69s/it]Inferencing: 646it [1:12:05,  6.69s/it]Inferencing: 647it [1:12:12,  6.70s/it]Inferencing: 648it [1:12:19,  6.70s/it]Inferencing: 649it [1:12:25,  6.70s/it]Inferencing: 650it [1:12:32,  6.69s/it]Inferencing: 651it [1:12:39,  6.69s/it]Inferencing: 652it [1:12:46,  6.70s/it]Inferencing: 653it [1:12:52,  6.70s/it]Inferencing: 654it [1:12:59,  6.70s/it]Inferencing: 655it [1:13:06,  6.70s/it]Inferencing: 656it [1:13:12,  6.70s/it]Inferencing: 657it [1:13:19,  6.70s/it]Inferencing: 658it [1:13:26,  6.70s/it]Inferencing: 659it [1:13:32,  6.69s/it]Inferencing: 660it [1:13:39,  6.69s/it]Inferencing: 661it [1:13:46,  6.70s/it]Inferencing: 662it [1:13:53,  6.70s/it]Inferencing: 663it [1:13:59,  6.70s/it]Inferencing: 664it [1:14:06,  6.69s/it]Inferencing: 665it [1:14:13,  6.70s/it]Inferencing: 666it [1:14:19,  6.70s/it]Inferencing: 667it [1:14:26,  6.69s/it]Inferencing: 668it [1:14:33,  6.70s/it]Inferencing: 669it [1:14:39,  6.69s/it]Inferencing: 670it [1:14:46,  6.70s/it]Inferencing: 671it [1:14:53,  6.70s/it]Inferencing: 672it [1:14:59,  6.69s/it]Inferencing: 673it [1:15:06,  6.70s/it]Inferencing: 674it [1:15:13,  6.69s/it]Inferencing: 675it [1:15:20,  6.70s/it]Inferencing: 676it [1:15:26,  6.70s/it]Inferencing: 677it [1:15:33,  6.69s/it]Inferencing: 678it [1:15:40,  6.70s/it]Inferencing: 679it [1:15:46,  6.71s/it]Inferencing: 680it [1:15:53,  6.70s/it]Inferencing: 681it [1:16:00,  6.69s/it]Inferencing: 682it [1:16:06,  6.69s/it]Inferencing: 683it [1:16:13,  6.69s/it]Inferencing: 684it [1:16:20,  6.70s/it]Inferencing: 685it [1:16:27,  6.70s/it]Inferencing: 686it [1:16:33,  6.69s/it]Inferencing: 687it [1:16:40,  6.69s/it]Inferencing: 688it [1:16:47,  6.70s/it]Inferencing: 689it [1:16:53,  6.70s/it]Inferencing: 690it [1:17:00,  6.69s/it]Inferencing: 691it [1:17:07,  6.70s/it]Inferencing: 692it [1:17:13,  6.69s/it]Inferencing: 693it [1:17:20,  6.71s/it]Inferencing: 694it [1:17:27,  6.74s/it]Inferencing: 695it [1:17:34,  6.72s/it]Inferencing: 696it [1:17:40,  6.71s/it]Inferencing: 697it [1:17:47,  6.72s/it]Inferencing: 698it [1:17:54,  6.71s/it]Inferencing: 699it [1:18:00,  6.70s/it]Inferencing: 700it [1:18:07,  6.70s/it]Inferencing: 701it [1:18:14,  6.70s/it]Inferencing: 702it [1:18:21,  6.72s/it]Inferencing: 703it [1:18:27,  6.71s/it]Inferencing: 704it [1:18:34,  6.70s/it]Inferencing: 705it [1:18:41,  6.70s/it]Inferencing: 706it [1:18:47,  6.70s/it]Inferencing: 707it [1:18:54,  6.71s/it]Inferencing: 708it [1:19:01,  6.70s/it]Inferencing: 709it [1:19:07,  6.70s/it]Inferencing: 710it [1:19:14,  6.70s/it]Inferencing: 711it [1:19:21,  6.71s/it]Inferencing: 712it [1:19:28,  6.70s/it]Inferencing: 713it [1:19:34,  6.70s/it]Inferencing: 714it [1:19:41,  6.70s/it]Inferencing: 715it [1:19:48,  6.70s/it]Inferencing: 716it [1:19:54,  6.71s/it]Inferencing: 717it [1:20:01,  6.70s/it]Inferencing: 718it [1:20:08,  6.70s/it]Inferencing: 719it [1:20:14,  6.69s/it]Inferencing: 720it [1:20:21,  6.71s/it]Inferencing: 721it [1:20:28,  6.70s/it]Inferencing: 722it [1:20:35,  6.69s/it]Inferencing: 723it [1:20:41,  6.69s/it]Inferencing: 724it [1:20:48,  6.69s/it]Inferencing: 725it [1:20:55,  6.71s/it]Inferencing: 726it [1:21:01,  6.70s/it]Inferencing: 727it [1:21:08,  6.69s/it]Inferencing: 728it [1:21:15,  6.69s/it]Inferencing: 729it [1:21:21,  6.69s/it]Inferencing: 730it [1:21:28,  6.71s/it]Inferencing: 731it [1:21:35,  6.70s/it]Inferencing: 732it [1:21:42,  6.69s/it]Inferencing: 733it [1:21:48,  6.69s/it]Inferencing: 734it [1:21:55,  6.71s/it]Inferencing: 735it [1:22:02,  6.70s/it]Inferencing: 736it [1:22:08,  6.70s/it]Inferencing: 737it [1:22:15,  6.70s/it]Inferencing: 738it [1:22:22,  6.69s/it]Inferencing: 739it [1:22:28,  6.71s/it]Inferencing: 740it [1:22:35,  6.70s/it]Inferencing: 741it [1:22:42,  6.70s/it]Inferencing: 742it [1:22:48,  6.70s/it]Inferencing: 743it [1:22:55,  6.70s/it]Inferencing: 744it [1:23:02,  6.70s/it]Inferencing: 745it [1:23:09,  6.70s/it]Inferencing: 746it [1:23:15,  6.69s/it]Inferencing: 747it [1:23:22,  6.69s/it]Inferencing: 748it [1:23:29,  6.71s/it]Inferencing: 749it [1:23:35,  6.70s/it]Inferencing: 750it [1:23:42,  6.70s/it]Inferencing: 751it [1:23:49,  6.70s/it]Inferencing: 752it [1:23:55,  6.69s/it]Inferencing: 753it [1:24:02,  6.71s/it]Inferencing: 754it [1:24:09,  6.71s/it]Inferencing: 755it [1:24:16,  6.70s/it]Inferencing: 756it [1:24:22,  6.70s/it]Inferencing: 757it [1:24:29,  6.71s/it]Inferencing: 758it [1:24:36,  6.70s/it]Inferencing: 759it [1:24:42,  6.70s/it]Inferencing: 760it [1:24:49,  6.69s/it]Inferencing: 761it [1:24:56,  6.69s/it]Inferencing: 762it [1:25:02,  6.70s/it]Inferencing: 763it [1:25:09,  6.69s/it]Inferencing: 764it [1:25:16,  6.69s/it]Inferencing: 765it [1:25:23,  6.69s/it]Inferencing: 766it [1:25:29,  6.71s/it]Inferencing: 767it [1:25:36,  6.70s/it]Inferencing: 768it [1:25:43,  6.69s/it]Inferencing: 769it [1:25:49,  6.69s/it]Inferencing: 770it [1:25:56,  6.69s/it]Inferencing: 771it [1:26:03,  6.70s/it]Inferencing: 772it [1:26:09,  6.70s/it]Inferencing: 773it [1:26:16,  6.69s/it]Inferencing: 774it [1:26:23,  6.69s/it]Inferencing: 775it [1:26:30,  6.70s/it]Inferencing: 776it [1:26:36,  6.69s/it]Inferencing: 777it [1:26:43,  6.69s/it]Inferencing: 778it [1:26:50,  6.69s/it]Inferencing: 779it [1:26:56,  6.69s/it]Inferencing: 780it [1:27:03,  6.70s/it]Inferencing: 781it [1:27:10,  6.70s/it]Inferencing: 782it [1:27:16,  6.70s/it]Inferencing: 783it [1:27:23,  6.69s/it]Inferencing: 784it [1:27:30,  6.69s/it]Inferencing: 785it [1:27:36,  6.70s/it]Inferencing: 786it [1:27:43,  6.70s/it]Inferencing: 787it [1:27:50,  6.70s/it]Inferencing: 788it [1:27:57,  6.69s/it]Inferencing: 789it [1:28:03,  6.70s/it]Inferencing: 790it [1:28:10,  6.70s/it]Inferencing: 791it [1:28:17,  6.69s/it]Inferencing: 792it [1:28:23,  6.69s/it]Inferencing: 793it [1:28:30,  6.69s/it]Inferencing: 794it [1:28:37,  6.70s/it]Inferencing: 795it [1:28:43,  6.69s/it]Inferencing: 796it [1:28:50,  6.69s/it]Inferencing: 797it [1:28:57,  6.70s/it]Inferencing: 798it [1:29:04,  6.71s/it]Inferencing: 799it [1:29:10,  6.70s/it]Inferencing: 800it [1:29:17,  6.69s/it]Inferencing: 801it [1:29:24,  6.69s/it]Inferencing: 802it [1:29:30,  6.69s/it]Inferencing: 803it [1:29:37,  6.70s/it]Inferencing: 804it [1:29:44,  6.69s/it]Inferencing: 805it [1:29:50,  6.69s/it]Inferencing: 806it [1:29:57,  6.69s/it]Inferencing: 807it [1:30:04,  6.69s/it]Inferencing: 808it [1:30:10,  6.70s/it]Inferencing: 809it [1:30:17,  6.69s/it]Inferencing: 810it [1:30:24,  6.69s/it]Inferencing: 811it [1:30:30,  6.69s/it]Inferencing: 812it [1:30:37,  6.70s/it]Inferencing: 813it [1:30:44,  6.69s/it]Inferencing: 814it [1:30:51,  6.69s/it]Inferencing: 815it [1:30:57,  6.69s/it]Inferencing: 816it [1:31:04,  6.70s/it]Inferencing: 817it [1:31:11,  6.70s/it]Inferencing: 818it [1:31:17,  6.70s/it]Inferencing: 819it [1:31:24,  6.69s/it]Inferencing: 820it [1:31:31,  6.70s/it]Inferencing: 821it [1:31:38,  6.71s/it]Inferencing: 822it [1:31:44,  6.70s/it]Inferencing: 823it [1:31:51,  6.69s/it]Inferencing: 824it [1:31:58,  6.69s/it]Inferencing: 825it [1:32:04,  6.69s/it]Inferencing: 826it [1:32:11,  6.71s/it]Inferencing: 827it [1:32:18,  6.70s/it]Inferencing: 828it [1:32:24,  6.69s/it]Inferencing: 829it [1:32:31,  6.69s/it]Inferencing: 830it [1:32:38,  6.71s/it]Inferencing: 831it [1:32:44,  6.70s/it]Inferencing: 832it [1:32:51,  6.69s/it]Inferencing: 833it [1:32:58,  6.69s/it]Inferencing: 834it [1:33:05,  6.69s/it]Inferencing: 835it [1:33:11,  6.71s/it]Inferencing: 836it [1:33:18,  6.70s/it]Inferencing: 837it [1:33:25,  6.70s/it]Inferencing: 838it [1:33:31,  6.70s/it]Inferencing: 839it [1:33:38,  6.69s/it]Inferencing: 840it [1:33:45,  6.71s/it]Inferencing: 841it [1:33:51,  6.70s/it]Inferencing: 842it [1:33:58,  6.69s/it]Inferencing: 843it [1:34:05,  6.69s/it]Inferencing: 844it [1:34:12,  6.70s/it]Inferencing: 845it [1:34:18,  6.70s/it]Inferencing: 846it [1:34:25,  6.69s/it]Inferencing: 847it [1:34:32,  6.69s/it]Inferencing: 848it [1:34:38,  6.69s/it]Inferencing: 849it [1:34:45,  6.71s/it]Inferencing: 850it [1:34:52,  6.70s/it]Inferencing: 851it [1:34:58,  6.70s/it]Inferencing: 852it [1:35:05,  6.69s/it]Inferencing: 853it [1:35:12,  6.71s/it]Inferencing: 854it [1:35:19,  6.71s/it]Inferencing: 855it [1:35:25,  6.70s/it]Inferencing: 856it [1:35:32,  6.70s/it]Inferencing: 857it [1:35:39,  6.69s/it]Inferencing: 858it [1:35:45,  6.71s/it]Inferencing: 859it [1:35:52,  6.70s/it]Inferencing: 860it [1:35:59,  6.70s/it]Inferencing: 861it [1:36:05,  6.70s/it]Inferencing: 862it [1:36:12,  6.69s/it]Inferencing: 863it [1:36:19,  6.71s/it]Inferencing: 864it [1:36:26,  6.70s/it]Inferencing: 865it [1:36:32,  6.70s/it]Inferencing: 866it [1:36:39,  6.70s/it]Inferencing: 867it [1:36:46,  6.71s/it]Inferencing: 868it [1:36:52,  6.71s/it]Inferencing: 869it [1:36:59,  6.70s/it]Inferencing: 870it [1:37:06,  6.69s/it]Inferencing: 871it [1:37:12,  6.69s/it]Inferencing: 872it [1:37:19,  6.70s/it]Inferencing: 873it [1:37:26,  6.70s/it]Inferencing: 874it [1:37:32,  6.70s/it]Inferencing: 875it [1:37:39,  6.69s/it]Inferencing: 876it [1:37:46,  6.71s/it]Inferencing: 877it [1:37:53,  6.70s/it]Inferencing: 878it [1:37:59,  6.70s/it]Inferencing: 879it [1:38:06,  6.70s/it]Inferencing: 880it [1:38:13,  6.69s/it]Inferencing: 881it [1:38:19,  6.71s/it]Inferencing: 882it [1:38:26,  6.70s/it]Inferencing: 883it [1:38:33,  6.70s/it]Inferencing: 884it [1:38:39,  6.69s/it]Inferencing: 885it [1:38:46,  6.69s/it]Inferencing: 886it [1:38:53,  6.70s/it]Inferencing: 887it [1:39:00,  6.70s/it]Inferencing: 888it [1:39:06,  6.69s/it]Inferencing: 889it [1:39:13,  6.69s/it]Inferencing: 890it [1:39:20,  6.70s/it]Inferencing: 891it [1:39:26,  6.70s/it]Inferencing: 892it [1:39:33,  6.69s/it]Inferencing: 893it [1:39:40,  6.69s/it]Inferencing: 894it [1:39:46,  6.69s/it]Inferencing: 895it [1:39:53,  6.70s/it]Inferencing: 896it [1:40:00,  6.71s/it]Inferencing: 897it [1:40:07,  6.70s/it]Inferencing: 898it [1:40:13,  6.69s/it]Inferencing: 899it [1:40:20,  6.70s/it]Inferencing: 900it [1:40:27,  6.70s/it]Inferencing: 901it [1:40:33,  6.70s/it]Inferencing: 902it [1:40:40,  6.70s/it]Inferencing: 903it [1:40:47,  6.69s/it]Inferencing: 904it [1:40:53,  6.70s/it]Inferencing: 905it [1:41:00,  6.70s/it]Inferencing: 906it [1:41:07,  6.70s/it]Inferencing: 907it [1:41:14,  6.69s/it]Inferencing: 908it [1:41:20,  6.70s/it]Inferencing: 909it [1:41:27,  6.70s/it]Inferencing: 910it [1:41:34,  6.69s/it]Inferencing: 911it [1:41:40,  6.70s/it]Inferencing: 912it [1:41:47,  6.69s/it]Inferencing: 913it [1:41:54,  6.70s/it]Inferencing: 914it [1:42:00,  6.70s/it]Inferencing: 915it [1:42:07,  6.69s/it]Inferencing: 916it [1:42:14,  6.70s/it]Inferencing: 917it [1:42:20,  6.69s/it]Inferencing: 918it [1:42:27,  6.71s/it]Inferencing: 919it [1:42:34,  6.71s/it]Inferencing: 920it [1:42:41,  6.71s/it]Inferencing: 921it [1:42:47,  6.71s/it]Inferencing: 922it [1:42:54,  6.72s/it]Inferencing: 923it [1:43:01,  6.71s/it]Inferencing: 924it [1:43:07,  6.71s/it]Inferencing: 925it [1:43:14,  6.70s/it]Inferencing: 926it [1:43:21,  6.69s/it]Inferencing: 927it [1:43:28,  6.71s/it]Inferencing: 928it [1:43:34,  6.70s/it]Inferencing: 929it [1:43:41,  6.70s/it]Inferencing: 930it [1:43:48,  6.69s/it]Inferencing: 931it [1:43:54,  6.71s/it]Inferencing: 932it [1:44:01,  6.71s/it]Inferencing: 933it [1:44:08,  6.70s/it]Inferencing: 934it [1:44:14,  6.70s/it]Inferencing: 935it [1:44:21,  6.70s/it]Inferencing: 936it [1:44:28,  6.72s/it]Inferencing: 937it [1:44:35,  6.71s/it]Inferencing: 938it [1:44:41,  6.70s/it]Inferencing: 939it [1:44:48,  6.71s/it]Inferencing: 940it [1:44:55,  6.70s/it]Inferencing: 941it [1:45:01,  6.71s/it]Inferencing: 942it [1:45:08,  6.70s/it]Inferencing: 943it [1:45:15,  6.70s/it]Inferencing: 944it [1:45:22,  6.70s/it]Inferencing: 945it [1:45:28,  6.71s/it]Inferencing: 946it [1:45:35,  6.70s/it]Inferencing: 947it [1:45:42,  6.70s/it]Inferencing: 948it [1:45:48,  6.69s/it]Inferencing: 949it [1:45:55,  6.69s/it]Inferencing: 950it [1:46:02,  6.71s/it]Inferencing: 951it [1:46:08,  6.70s/it]Inferencing: 952it [1:46:15,  6.69s/it]Inferencing: 953it [1:46:22,  6.69s/it]Inferencing: 954it [1:46:29,  6.71s/it]Inferencing: 955it [1:46:35,  6.70s/it]Inferencing: 956it [1:46:42,  6.70s/it]Inferencing: 957it [1:46:49,  6.70s/it]Inferencing: 958it [1:46:55,  6.69s/it]Inferencing: 959it [1:47:02,  6.71s/it]Inferencing: 960it [1:47:09,  6.70s/it]Inferencing: 961it [1:47:15,  6.70s/it]Inferencing: 962it [1:47:22,  6.70s/it]Inferencing: 963it [1:47:29,  6.70s/it]Inferencing: 964it [1:47:36,  6.70s/it]Inferencing: 965it [1:47:42,  6.69s/it]Inferencing: 966it [1:47:49,  6.69s/it]Inferencing: 967it [1:47:56,  6.69s/it]Inferencing: 968it [1:48:02,  6.70s/it]Inferencing: 969it [1:48:09,  6.70s/it]Inferencing: 970it [1:48:16,  6.70s/it]Inferencing: 971it [1:48:22,  6.69s/it]Inferencing: 972it [1:48:29,  6.69s/it]Inferencing: 973it [1:48:36,  6.70s/it]Inferencing: 974it [1:48:42,  6.70s/it]Inferencing: 975it [1:48:49,  6.70s/it]Inferencing: 976it [1:48:56,  6.69s/it]Inferencing: 977it [1:49:03,  6.71s/it]Inferencing: 978it [1:49:09,  6.70s/it]Inferencing: 979it [1:49:16,  6.70s/it]Inferencing: 980it [1:49:23,  6.70s/it]Inferencing: 981it [1:49:29,  6.69s/it]Inferencing: 982it [1:49:36,  6.71s/it]Inferencing: 983it [1:49:43,  6.70s/it]Inferencing: 984it [1:49:49,  6.70s/it]Inferencing: 985it [1:49:56,  6.69s/it]Inferencing: 986it [1:50:03,  6.70s/it]Inferencing: 987it [1:50:10,  6.70s/it]Inferencing: 988it [1:50:16,  6.70s/it]Inferencing: 989it [1:50:23,  6.69s/it]Inferencing: 990it [1:50:30,  6.69s/it]Inferencing: 991it [1:50:36,  6.71s/it]Inferencing: 992it [1:50:43,  6.71s/it]Inferencing: 993it [1:50:50,  6.70s/it]Inferencing: 994it [1:50:56,  6.69s/it]Inferencing: 995it [1:51:03,  6.69s/it]Inferencing: 996it [1:51:10,  6.71s/it]Inferencing: 997it [1:51:17,  6.71s/it]Inferencing: 998it [1:51:23,  6.70s/it]Inferencing: 999it [1:51:30,  6.69s/it]Inferencing: 1000it [1:51:37,  6.70s/it]Inferencing: 1001it [1:51:43,  6.70s/it]Inferencing: 1002it [1:51:50,  6.70s/it]Inferencing: 1003it [1:51:57,  6.69s/it]Inferencing: 1004it [1:52:03,  6.69s/it]Inferencing: 1005it [1:52:10,  6.70s/it]Inferencing: 1006it [1:52:17,  6.70s/it]Inferencing: 1007it [1:52:24,  6.69s/it]Inferencing: 1008it [1:52:30,  6.69s/it]Inferencing: 1009it [1:52:37,  6.70s/it]Inferencing: 1010it [1:52:44,  6.71s/it]Inferencing: 1011it [1:52:50,  6.70s/it]Inferencing: 1012it [1:52:57,  6.69s/it]Inferencing: 1013it [1:53:04,  6.69s/it]Inferencing: 1014it [1:53:10,  6.71s/it]Inferencing: 1015it [1:53:17,  6.71s/it]Inferencing: 1016it [1:53:24,  6.70s/it]Inferencing: 1017it [1:53:31,  6.69s/it]Inferencing: 1018it [1:53:37,  6.69s/it]Inferencing: 1019it [1:53:44,  6.71s/it]Inferencing: 1020it [1:53:51,  6.71s/it]Inferencing: 1021it [1:53:57,  6.70s/it]Inferencing: 1022it [1:54:04,  6.69s/it]Inferencing: 1023it [1:54:11,  6.71s/it]Inferencing: 1024it [1:54:17,  6.70s/it]Inferencing: 1025it [1:54:24,  6.70s/it]Inferencing: 1026it [1:54:31,  6.70s/it]Inferencing: 1027it [1:54:38,  6.70s/it]Inferencing: 1028it [1:54:44,  6.71s/it]Inferencing: 1029it [1:54:51,  6.72s/it]Inferencing: 1030it [1:54:58,  6.73s/it]Inferencing: 1031it [1:55:04,  6.72s/it]Inferencing: 1032it [1:55:11,  6.73s/it]Inferencing: 1033it [1:55:18,  6.72s/it]Inferencing: 1034it [1:55:25,  6.71s/it]Inferencing: 1035it [1:55:31,  6.70s/it]Inferencing: 1036it [1:55:38,  6.73s/it]Inferencing: 1037it [1:55:45,  6.73s/it]Inferencing: 1038it [1:55:51,  6.71s/it]Inferencing: 1039it [1:55:58,  6.71s/it]Inferencing: 1040it [1:56:05,  6.70s/it]Inferencing: 1041it [1:56:12,  6.71s/it]Inferencing: 1042it [1:56:18,  6.70s/it]Inferencing: 1043it [1:56:25,  6.70s/it]Inferencing: 1044it [1:56:32,  6.69s/it]Inferencing: 1045it [1:56:38,  6.70s/it]Inferencing: 1046it [1:56:45,  6.71s/it]Inferencing: 1047it [1:56:52,  6.70s/it]Inferencing: 1048it [1:56:58,  6.70s/it]Inferencing: 1049it [1:57:05,  6.70s/it]Inferencing: 1050it [1:57:12,  6.69s/it]Inferencing: 1051it [1:57:19,  6.71s/it]Inferencing: 1052it [1:57:25,  6.70s/it]Inferencing: 1053it [1:57:32,  6.70s/it]Inferencing: 1054it [1:57:39,  6.70s/it]Inferencing: 1055it [1:57:45,  6.71s/it]Inferencing: 1056it [1:57:52,  6.70s/it]Inferencing: 1057it [1:57:59,  6.70s/it]Inferencing: 1058it [1:58:05,  6.70s/it]Inferencing: 1059it [1:58:12,  6.69s/it]Inferencing: 1060it [1:58:19,  6.70s/it]Inferencing: 1061it [1:58:26,  6.70s/it]Inferencing: 1062it [1:58:32,  6.70s/it]Inferencing: 1063it [1:58:39,  6.70s/it]Inferencing: 1064it [1:58:46,  6.71s/it]Inferencing: 1065it [1:58:52,  6.70s/it]Inferencing: 1066it [1:58:59,  6.70s/it]Inferencing: 1067it [1:59:06,  6.69s/it]Inferencing: 1068it [1:59:12,  6.70s/it]Inferencing: 1069it [1:59:19,  6.70s/it]Inferencing: 1070it [1:59:26,  6.70s/it]Inferencing: 1071it [1:59:33,  6.69s/it]Inferencing: 1072it [1:59:39,  6.69s/it]Inferencing: 1073it [1:59:46,  6.69s/it]Inferencing: 1074it [1:59:53,  6.70s/it]Inferencing: 1075it [1:59:59,  6.73s/it]Inferencing: 1076it [2:00:06,  6.71s/it]Inferencing: 1077it [2:00:13,  6.70s/it]Inferencing: 1078it [2:00:20,  6.71s/it]Inferencing: 1079it [2:00:26,  6.71s/it]Inferencing: 1080it [2:00:28,  5.34s/it]Inferencing: 1080it [2:00:28,  6.69s/it]
+11/24/2024 06:10:29 - INFO - __main__ -   merging embeddings
+11/24/2024 06:11:43 - INFO - __main__ -   ***** Done passage inference *****
+11/24/2024 06:11:43 - INFO - __main__ -   ***** inference of train query *****
+502939 -1
+502939 -1
+502939502939 -1 -1
+
+11/24/2024 06:11:43 - INFO - __main__ -   ***** Running ANN Embedding Inference *****
+11/24/2024 06:11:43 - INFO - __main__ -     Batch size = 2048
+Inferencing: 0it [00:00, ?it/s]Inferencing: 0it [00:12, ?it/s]Inferencing: 7it [00:14,  2.10s/it]Inferencing: 8it [00:16,  2.10s/it]Inferencing: 9it [00:18,  2.10s/it]Inferencing: 10it [00:20,  2.09s/it]Inferencing: 11it [00:23,  2.09s/it]Inferencing: 12it [00:25,  2.08s/it]Inferencing: 13it [00:27,  2.09s/it]Inferencing: 14it [00:29,  2.08s/it]Inferencing: 15it [00:31,  2.08s/it]Inferencing: 16it [00:33,  2.08s/it]Inferencing: 17it [00:35,  2.08s/it]Inferencing: 18it [00:37,  2.08s/it]Inferencing: 19it [00:39,  2.08s/it]Inferencing: 20it [00:41,  2.08s/it]Inferencing: 21it [00:43,  2.08s/it]Inferencing: 22it [00:45,  2.09s/it]Inferencing: 23it [00:48,  2.08s/it]Inferencing: 24it [00:50,  2.08s/it]Inferencing: 25it [00:52,  2.09s/it]Inferencing: 26it [00:54,  2.09s/it]Inferencing: 27it [00:56,  2.09s/it]Inferencing: 28it [00:58,  2.08s/it]Inferencing: 29it [01:00,  2.13s/it]Inferencing: 30it [01:02,  2.11s/it]Inferencing: 31it [01:04,  2.12s/it]Inferencing: 32it [01:06,  2.10s/it]Inferencing: 33it [01:09,  2.09s/it]Inferencing: 34it [01:11,  2.09s/it]Inferencing: 35it [01:13,  2.08s/it]Inferencing: 36it [01:15,  2.10s/it]Inferencing: 37it [01:17,  2.09s/it]Inferencing: 38it [01:19,  2.08s/it]Inferencing: 39it [01:21,  2.08s/it]Inferencing: 40it [01:23,  2.10s/it]Inferencing: 41it [01:25,  2.10s/it]Inferencing: 42it [01:27,  2.09s/it]Inferencing: 43it [01:29,  2.08s/it]Inferencing: 44it [01:31,  2.08s/it]Inferencing: 45it [01:34,  2.09s/it]Inferencing: 46it [01:36,  2.09s/it]Inferencing: 47it [01:38,  2.08s/it]Inferencing: 48it [01:40,  2.08s/it]Inferencing: 49it [01:42,  2.09s/it]Inferencing: 50it [01:44,  2.08s/it]Inferencing: 51it [01:46,  2.08s/it]Inferencing: 52it [01:48,  2.08s/it]Inferencing: 53it [01:50,  2.07s/it]Inferencing: 54it [01:52,  2.09s/it]Inferencing: 55it [01:54,  2.08s/it]Inferencing: 56it [01:56,  2.08s/it]Inferencing: 57it [01:59,  2.08s/it]Inferencing: 58it [02:01,  2.09s/it]Inferencing: 59it [02:03,  2.08s/it]Inferencing: 60it [02:05,  2.08s/it]Inferencing: 61it [02:07,  2.08s/it]Inferencing: 62it [02:08,  1.70s/it]Inferencing: 62it [02:08,  2.07s/it]
+11/24/2024 06:13:51 - INFO - __main__ -   merging embeddings
+Inference Time -  2.2866408824920654 7305.851849317551 132.4280333518982
+Inference Time -  2.2960598468780518 7305.87112402916 132.40466213226318
+Inference Time -  2.2899818420410156 7305.877977848053 132.4054365158081
+Inference Time -  2.291635751724243 7305.8736090660095 132.40850377082825
+11/24/2024 06:14:08 - INFO - __main__ -   ***** Done ANN Index *****
+Indexing Time -  13.37172269821167
+Search FAISS TOP K
+0 th batch is processing.. out of 1005
+1 th batch is processing.. out of 1005
+2 th batch is processing.. out of 1005
+3 th batch is processing.. out of 1005
+4 th batch is processing.. out of 1005
+5 th batch is processing.. out of 1005
+6 th batch is processing.. out of 1005
+7 th batch is processing.. out of 1005
+8 th batch is processing.. out of 1005
+9 th batch is processing.. out of 1005
+10 th batch is processing.. out of 1005
+11 th batch is processing.. out of 1005
+12 th batch is processing.. out of 1005
+13 th batch is processing.. out of 1005
+14 th batch is processing.. out of 1005
+15 th batch is processing.. out of 1005
+16 th batch is processing.. out of 1005
+17 th batch is processing.. out of 1005
+18 th batch is processing.. out of 1005
+19 th batch is processing.. out of 1005
+20 th batch is processing.. out of 1005
+21 th batch is processing.. out of 1005
+22 th batch is processing.. out of 1005
+23 th batch is processing.. out of 1005
+24 th batch is processing.. out of 1005
+25 th batch is processing.. out of 1005
+26 th batch is processing.. out of 1005
+27 th batch is processing.. out of 1005
+28 th batch is processing.. out of 1005
+29 th batch is processing.. out of 1005
+30 th batch is processing.. out of 1005
+31 th batch is processing.. out of 1005
+32 th batch is processing.. out of 1005
+33 th batch is processing.. out of 1005
+34 th batch is processing.. out of 1005
+35 th batch is processing.. out of 1005
+36 th batch is processing.. out of 1005
+37 th batch is processing.. out of 1005
+38 th batch is processing.. out of 1005
+39 th batch is processing.. out of 1005
+40 th batch is processing.. out of 1005
+41 th batch is processing.. out of 1005
+42 th batch is processing.. out of 1005
+43 th batch is processing.. out of 1005
+44 th batch is processing.. out of 1005
+45 th batch is processing.. out of 1005
+46 th batch is processing.. out of 1005
+47 th batch is processing.. out of 1005
+48 th batch is processing.. out of 1005
+49 th batch is processing.. out of 1005
+50 th batch is processing.. out of 1005
+51 th batch is processing.. out of 1005
+52 th batch is processing.. out of 1005
+53 th batch is processing.. out of 1005
+54 th batch is processing.. out of 1005
+55 th batch is processing.. out of 1005
+56 th batch is processing.. out of 1005
+57 th batch is processing.. out of 1005
+58 th batch is processing.. out of 1005
+59 th batch is processing.. out of 1005
+60 th batch is processing.. out of 1005
+61 th batch is processing.. out of 1005
+62 th batch is processing.. out of 1005
+63 th batch is processing.. out of 1005
+64 th batch is processing.. out of 1005
+65 th batch is processing.. out of 1005
+66 th batch is processing.. out of 1005
+67 th batch is processing.. out of 1005
+68 th batch is processing.. out of 1005
+69 th batch is processing.. out of 1005
+70 th batch is processing.. out of 1005
+71 th batch is processing.. out of 1005
+72 th batch is processing.. out of 1005
+73 th batch is processing.. out of 1005
+74 th batch is processing.. out of 1005
+75 th batch is processing.. out of 1005
+76 th batch is processing.. out of 1005
+77 th batch is processing.. out of 1005
+78 th batch is processing.. out of 1005
+79 th batch is processing.. out of 1005
+80 th batch is processing.. out of 1005
+81 th batch is processing.. out of 1005
+82 th batch is processing.. out of 1005
+83 th batch is processing.. out of 1005
+84 th batch is processing.. out of 1005
+85 th batch is processing.. out of 1005
+86 th batch is processing.. out of 1005
+87 th batch is processing.. out of 1005
+88 th batch is processing.. out of 1005
+89 th batch is processing.. out of 1005
+90 th batch is processing.. out of 1005
+91 th batch is processing.. out of 1005
+92 th batch is processing.. out of 1005
+93 th batch is processing.. out of 1005
+94 th batch is processing.. out of 1005
+95 th batch is processing.. out of 1005
+96 th batch is processing.. out of 1005
+97 th batch is processing.. out of 1005
+98 th batch is processing.. out of 1005
+99 th batch is processing.. out of 1005
+100 th batch is processing.. out of 1005
+101 th batch is processing.. out of 1005
+102 th batch is processing.. out of 1005
+103 th batch is processing.. out of 1005
+104 th batch is processing.. out of 1005
+105 th batch is processing.. out of 1005
+106 th batch is processing.. out of 1005
+107 th batch is processing.. out of 1005
+108 th batch is processing.. out of 1005
+109 th batch is processing.. out of 1005
+110 th batch is processing.. out of 1005
+111 th batch is processing.. out of 1005
+112 th batch is processing.. out of 1005
+113 th batch is processing.. out of 1005
+114 th batch is processing.. out of 1005
+115 th batch is processing.. out of 1005
+116 th batch is processing.. out of 1005
+117 th batch is processing.. out of 1005
+118 th batch is processing.. out of 1005
+119 th batch is processing.. out of 1005
+120 th batch is processing.. out of 1005
+121 th batch is processing.. out of 1005
+122 th batch is processing.. out of 1005
+123 th batch is processing.. out of 1005
+124 th batch is processing.. out of 1005
+125 th batch is processing.. out of 1005
+126 th batch is processing.. out of 1005
+127 th batch is processing.. out of 1005
+128 th batch is processing.. out of 1005
+129 th batch is processing.. out of 1005
+130 th batch is processing.. out of 1005
+131 th batch is processing.. out of 1005
+132 th batch is processing.. out of 1005
+133 th batch is processing.. out of 1005
+134 th batch is processing.. out of 1005
+135 th batch is processing.. out of 1005
+136 th batch is processing.. out of 1005
+137 th batch is processing.. out of 1005
+138 th batch is processing.. out of 1005
+139 th batch is processing.. out of 1005
+140 th batch is processing.. out of 1005
+141 th batch is processing.. out of 1005
+142 th batch is processing.. out of 1005
+143 th batch is processing.. out of 1005
+144 th batch is processing.. out of 1005
+145 th batch is processing.. out of 1005
+146 th batch is processing.. out of 1005
+147 th batch is processing.. out of 1005
+148 th batch is processing.. out of 1005
+149 th batch is processing.. out of 1005
+150 th batch is processing.. out of 1005
+151 th batch is processing.. out of 1005
+152 th batch is processing.. out of 1005
+153 th batch is processing.. out of 1005
+154 th batch is processing.. out of 1005
+155 th batch is processing.. out of 1005
+156 th batch is processing.. out of 1005
+157 th batch is processing.. out of 1005
+158 th batch is processing.. out of 1005
+159 th batch is processing.. out of 1005
+160 th batch is processing.. out of 1005
+161 th batch is processing.. out of 1005
+162 th batch is processing.. out of 1005
+163 th batch is processing.. out of 1005
+164 th batch is processing.. out of 1005
+165 th batch is processing.. out of 1005
+166 th batch is processing.. out of 1005
+167 th batch is processing.. out of 1005
+168 th batch is processing.. out of 1005
+169 th batch is processing.. out of 1005
+170 th batch is processing.. out of 1005
+171 th batch is processing.. out of 1005
+172 th batch is processing.. out of 1005
+173 th batch is processing.. out of 1005
+174 th batch is processing.. out of 1005
+175 th batch is processing.. out of 1005
+176 th batch is processing.. out of 1005
+177 th batch is processing.. out of 1005
+178 th batch is processing.. out of 1005
+179 th batch is processing.. out of 1005
+180 th batch is processing.. out of 1005
+181 th batch is processing.. out of 1005
+182 th batch is processing.. out of 1005
+183 th batch is processing.. out of 1005
+184 th batch is processing.. out of 1005
+185 th batch is processing.. out of 1005
+186 th batch is processing.. out of 1005
+187 th batch is processing.. out of 1005
+188 th batch is processing.. out of 1005
+189 th batch is processing.. out of 1005
+190 th batch is processing.. out of 1005
+191 th batch is processing.. out of 1005
+192 th batch is processing.. out of 1005
+193 th batch is processing.. out of 1005
+194 th batch is processing.. out of 1005
+195 th batch is processing.. out of 1005
+196 th batch is processing.. out of 1005
+197 th batch is processing.. out of 1005
+198 th batch is processing.. out of 1005
+199 th batch is processing.. out of 1005
+200 th batch is processing.. out of 1005
+201 th batch is processing.. out of 1005
+202 th batch is processing.. out of 1005
+203 th batch is processing.. out of 1005
+204 th batch is processing.. out of 1005
+205 th batch is processing.. out of 1005
+206 th batch is processing.. out of 1005
+207 th batch is processing.. out of 1005
+208 th batch is processing.. out of 1005
+209 th batch is processing.. out of 1005
+210 th batch is processing.. out of 1005
+211 th batch is processing.. out of 1005
+212 th batch is processing.. out of 1005
+213 th batch is processing.. out of 1005
+214 th batch is processing.. out of 1005
+215 th batch is processing.. out of 1005
+216 th batch is processing.. out of 1005
+217 th batch is processing.. out of 1005
+218 th batch is processing.. out of 1005
+219 th batch is processing.. out of 1005
+220 th batch is processing.. out of 1005
+221 th batch is processing.. out of 1005
+222 th batch is processing.. out of 1005
+223 th batch is processing.. out of 1005
+224 th batch is processing.. out of 1005
+225 th batch is processing.. out of 1005
+226 th batch is processing.. out of 1005
+227 th batch is processing.. out of 1005
+228 th batch is processing.. out of 1005
+229 th batch is processing.. out of 1005
+230 th batch is processing.. out of 1005
+231 th batch is processing.. out of 1005
+232 th batch is processing.. out of 1005
+233 th batch is processing.. out of 1005
+234 th batch is processing.. out of 1005
+235 th batch is processing.. out of 1005
+236 th batch is processing.. out of 1005
+237 th batch is processing.. out of 1005
+238 th batch is processing.. out of 1005
+239 th batch is processing.. out of 1005
+240 th batch is processing.. out of 1005
+241 th batch is processing.. out of 1005
+242 th batch is processing.. out of 1005
+243 th batch is processing.. out of 1005
+244 th batch is processing.. out of 1005
+245 th batch is processing.. out of 1005
+246 th batch is processing.. out of 1005
+247 th batch is processing.. out of 1005
+248 th batch is processing.. out of 1005
+249 th batch is processing.. out of 1005
+250 th batch is processing.. out of 1005
+251 th batch is processing.. out of 1005
+252 th batch is processing.. out of 1005
+253 th batch is processing.. out of 1005
+254 th batch is processing.. out of 1005
+255 th batch is processing.. out of 1005
+256 th batch is processing.. out of 1005
+257 th batch is processing.. out of 1005
+258 th batch is processing.. out of 1005
+259 th batch is processing.. out of 1005
+260 th batch is processing.. out of 1005
+261 th batch is processing.. out of 1005
+262 th batch is processing.. out of 1005
+263 th batch is processing.. out of 1005
+264 th batch is processing.. out of 1005
+265 th batch is processing.. out of 1005
+266 th batch is processing.. out of 1005
+267 th batch is processing.. out of 1005
+268 th batch is processing.. out of 1005
+269 th batch is processing.. out of 1005
+270 th batch is processing.. out of 1005
+271 th batch is processing.. out of 1005
+272 th batch is processing.. out of 1005
+273 th batch is processing.. out of 1005
+274 th batch is processing.. out of 1005
+275 th batch is processing.. out of 1005
+276 th batch is processing.. out of 1005
+277 th batch is processing.. out of 1005
+278 th batch is processing.. out of 1005
+279 th batch is processing.. out of 1005
+280 th batch is processing.. out of 1005
+281 th batch is processing.. out of 1005
+282 th batch is processing.. out of 1005
+283 th batch is processing.. out of 1005
+284 th batch is processing.. out of 1005
+285 th batch is processing.. out of 1005
+286 th batch is processing.. out of 1005
+287 th batch is processing.. out of 1005
+288 th batch is processing.. out of 1005
+289 th batch is processing.. out of 1005
+290 th batch is processing.. out of 1005
+291 th batch is processing.. out of 1005
+292 th batch is processing.. out of 1005
+293 th batch is processing.. out of 1005
+294 th batch is processing.. out of 1005
+295 th batch is processing.. out of 1005
+296 th batch is processing.. out of 1005
+297 th batch is processing.. out of 1005
+298 th batch is processing.. out of 1005
+299 th batch is processing.. out of 1005
+300 th batch is processing.. out of 1005
+301 th batch is processing.. out of 1005
+302 th batch is processing.. out of 1005
+303 th batch is processing.. out of 1005
+304 th batch is processing.. out of 1005
+305 th batch is processing.. out of 1005
+306 th batch is processing.. out of 1005
+307 th batch is processing.. out of 1005
+308 th batch is processing.. out of 1005
+309 th batch is processing.. out of 1005
+310 th batch is processing.. out of 1005
+311 th batch is processing.. out of 1005
+312 th batch is processing.. out of 1005
+313 th batch is processing.. out of 1005
+314 th batch is processing.. out of 1005
+315 th batch is processing.. out of 1005
+316 th batch is processing.. out of 1005
+317 th batch is processing.. out of 1005
+318 th batch is processing.. out of 1005
+319 th batch is processing.. out of 1005
+320 th batch is processing.. out of 1005
+321 th batch is processing.. out of 1005
+322 th batch is processing.. out of 1005
+323 th batch is processing.. out of 1005
+324 th batch is processing.. out of 1005
+325 th batch is processing.. out of 1005
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "../drivers/run_ann_data_gen.py", line 1203, in <module>
+  File "../drivers/run_ann_data_gen.py", line 1203, in <module>
+    args = parser.parse_args()
+  File "../drivers/run_ann_data_gen.py", line 1199, in main
+    args = parser.parse_args()
+  File "../drivers/run_ann_data_gen.py", line 1199, in main
+    default=False,
+  File "../drivers/run_ann_data_gen.py", line 1191, in ann_data_gen
+    default=False,
+  File "../drivers/run_ann_data_gen.py", line 1191, in ann_data_gen
+    type=bool, 
+  File "/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/distributed/distributed_c10d.py", line 2783, in barrier
+    type=bool, 
+  File "/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/distributed/distributed_c10d.py", line 2783, in barrier
+    work.wait()
+RuntimeError: [Rank 2] Caught collective operation timeout: WorkNCCL(SeqNum=28, OpType=ALLREDUCE, TensorShape=[1], Timeout(ms)=72000000) ran for 72000088 milliseconds before timing out.
+    work.wait()
+RuntimeError: [Rank 3] Caught collective operation timeout: WorkNCCL(SeqNum=28, OpType=ALLREDUCE, TensorShape=[1], Timeout(ms)=72000000) ran for 72000081 milliseconds before timing out.
+Traceback (most recent call last):
+  File "../drivers/run_ann_data_gen.py", line 1203, in <module>
+    args = parser.parse_args()
+  File "../drivers/run_ann_data_gen.py", line 1199, in main
+    default=False,
+  File "../drivers/run_ann_data_gen.py", line 1191, in ann_data_gen
+    type=bool, 
+  File "/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/distributed/distributed_c10d.py", line 2783, in barrier
+    work.wait()
+RuntimeError: [Rank 1] Caught collective operation timeout: WorkNCCL(SeqNum=28, OpType=ALLREDUCE, TensorShape=[1], Timeout(ms)=72000000) ran for 72000328 milliseconds before timing out.
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 1336816 closing signal SIGTERM
+ERROR:torch.distributed.elastic.multiprocessing.api:failed (exitcode: 1) local_rank: 1 (pid: 1336817) of binary: /home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/bin/python
+Traceback (most recent call last):
+  File "/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/runpy.py", line 194, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/distributed/launch.py", line 193, in <module>
+    main()
+  File "/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/distributed/launch.py", line 189, in main
+    launch(args)
+  File "/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/distributed/launch.py", line 174, in launch
+    run(args)
+  File "/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/distributed/run.py", line 715, in run
+    elastic_launch(
+  File "/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/distributed/launcher/api.py", line 131, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/distributed/launcher/api.py", line 245, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+../drivers/run_ann_data_gen.py FAILED
+------------------------------------------------------------
+Failures:
+[1]:
+  time      : 2024-11-25_02:13:58
+  host      : gpu022.unity.rc.umass.edu
+  rank      : 2 (local_rank: 2)
+  exitcode  : 1 (pid: 1336818)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[2]:
+  time      : 2024-11-25_02:13:58
+  host      : gpu022.unity.rc.umass.edu
+  rank      : 3 (local_rank: 3)
+  exitcode  : 1 (pid: 1336819)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2024-11-25_02:13:58
+  host      : gpu022.unity.rc.umass.edu
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 1336817)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+sbatch_train_index-a100_reproduce_inference.sh finished

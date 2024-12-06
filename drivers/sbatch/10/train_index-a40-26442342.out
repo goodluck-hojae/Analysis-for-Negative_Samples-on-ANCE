@@ -1,0 +1,561 @@
+Thu Nov 28 00:05:05 2024       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 550.90.07              Driver Version: 550.90.07      CUDA Version: 12.4     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA L40S                    On  |   00000000:4A:00.0 Off |                    0 |
+| N/A   27C    P8             32W /  350W |       1MiB /  46068MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   1  NVIDIA L40S                    On  |   00000000:61:00.0 Off |                    0 |
+| N/A   29C    P8             34W /  350W |       1MiB /  46068MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   2  NVIDIA L40S                    On  |   00000000:CA:00.0 Off |                    0 |
+| N/A   27C    P8             32W /  350W |       1MiB /  46068MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   3  NVIDIA L40S                    On  |   00000000:E1:00.0 Off |                    0 |
+| N/A   28C    P8             32W /  350W |       1MiB /  46068MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+sbatch_train_index-a40_subset_10_bottom_neg_only.sh
+Loading conda
+python -m torch.distributed.launch --master_port=29502 --nproc_per_node=4 drivers/run_ann_data_gen.py --training_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/checkpoints_random --init_model_dir /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 --model_type rdot_nll --output_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_random --cache_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/cache --data_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/preprocessed_data --max_seq_length 512 --per_gpu_eval_batch_size 512 --topk_training 200 --negative_sample 20 --server_port 12345 --end_output_num -1 --ann_chunk_factor 20 --bottom_neg true --ann_measure_topk_mrr false --ann_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_random
+python -m torch.distributed.launch --master_port=29501 --nproc_per_node=4 drivers/run_ann_data_gen.py --training_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/checkpoints_bottom_neg_only --init_model_dir /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 --model_type rdot_nll --output_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_bottom_neg_only --cache_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/cache --data_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/preprocessed_data --max_seq_length 512 --per_gpu_eval_batch_size 512 --topk_training 200 --negative_sample 20 --server_port 12345 --end_output_num -1 --ann_chunk_factor 20 --bottom_neg true --bottom_only true --ann_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_bottom_neg_only
+/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/distributed/launch.py:178: FutureWarning: The module torch.distributed.launch is deprecated
+and will be removed in future. Use torchrun.
+Note that --use_env is set by default in torchrun.
+If your script expects `--local_rank` argument to be set, please
+change it to read from `os.environ['LOCAL_RANK']` instead. See 
+https://pytorch.org/docs/stable/distributed.html#launch-utility for 
+further instructions
+
+  warnings.warn(
+WARNING:torch.distributed.run:
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/distributed/launch.py:178: FutureWarning: The module torch.distributed.launch is deprecated
+and will be removed in future. Use torchrun.
+Note that --use_env is set by default in torchrun.
+If your script expects `--local_rank` argument to be set, please
+change it to read from `os.environ['LOCAL_RANK']` instead. See 
+https://pytorch.org/docs/stable/distributed.html#launch-utility for 
+further instructions
+
+  warnings.warn(
+WARNING:torch.distributed.run:
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+11/28/2024 00:05:11 - WARNING - __main__ -   Process rank: 2, device: cuda:2, n_gpu: 1, distributed training: True
+Process rank: 2, device: cuda:2, n_gpu: 1, distributed training: True
+11/28/2024 00:05:11 - WARNING - __main__ -   Process rank: 3, device: cuda:3, n_gpu: 1, distributed training: True
+Process rank: 3, device: cuda:3, n_gpu: 1, distributed training: True
+Process rank: 1, device: cuda:1, n_gpu: 1, distributed training: True
+11/28/2024 00:05:11 - WARNING - __main__ -   Process rank: 1, device: cuda:1, n_gpu: 1, distributed training: True
+Process rank: 0, device: cuda:0, n_gpu: 1, distributed training: True
+11/28/2024 00:05:11 - WARNING - __main__ -   Process rank: 0, device: cuda:0, n_gpu: 1, distributed training: True
+starting output number 0
+11/28/2024 00:05:11 - INFO - __main__ -   starting output number 0
+Loading query_2_pos_docid
+11/28/2024 00:05:11 - INFO - __main__ -   Loading query_2_pos_docid
+Loading dev query_2_pos_docid
+11/28/2024 00:05:11 - INFO - __main__ -   Loading dev query_2_pos_docid
+52887
+11/28/2024 00:05:11 - INFO - __main__ -   52887
+start generate ann data number 0
+11/28/2024 00:05:11 - INFO - __main__ -   start generate ann data number 0
+11/28/2024 00:05:11 - INFO - __main__ -   next checkpoint at /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next checkpoint at /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+11/28/2024 00:05:11 - INFO - transformers.configuration_utils -   loading configuration file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/config.json
+11/28/2024 00:05:11 - INFO - transformers.configuration_utils -   Model config {
+  "architectures": [
+    "RobertaForMaskedLM"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "bos_token_id": 0,
+  "eos_token_id": 2,
+  "finetuning_task": "MSMarco",
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "id2label": {
+    "0": "LABEL_0",
+    "1": "LABEL_1"
+  },
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "is_decoder": false,
+  "label2id": {
+    "LABEL_0": 0,
+    "LABEL_1": 1
+  },
+  "layer_norm_eps": 1e-05,
+  "max_position_embeddings": 514,
+  "model_type": "roberta",
+  "num_attention_heads": 12,
+  "num_hidden_layers": 12,
+  "num_labels": 2,
+  "output_attentions": false,
+  "output_hidden_states": false,
+  "output_past": true,
+  "pad_token_id": 1,
+  "pruned_heads": {},
+  "torchscript": false,
+  "type_vocab_size": 1,
+  "use_bfloat16": false,
+  "vocab_size": 50265
+}
+
+11/28/2024 00:05:11 - INFO - transformers.tokenization_utils -   Model name '/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000' not found in model shortcut name list (roberta-base, roberta-large, roberta-large-mnli, distilroberta-base, roberta-base-openai-detector, roberta-large-openai-detector). Assuming '/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000' is a path or url to a directory containing tokenizer files.
+11/28/2024 00:05:11 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/vocab.json
+11/28/2024 00:05:11 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/merges.txt
+11/28/2024 00:05:11 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/added_tokens.json
+11/28/2024 00:05:11 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/special_tokens_map.json
+11/28/2024 00:05:11 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/tokenizer_config.json
+Process rank: 3, device: cuda:3, n_gpu: 1, distributed training: True
+11/28/2024 00:05:11 - WARNING - __main__ -   Process rank: 3, device: cuda:3, n_gpu: 1, distributed training: True
+Process rank: 1, device: cuda:1, n_gpu: 1, distributed training: True
+11/28/2024 00:05:11 - WARNING - __main__ -   Process rank: 1, device: cuda:1, n_gpu: 1, distributed training: True
+Process rank: 2, device: cuda:2, n_gpu: 1, distributed training: True
+11/28/2024 00:05:11 - WARNING - __main__ -   Process rank: 2, device: cuda:2, n_gpu: 1, distributed training: True
+Process rank: 0, device: cuda:0, n_gpu: 1, distributed training: True
+11/28/2024 00:05:11 - WARNING - __main__ -   Process rank: 0, device: cuda:0, n_gpu: 1, distributed training: True
+starting output number 0
+11/28/2024 00:05:11 - INFO - __main__ -   starting output number 0
+Loading query_2_pos_docid
+11/28/2024 00:05:11 - INFO - __main__ -   Loading query_2_pos_docid
+11/28/2024 00:05:11 - INFO - transformers.modeling_utils -   loading weights file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/pytorch_model.bin
+Using mean: False
+Using mean: False
+Using mean: False
+Using mean: False
+Loading dev query_2_pos_docid
+11/28/2024 00:05:11 - INFO - __main__ -   Loading dev query_2_pos_docid
+52887
+11/28/2024 00:05:11 - INFO - __main__ -   52887
+start generate ann data number 0
+11/28/2024 00:05:11 - INFO - __main__ -   start generate ann data number 0
+next checkpoint at /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+11/28/2024 00:05:11 - INFO - __main__ -   next checkpoint at /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+11/28/2024 00:05:11 - INFO - transformers.configuration_utils -   loading configuration file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/config.json
+11/28/2024 00:05:11 - INFO - transformers.configuration_utils -   Model config {
+  "architectures": [
+    "RobertaForMaskedLM"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "bos_token_id": 0,
+  "eos_token_id": 2,
+  "finetuning_task": "MSMarco",
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "id2label": {
+    "0": "LABEL_0",
+    "1": "LABEL_1"
+  },
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "is_decoder": false,
+  "label2id": {
+    "LABEL_0": 0,
+    "LABEL_1": 1
+  },
+  "layer_norm_eps": 1e-05,
+  "max_position_embeddings": 514,
+  "model_type": "roberta",
+  "num_attention_heads": 12,
+  "num_hidden_layers": 12,
+  "num_labels": 2,
+  "output_attentions": false,
+  "output_hidden_states": false,
+  "output_past": true,
+  "pad_token_id": 1,
+  "pruned_heads": {},
+  "torchscript": false,
+  "type_vocab_size": 1,
+  "use_bfloat16": false,
+  "vocab_size": 50265
+}
+
+11/28/2024 00:05:11 - INFO - transformers.tokenization_utils -   Model name '/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000' not found in model shortcut name list (roberta-base, roberta-large, roberta-large-mnli, distilroberta-base, roberta-base-openai-detector, roberta-large-openai-detector). Assuming '/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000' is a path or url to a directory containing tokenizer files.
+11/28/2024 00:05:11 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/vocab.json
+11/28/2024 00:05:11 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/merges.txt
+11/28/2024 00:05:11 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/added_tokens.json
+11/28/2024 00:05:11 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/special_tokens_map.json
+11/28/2024 00:05:11 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/tokenizer_config.json
+Using mean: False
+Using mean: False
+11/28/2024 00:05:11 - INFO - transformers.modeling_utils -   loading weights file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/pytorch_model.bin
+Using mean: False
+Using mean: False
+Inference parameters Namespace(ann_chunk_factor=20, ann_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_bottom_neg_only', ann_measure_topk_mrr=True, bottom_neg=True, bottom_only=True, cache_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/cache', config_name='', data_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/preprocessed_data', device=device(type='cuda', index=0), end_output_num=-1, inference=False, init_model_dir='/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000', last_checkpoint_dir='', limit_total_number=100000, load_gen=False, local_rank=0, max_doc_character=10000, max_query_length=64, max_seq_length=512, model_name_or_path='/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000', model_type='rdot_nll', n_gpu=1, negative_sample=20, no_cuda=False, only_keep_latest_embedding_file=False, output_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_bottom_neg_only', per_gpu_eval_batch_size=512, rank=0, server_ip='', server_port='12345', tokenizer_name='', topk_training=200, training_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/checkpoints_bottom_neg_only', world_size=4)
+11/28/2024 00:05:18 - INFO - __main__ -   Inference parameters Namespace(ann_chunk_factor=20, ann_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_bottom_neg_only', ann_measure_topk_mrr=True, bottom_neg=True, bottom_only=True, cache_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/cache', config_name='', data_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/preprocessed_data', device=device(type='cuda', index=0), end_output_num=-1, inference=False, init_model_dir='/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000', last_checkpoint_dir='', limit_total_number=100000, load_gen=False, local_rank=0, max_doc_character=10000, max_query_length=64, max_seq_length=512, model_name_or_path='/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000', model_type='rdot_nll', n_gpu=1, negative_sample=20, no_cuda=False, only_keep_latest_embedding_file=False, output_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_bottom_neg_only', per_gpu_eval_batch_size=512, rank=0, server_ip='', server_port='12345', tokenizer_name='', topk_training=200, training_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/checkpoints_bottom_neg_only', world_size=4)
+Inference parameters Namespace(ann_chunk_factor=20, ann_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_random', ann_measure_topk_mrr=True, bottom_neg=True, bottom_only=False, cache_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/cache', config_name='', data_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/preprocessed_data', device=device(type='cuda', index=0), end_output_num=-1, inference=False, init_model_dir='/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000', last_checkpoint_dir='', limit_total_number=100000, load_gen=False, local_rank=0, max_doc_character=10000, max_query_length=64, max_seq_length=512, model_name_or_path='/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000', model_type='rdot_nll', n_gpu=1, negative_sample=20, no_cuda=False, only_keep_latest_embedding_file=False, output_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_random', per_gpu_eval_batch_size=512, rank=0, server_ip='', server_port='12345', tokenizer_name='', topk_training=200, training_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/checkpoints_random', world_size=4)
+11/28/2024 00:05:18 - INFO - __main__ -   Inference parameters Namespace(ann_chunk_factor=20, ann_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_random', ann_measure_topk_mrr=True, bottom_neg=True, bottom_only=False, cache_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/cache', config_name='', data_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/preprocessed_data', device=device(type='cuda', index=0), end_output_num=-1, inference=False, init_model_dir='/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000', last_checkpoint_dir='', limit_total_number=100000, load_gen=False, local_rank=0, max_doc_character=10000, max_query_length=64, max_seq_length=512, model_name_or_path='/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000', model_type='rdot_nll', n_gpu=1, negative_sample=20, no_cuda=False, only_keep_latest_embedding_file=False, output_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_random', per_gpu_eval_batch_size=512, rank=0, server_ip='', server_port='12345', tokenizer_name='', topk_training=200, training_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/checkpoints_random', world_size=4)
+***** inference of dev query *****
+11/28/2024 00:05:18 - INFO - __main__ -   ***** inference of dev query *****
+6980 -1
+6980 -1
+6980 -1
+6980 -1
+***** Running ANN Embedding Inference *****
+11/28/2024 00:05:18 - INFO - __main__ -   ***** Running ANN Embedding Inference *****
+  Batch size = 512
+11/28/2024 00:05:18 - INFO - __main__ -     Batch size = 512
+Inferencing: 0it [00:00, ?it/s]11/28/2024 00:05:18 - INFO - __main__ -   ***** inference of dev query *****
+***** inference of dev query *****
+6980 -1
+6980 -1
+6980 -1
+6980 -1
+***** Running ANN Embedding Inference *****
+11/28/2024 00:05:18 - INFO - __main__ -   ***** Running ANN Embedding Inference *****
+  Batch size = 512
+11/28/2024 00:05:18 - INFO - __main__ -     Batch size = 512
+Inferencing: 0it [00:00, ?it/s]Inferencing: 4it [00:02,  1.57it/s]
+merging embeddings
+11/28/2024 00:05:21 - INFO - __main__ -   merging embeddings
+Inferencing: 4it [00:02,  1.52it/s]
+merging embeddings
+11/28/2024 00:05:21 - INFO - __main__ -   merging embeddings
+884182 -1
+884182 -1
+***** inference of passages *****
+11/28/2024 00:05:21 - INFO - __main__ -   ***** inference of passages *****
+884182 -1
+884182 -1
+***** Running ANN Embedding Inference *****
+11/28/2024 00:05:21 - INFO - __main__ -   ***** Running ANN Embedding Inference *****
+  Batch size = 512
+11/28/2024 00:05:21 - INFO - __main__ -     Batch size = 512
+Inferencing: 0it [00:00, ?it/s]***** inference of passages *****
+11/28/2024 00:05:21 - INFO - __main__ -   ***** inference of passages *****
+884182 -1
+884182 -1
+884182 -1
+884182 -1
+***** Running ANN Embedding Inference *****
+11/28/2024 00:05:21 - INFO - __main__ -   ***** Running ANN Embedding Inference *****
+  Batch size = 512
+11/28/2024 00:05:21 - INFO - __main__ -     Batch size = 512
+Inferencing: 0it [00:00, ?it/s]Inferencing: 0it [00:17, ?it/s]Inferencing: 0it [00:17, ?it/s]Inferencing: 3it [00:18,  6.03s/it]Inferencing: 3it [00:18,  6.04s/it]Inferencing: 4it [00:24,  6.02s/it]Inferencing: 4it [00:24,  6.03s/it]Inferencing: 5it [00:30,  6.01s/it]Inferencing: 5it [00:30,  6.02s/it]Inferencing: 6it [00:36,  6.00s/it]Inferencing: 6it [00:36,  6.01s/it]Inferencing: 7it [00:42,  6.00s/it]Inferencing: 7it [00:42,  6.00s/it]Inferencing: 8it [00:48,  5.99s/it]Inferencing: 8it [00:48,  6.00s/it]Inferencing: 9it [00:54,  5.99s/it]Inferencing: 9it [00:54,  6.00s/it]Inferencing: 10it [01:00,  5.99s/it]Inferencing: 10it [01:00,  5.99s/it]Inferencing: 11it [01:05,  5.98s/it]Inferencing: 11it [01:06,  5.99s/it]Inferencing: 12it [01:11,  5.98s/it]Inferencing: 12it [01:12,  5.98s/it]Inferencing: 13it [01:17,  5.98s/it]Inferencing: 13it [01:17,  5.98s/it]Inferencing: 14it [01:23,  5.98s/it]Inferencing: 14it [01:23,  5.98s/it]Inferencing: 15it [01:29,  5.97s/it]Inferencing: 15it [01:29,  5.98s/it]Inferencing: 16it [01:35,  5.97s/it]Inferencing: 16it [01:35,  5.97s/it]Inferencing: 17it [01:41,  5.97s/it]Inferencing: 17it [01:41,  5.97s/it]Inferencing: 18it [01:47,  5.96s/it]Inferencing: 18it [01:47,  5.97s/it]Inferencing: 19it [01:53,  5.96s/it]Inferencing: 19it [01:53,  5.96s/it]Inferencing: 20it [01:59,  5.95s/it]Inferencing: 20it [01:59,  5.96s/it]Inferencing: 21it [02:05,  5.95s/it]Inferencing: 21it [02:05,  5.95s/it]Inferencing: 22it [02:11,  5.94s/it]Inferencing: 22it [02:11,  5.94s/it]Inferencing: 23it [02:17,  5.93s/it]Inferencing: 23it [02:17,  5.94s/it]Inferencing: 24it [02:23,  5.93s/it]Inferencing: 24it [02:23,  5.93s/it]Inferencing: 25it [02:29,  5.92s/it]Inferencing: 25it [02:29,  5.93s/it]Inferencing: 26it [02:35,  5.92s/it]Inferencing: 26it [02:35,  5.92s/it]Inferencing: 27it [02:41,  5.92s/it]Inferencing: 27it [02:41,  5.92s/it]Inferencing: 28it [02:46,  5.91s/it]Inferencing: 28it [02:47,  5.92s/it]Inferencing: 29it [02:52,  5.91s/it]Inferencing: 29it [02:52,  5.91s/it]Inferencing: 30it [02:58,  5.90s/it]Inferencing: 30it [02:58,  5.91s/it]Inferencing: 31it [03:04,  5.91s/it]Inferencing: 31it [03:04,  5.92s/it]Inferencing: 32it [03:10,  5.90s/it]Inferencing: 32it [03:10,  5.91s/it]Inferencing: 33it [03:16,  5.89s/it]Inferencing: 33it [03:16,  5.90s/it]Inferencing: 34it [03:22,  5.89s/it]Inferencing: 34it [03:22,  5.89s/it]Inferencing: 35it [03:28,  5.88s/it]Inferencing: 35it [03:28,  5.89s/it]Inferencing: 36it [03:34,  5.88s/it]Inferencing: 36it [03:34,  5.88s/it]Inferencing: 37it [03:39,  5.87s/it]Inferencing: 37it [03:40,  5.87s/it]Inferencing: 38it [03:45,  5.86s/it]Inferencing: 38it [03:45,  5.87s/it]Inferencing: 39it [03:51,  5.86s/it]Inferencing: 39it [03:51,  5.86s/it]Inferencing: 40it [03:57,  5.86s/it]Inferencing: 40it [03:57,  5.86s/it]Inferencing: 41it [04:03,  5.85s/it]Inferencing: 41it [04:03,  5.85s/it]Inferencing: 42it [04:09,  5.85s/it]Inferencing: 42it [04:09,  5.85s/it]Inferencing: 43it [04:14,  5.85s/it]Inferencing: 43it [04:15,  5.85s/it]Inferencing: 44it [04:20,  5.84s/it]Inferencing: 44it [04:20,  5.85s/it]Inferencing: 45it [04:26,  5.83s/it]Inferencing: 45it [04:26,  5.84s/it]Inferencing: 46it [04:32,  5.82s/it]Inferencing: 46it [04:32,  5.83s/it]Inferencing: 47it [04:38,  5.82s/it]Inferencing: 47it [04:38,  5.82s/it]Inferencing: 48it [04:44,  5.81s/it]Inferencing: 48it [04:44,  5.82s/it]Inferencing: 49it [04:49,  5.81s/it]Inferencing: 49it [04:50,  5.81s/it]Inferencing: 50it [04:55,  5.80s/it]Inferencing: 50it [04:55,  5.81s/it]Inferencing: 51it [05:01,  5.80s/it]Inferencing: 51it [05:01,  5.80s/it]Inferencing: 52it [05:07,  5.80s/it]Inferencing: 52it [05:07,  5.80s/it]Inferencing: 53it [05:12,  5.79s/it]Inferencing: 53it [05:13,  5.80s/it]Inferencing: 54it [05:18,  5.79s/it]Inferencing: 54it [05:18,  5.79s/it]Inferencing: 55it [05:24,  5.79s/it]Inferencing: 55it [05:24,  5.79s/it]Inferencing: 56it [05:30,  5.78s/it]Inferencing: 56it [05:30,  5.79s/it]Inferencing: 57it [05:36,  5.78s/it]Inferencing: 57it [05:36,  5.78s/it]Inferencing: 58it [05:41,  5.79s/it]Inferencing: 58it [05:42,  5.79s/it]Inferencing: 59it [05:47,  5.78s/it]Inferencing: 59it [05:47,  5.79s/it]Inferencing: 60it [05:53,  5.78s/it]Inferencing: 60it [05:53,  5.78s/it]Inferencing: 61it [05:59,  5.77s/it]Inferencing: 61it [05:59,  5.77s/it]Inferencing: 62it [06:04,  5.77s/it]Inferencing: 62it [06:05,  5.77s/it]Inferencing: 63it [06:10,  5.76s/it]Inferencing: 63it [06:10,  5.76s/it]Inferencing: 64it [06:16,  5.76s/it]Inferencing: 64it [06:16,  5.76s/it]Inferencing: 65it [06:22,  5.75s/it]Inferencing: 65it [06:22,  5.76s/it]Inferencing: 66it [06:27,  5.75s/it]Inferencing: 66it [06:28,  5.75s/it]Inferencing: 67it [06:33,  5.75s/it]Inferencing: 67it [06:33,  5.76s/it]Inferencing: 68it [06:39,  5.75s/it]Inferencing: 68it [06:39,  5.75s/it]Inferencing: 69it [06:45,  5.74s/it]Inferencing: 69it [06:45,  5.75s/it]Inferencing: 70it [06:50,  5.74s/it]Inferencing: 70it [06:51,  5.74s/it]Inferencing: 71it [06:56,  5.73s/it]Inferencing: 71it [06:56,  5.74s/it]Inferencing: 72it [07:02,  5.73s/it]Inferencing: 72it [07:02,  5.73s/it]Inferencing: 73it [07:08,  5.72s/it]Inferencing: 73it [07:08,  5.73s/it]Inferencing: 74it [07:13,  5.72s/it]Inferencing: 74it [07:14,  5.72s/it]Inferencing: 75it [07:19,  5.72s/it]Inferencing: 75it [07:19,  5.72s/it]Inferencing: 76it [07:25,  5.71s/it]Inferencing: 76it [07:25,  5.72s/it]Inferencing: 77it [07:30,  5.71s/it]Inferencing: 77it [07:31,  5.71s/it]Inferencing: 78it [07:36,  5.71s/it]Inferencing: 78it [07:36,  5.71s/it]Inferencing: 79it [07:42,  5.70s/it]Inferencing: 79it [07:42,  5.71s/it]Inferencing: 80it [07:47,  5.70s/it]Inferencing: 80it [07:48,  5.70s/it]Inferencing: 81it [07:53,  5.70s/it]Inferencing: 81it [07:53,  5.70s/it]Inferencing: 82it [07:59,  5.69s/it]Inferencing: 82it [07:59,  5.69s/it]Inferencing: 83it [08:04,  5.69s/it]Inferencing: 83it [08:05,  5.69s/it]Inferencing: 84it [08:10,  5.69s/it]Inferencing: 84it [08:10,  5.69s/it]Inferencing: 85it [08:16,  5.69s/it]Inferencing: 85it [08:16,  5.69s/it]Inferencing: 86it [08:22,  5.68s/it]Inferencing: 86it [08:22,  5.69s/it]Inferencing: 87it [08:27,  5.70s/it]Inferencing: 87it [08:28,  5.70s/it]Inferencing: 88it [08:33,  5.69s/it]Inferencing: 88it [08:33,  5.69s/it]Inferencing: 89it [08:39,  5.69s/it]Inferencing: 89it [08:39,  5.69s/it]Inferencing: 90it [08:44,  5.69s/it]Inferencing: 90it [08:45,  5.69s/it]Inferencing: 91it [08:50,  5.69s/it]Inferencing: 91it [08:50,  5.69s/it]Inferencing: 92it [08:56,  5.68s/it]Inferencing: 92it [08:56,  5.69s/it]Inferencing: 93it [09:01,  5.68s/it]Inferencing: 93it [09:02,  5.68s/it]Inferencing: 94it [09:07,  5.68s/it]Inferencing: 94it [09:07,  5.68s/it]Inferencing: 95it [09:13,  5.68s/it]Inferencing: 95it [09:13,  5.68s/it]Inferencing: 96it [09:18,  5.68s/it]Inferencing: 96it [09:19,  5.68s/it]Inferencing: 97it [09:24,  5.68s/it]Inferencing: 97it [09:24,  5.68s/it]Inferencing: 98it [09:30,  5.68s/it]Inferencing: 98it [09:30,  5.68s/it]Inferencing: 99it [09:35,  5.68s/it]Inferencing: 99it [09:36,  5.68s/it]Inferencing: 100it [09:41,  5.68s/it]Inferencing: 100it [09:41,  5.69s/it]Inferencing: 101it [09:47,  5.68s/it]Inferencing: 101it [09:47,  5.68s/it]Inferencing: 102it [09:52,  5.68s/it]Inferencing: 102it [09:53,  5.68s/it]Inferencing: 103it [09:58,  5.68s/it]Inferencing: 103it [09:59,  5.68s/it]Inferencing: 104it [10:04,  5.68s/it]Inferencing: 104it [10:04,  5.68s/it]Inferencing: 105it [10:10,  5.68s/it]Inferencing: 105it [10:10,  5.68s/it]Inferencing: 106it [10:15,  5.68s/it]Inferencing: 106it [10:16,  5.68s/it]Inferencing: 107it [10:21,  5.68s/it]Inferencing: 107it [10:21,  5.68s/it]Inferencing: 108it [10:27,  5.68s/it]Inferencing: 108it [10:27,  5.68s/it]Inferencing: 109it [10:32,  5.68s/it]Inferencing: 109it [10:33,  5.68s/it]Inferencing: 110it [10:38,  5.68s/it]Inferencing: 110it [10:38,  5.68s/it]Inferencing: 111it [10:44,  5.69s/it]Inferencing: 111it [10:44,  5.68s/it]Inferencing: 112it [10:49,  5.69s/it]Inferencing: 112it [10:50,  5.69s/it]Inferencing: 113it [10:55,  5.70s/it]Inferencing: 113it [10:55,  5.69s/it]Inferencing: 114it [11:01,  5.72s/it]Inferencing: 114it [11:01,  5.71s/it]Inferencing: 115it [11:07,  5.74s/it]Inferencing: 115it [11:07,  5.73s/it]Inferencing: 116it [11:12,  5.74s/it]Inferencing: 116it [11:13,  5.73s/it]Inferencing: 117it [11:18,  5.74s/it]Inferencing: 117it [11:18,  5.73s/it]Inferencing: 118it [11:24,  5.74s/it]Inferencing: 118it [11:24,  5.74s/it]Inferencing: 119it [11:30,  5.74s/it]Inferencing: 119it [11:30,  5.74s/it]Inferencing: 120it [11:35,  5.74s/it]Inferencing: 120it [11:36,  5.74s/it]Inferencing: 121it [11:41,  5.75s/it]Inferencing: 121it [11:41,  5.74s/it]Inferencing: 122it [11:47,  5.76s/it]Inferencing: 122it [11:47,  5.75s/it]Inferencing: 123it [11:53,  5.77s/it]Inferencing: 123it [11:53,  5.76s/it]Inferencing: 124it [11:58,  5.77s/it]Inferencing: 124it [11:59,  5.77s/it]Inferencing: 125it [12:04,  5.79s/it]Inferencing: 125it [12:04,  5.78s/it]Inferencing: 126it [12:10,  5.80s/it]Inferencing: 126it [12:10,  5.79s/it]Inferencing: 127it [12:16,  5.82s/it]Inferencing: 127it [12:16,  5.81s/it]Inferencing: 128it [12:22,  5.83s/it]Inferencing: 128it [12:22,  5.82s/it]Inferencing: 129it [12:28,  5.84s/it]Inferencing: 129it [12:28,  5.83s/it]Inferencing: 130it [12:34,  5.84s/it]Inferencing: 130it [12:34,  5.84s/it]Inferencing: 131it [12:39,  5.84s/it]Inferencing: 131it [12:40,  5.84s/it]Inferencing: 132it [12:45,  5.84s/it]Inferencing: 132it [12:45,  5.84s/it]Inferencing: 133it [12:51,  5.84s/it]Inferencing: 133it [12:51,  5.84s/it]Inferencing: 134it [12:57,  5.84s/it]Inferencing: 134it [12:57,  5.84s/it]Inferencing: 135it [13:03,  5.84s/it]Inferencing: 135it [13:03,  5.84s/it]Inferencing: 136it [13:09,  5.84s/it]Inferencing: 136it [13:09,  5.84s/it]Inferencing: 137it [13:14,  5.84s/it]Inferencing: 137it [13:15,  5.84s/it]Inferencing: 138it [13:20,  5.84s/it]Inferencing: 138it [13:20,  5.84s/it]Inferencing: 139it [13:26,  5.84s/it]Inferencing: 139it [13:26,  5.84s/it]Inferencing: 140it [13:32,  5.84s/it]Inferencing: 140it [13:32,  5.84s/it]Inferencing: 141it [13:38,  5.84s/it]Inferencing: 141it [13:38,  5.84s/it]Inferencing: 142it [13:44,  5.83s/it]Inferencing: 142it [13:44,  5.83s/it]Inferencing: 143it [13:49,  5.85s/it]Inferencing: 143it [13:50,  5.85s/it]Inferencing: 144it [13:55,  5.84s/it]Inferencing: 144it [13:55,  5.84s/it]Inferencing: 145it [14:01,  5.84s/it]Inferencing: 145it [14:01,  5.84s/it]Inferencing: 146it [14:07,  5.84s/it]Inferencing: 146it [14:07,  5.84s/it]Inferencing: 147it [14:13,  5.83s/it]Inferencing: 147it [14:13,  5.83s/it]Inferencing: 148it [14:19,  5.83s/it]Inferencing: 148it [14:19,  5.83s/it]Inferencing: 149it [14:24,  5.83s/it]Inferencing: 149it [14:25,  5.83s/it]Inferencing: 150it [14:30,  5.82s/it]Inferencing: 150it [14:30,  5.83s/it]Inferencing: 151it [14:36,  5.82s/it]Inferencing: 151it [14:36,  5.82s/it]Inferencing: 152it [14:42,  5.82s/it]Inferencing: 152it [14:42,  5.82s/it]Inferencing: 153it [14:48,  5.81s/it]Inferencing: 153it [14:48,  5.81s/it]Inferencing: 154it [14:53,  5.81s/it]Inferencing: 154it [14:54,  5.81s/it]Inferencing: 155it [14:59,  5.81s/it]Inferencing: 155it [14:59,  5.81s/it]Inferencing: 156it [15:05,  5.80s/it]Inferencing: 156it [15:05,  5.80s/it]Inferencing: 157it [15:11,  5.80s/it]Inferencing: 157it [15:11,  5.80s/it]Inferencing: 158it [15:17,  5.80s/it]Inferencing: 158it [15:17,  5.80s/it]Inferencing: 159it [15:22,  5.79s/it]Inferencing: 159it [15:23,  5.80s/it]Inferencing: 160it [15:28,  5.79s/it]Inferencing: 160it [15:28,  5.79s/it]Inferencing: 161it [15:34,  5.79s/it]Inferencing: 161it [15:34,  5.79s/it]Inferencing: 162it [15:40,  5.78s/it]Inferencing: 162it [15:40,  5.79s/it]Inferencing: 163it [15:46,  5.78s/it]Inferencing: 163it [15:46,  5.79s/it]Inferencing: 164it [15:51,  5.78s/it]Inferencing: 164it [15:52,  5.78s/it]Inferencing: 165it [15:57,  5.77s/it]Inferencing: 165it [15:57,  5.78s/it]Inferencing: 166it [16:03,  5.77s/it]Inferencing: 166it [16:03,  5.77s/it]Inferencing: 167it [16:09,  5.76s/it]Inferencing: 167it [16:09,  5.77s/it]Inferencing: 168it [16:14,  5.76s/it]Inferencing: 168it [16:15,  5.76s/it]Inferencing: 169it [16:20,  5.78s/it]Inferencing: 169it [16:20,  5.77s/it]Inferencing: 170it [16:26,  5.80s/it]Inferencing: 170it [16:26,  5.79s/it]Inferencing: 171it [16:32,  5.80s/it]Inferencing: 171it [16:32,  5.79s/it]Inferencing: 172it [16:38,  5.79s/it]Inferencing: 172it [16:38,  5.79s/it]Inferencing: 173it [16:43,  5.79s/it]Inferencing: 173it [16:44,  5.79s/it]Inferencing: 174it [16:49,  5.79s/it]Inferencing: 174it [16:49,  5.79s/it]Inferencing: 175it [16:55,  5.78s/it]Inferencing: 175it [16:55,  5.79s/it]Inferencing: 176it [17:01,  5.78s/it]Inferencing: 176it [17:01,  5.78s/it]Inferencing: 177it [17:06,  5.78s/it]Inferencing: 177it [17:07,  5.78s/it]Inferencing: 178it [17:12,  5.77s/it]Inferencing: 178it [17:12,  5.77s/it]Inferencing: 179it [17:18,  5.77s/it]Inferencing: 179it [17:18,  5.77s/it]Inferencing: 180it [17:24,  5.77s/it]Inferencing: 180it [17:24,  5.77s/it]Inferencing: 181it [17:30,  5.76s/it]Inferencing: 181it [17:30,  5.77s/it]Inferencing: 182it [17:35,  5.76s/it]Inferencing: 182it [17:36,  5.76s/it]Inferencing: 183it [17:41,  5.76s/it]Inferencing: 183it [17:41,  5.76s/it]Inferencing: 184it [17:47,  5.76s/it]Inferencing: 184it [17:47,  5.76s/it]Inferencing: 185it [17:53,  5.75s/it]Inferencing: 185it [17:53,  5.76s/it]Inferencing: 186it [17:58,  5.75s/it]Inferencing: 186it [17:59,  5.75s/it]Inferencing: 187it [18:04,  5.75s/it]Inferencing: 187it [18:04,  5.75s/it]Inferencing: 188it [18:10,  5.75s/it]Inferencing: 188it [18:10,  5.75s/it]Inferencing: 189it [18:15,  5.75s/it]Inferencing: 189it [18:16,  5.75s/it]Inferencing: 190it [18:21,  5.74s/it]Inferencing: 190it [18:21,  5.74s/it]Inferencing: 191it [18:27,  5.74s/it]Inferencing: 191it [18:27,  5.74s/it]Inferencing: 192it [18:33,  5.73s/it]Inferencing: 192it [18:33,  5.74s/it]Inferencing: 193it [18:38,  5.72s/it]Inferencing: 193it [18:39,  5.73s/it]Inferencing: 194it [18:44,  5.73s/it]Inferencing: 194it [18:44,  5.73s/it]Inferencing: 195it [18:50,  5.72s/it]Inferencing: 195it [18:50,  5.72s/it]Inferencing: 196it [18:56,  5.72s/it]Inferencing: 196it [18:56,  5.72s/it]Inferencing: 197it [19:01,  5.72s/it]Inferencing: 197it [19:02,  5.72s/it]Inferencing: 198it [19:07,  5.73s/it]Inferencing: 198it [19:07,  5.72s/it]Inferencing: 199it [19:13,  5.75s/it]Inferencing: 199it [19:13,  5.75s/it]Inferencing: 200it [19:19,  5.78s/it]Inferencing: 200it [19:19,  5.76s/it]Inferencing: 201it [19:25,  5.83s/it]Inferencing: 201it [19:25,  5.80s/it]Inferencing: 202it [19:30,  5.85s/it]Inferencing: 202it [19:31,  5.82s/it]Inferencing: 203it [19:36,  5.86s/it]Inferencing: 203it [19:37,  5.84s/it]Inferencing: 204it [19:42,  5.86s/it]Inferencing: 204it [19:42,  5.85s/it]Inferencing: 205it [19:48,  5.86s/it]Inferencing: 205it [19:48,  5.86s/it]Inferencing: 206it [19:54,  5.86s/it]Inferencing: 206it [19:54,  5.86s/it]Inferencing: 207it [20:00,  5.86s/it]Inferencing: 207it [20:00,  5.86s/it]Inferencing: 208it [20:06,  5.86s/it]Inferencing: 208it [20:06,  5.86s/it]Inferencing: 209it [20:12,  5.86s/it]Inferencing: 209it [20:12,  5.86s/it]Inferencing: 210it [20:17,  5.85s/it]Inferencing: 210it [20:18,  5.85s/it]Inferencing: 211it [20:23,  5.85s/it]Inferencing: 211it [20:23,  5.85s/it]Inferencing: 212it [20:29,  5.85s/it]Inferencing: 212it [20:29,  5.85s/it]Inferencing: 213it [20:35,  5.86s/it]Inferencing: 213it [20:35,  5.86s/it]Inferencing: 214it [20:41,  5.86s/it]Inferencing: 214it [20:41,  5.86s/it]Inferencing: 215it [20:47,  5.86s/it]Inferencing: 215it [20:47,  5.86s/it]Inferencing: 216it [20:52,  5.85s/it]Inferencing: 216it [20:53,  5.85s/it]Inferencing: 217it [20:58,  5.85s/it]Inferencing: 217it [20:59,  5.85s/it]Inferencing: 218it [21:04,  5.85s/it]Inferencing: 218it [21:04,  5.85s/it]Inferencing: 219it [21:10,  5.85s/it]Inferencing: 219it [21:10,  5.85s/it]Inferencing: 220it [21:16,  5.85s/it]Inferencing: 220it [21:16,  5.85s/it]Inferencing: 221it [21:22,  5.86s/it]Inferencing: 221it [21:22,  5.85s/it]Inferencing: 222it [21:28,  5.87s/it]Inferencing: 222it [21:28,  5.86s/it]Inferencing: 223it [21:34,  5.87s/it]Inferencing: 223it [21:34,  5.87s/it]Inferencing: 224it [21:39,  5.88s/it]Inferencing: 224it [21:40,  5.87s/it]Inferencing: 225it [21:45,  5.89s/it]Inferencing: 225it [21:45,  5.88s/it]Inferencing: 226it [21:51,  5.89s/it]Inferencing: 226it [21:51,  5.89s/it]Inferencing: 227it [21:57,  5.93s/it]Inferencing: 227it [21:57,  5.92s/it]Inferencing: 228it [22:03,  5.94s/it]Inferencing: 228it [22:03,  5.93s/it]Inferencing: 229it [22:09,  5.94s/it]Inferencing: 229it [22:09,  5.93s/it]Inferencing: 230it [22:15,  5.95s/it]Inferencing: 230it [22:15,  5.94s/it]Inferencing: 231it [22:21,  5.95s/it]Inferencing: 231it [22:21,  5.95s/it]Inferencing: 232it [22:27,  5.95s/it]Inferencing: 232it [22:27,  5.95s/it]Inferencing: 233it [22:33,  5.95s/it]Inferencing: 233it [22:33,  5.95s/it]Inferencing: 234it [22:39,  5.95s/it]Inferencing: 234it [22:39,  5.95s/it]Inferencing: 235it [22:45,  5.94s/it]Inferencing: 235it [22:45,  5.94s/it]Inferencing: 236it [22:51,  5.94s/it]Inferencing: 236it [22:51,  5.94s/it]Inferencing: 237it [22:57,  5.93s/it]Inferencing: 237it [22:57,  5.93s/it]Inferencing: 238it [23:03,  5.93s/it]Inferencing: 238it [23:03,  5.93s/it]Inferencing: 239it [23:09,  5.93s/it]Inferencing: 239it [23:09,  5.93s/it]Inferencing: 240it [23:14,  5.92s/it]Inferencing: 240it [23:15,  5.93s/it]Inferencing: 241it [23:20,  5.92s/it]Inferencing: 241it [23:20,  5.92s/it]Inferencing: 242it [23:26,  5.91s/it]Inferencing: 242it [23:26,  5.92s/it]Inferencing: 243it [23:32,  5.92s/it]Inferencing: 243it [23:32,  5.92s/it]Inferencing: 244it [23:38,  5.92s/it]Inferencing: 244it [23:38,  5.92s/it]Inferencing: 245it [23:44,  5.92s/it]Inferencing: 245it [23:44,  5.92s/it]Inferencing: 246it [23:50,  5.91s/it]Inferencing: 246it [23:50,  5.92s/it]Inferencing: 247it [23:56,  5.91s/it]Inferencing: 247it [23:56,  5.91s/it]Inferencing: 248it [24:02,  5.90s/it]Inferencing: 248it [24:02,  5.91s/it]Inferencing: 249it [24:08,  5.90s/it]Inferencing: 249it [24:08,  5.90s/it]Inferencing: 250it [24:14,  5.90s/it]Inferencing: 250it [24:14,  5.90s/it]Inferencing: 251it [24:19,  5.89s/it]Inferencing: 251it [24:20,  5.90s/it]Inferencing: 252it [24:25,  5.89s/it]Inferencing: 252it [24:25,  5.89s/it]Inferencing: 253it [24:31,  5.89s/it]Inferencing: 253it [24:31,  5.89s/it]Inferencing: 254it [24:37,  5.88s/it]Inferencing: 254it [24:37,  5.89s/it]Inferencing: 255it [24:43,  5.90s/it]Inferencing: 255it [24:43,  5.90s/it]Inferencing: 256it [24:49,  5.89s/it]Inferencing: 256it [24:49,  5.89s/it]Inferencing: 257it [24:55,  5.89s/it]Inferencing: 257it [24:55,  5.89s/it]Inferencing: 258it [25:01,  5.89s/it]Inferencing: 258it [25:01,  5.89s/it]Inferencing: 259it [25:06,  5.88s/it]Inferencing: 259it [25:07,  5.88s/it]Inferencing: 260it [25:12,  5.87s/it]Inferencing: 260it [25:12,  5.87s/it]Inferencing: 261it [25:18,  5.86s/it]Inferencing: 261it [25:18,  5.87s/it]Inferencing: 262it [25:24,  5.86s/it]Inferencing: 262it [25:24,  5.86s/it]Inferencing: 263it [25:30,  5.85s/it]Inferencing: 263it [25:30,  5.85s/it]Inferencing: 264it [25:36,  5.85s/it]Inferencing: 264it [25:36,  5.85s/it]Inferencing: 265it [25:42,  5.84s/it]Inferencing: 265it [25:42,  5.85s/it]Inferencing: 266it [25:47,  5.84s/it]Inferencing: 266it [25:48,  5.84s/it]Inferencing: 267it [25:53,  5.84s/it]Inferencing: 267it [25:53,  5.84s/it]Inferencing: 268it [25:59,  5.83s/it]Inferencing: 268it [25:59,  5.83s/it]Inferencing: 269it [26:05,  5.83s/it]Inferencing: 269it [26:05,  5.83s/it]Inferencing: 270it [26:11,  5.82s/it]Inferencing: 270it [26:11,  5.82s/it]Inferencing: 271it [26:16,  5.82s/it]Inferencing: 271it [26:17,  5.82s/it]Inferencing: 272it [26:22,  5.82s/it]Inferencing: 272it [26:22,  5.82s/it]Inferencing: 273it [26:28,  5.81s/it]Inferencing: 273it [26:28,  5.82s/it]Inferencing: 274it [26:34,  5.81s/it]Inferencing: 274it [26:34,  5.81s/it]Inferencing: 275it [26:40,  5.81s/it]Inferencing: 275it [26:40,  5.81s/it]Inferencing: 276it [26:45,  5.80s/it]Inferencing: 276it [26:46,  5.81s/it]Inferencing: 277it [26:51,  5.81s/it]Inferencing: 277it [26:51,  5.81s/it]Inferencing: 278it [26:57,  5.80s/it]Inferencing: 278it [26:57,  5.81s/it]Inferencing: 279it [27:03,  5.80s/it]Inferencing: 279it [27:03,  5.80s/it]Inferencing: 280it [27:09,  5.79s/it]Inferencing: 280it [27:09,  5.80s/it]Inferencing: 281it [27:14,  5.79s/it]Inferencing: 281it [27:15,  5.79s/it]Inferencing: 282it [27:20,  5.81s/it]Inferencing: 282it [27:20,  5.81s/it]Inferencing: 283it [27:26,  5.81s/it]Inferencing: 283it [27:26,  5.81s/it]Inferencing: 284it [27:32,  5.81s/it]Inferencing: 284it [27:32,  5.81s/it]Inferencing: 285it [27:38,  5.81s/it]Inferencing: 285it [27:38,  5.81s/it]Inferencing: 286it [27:44,  5.82s/it]Inferencing: 286it [27:44,  5.81s/it]Inferencing: 287it [27:49,  5.82s/it]Inferencing: 287it [27:50,  5.82s/it]Inferencing: 288it [27:55,  5.83s/it]Inferencing: 288it [27:55,  5.82s/it]Inferencing: 289it [28:01,  5.84s/it]Inferencing: 289it [28:01,  5.83s/it]Inferencing: 290it [28:07,  5.85s/it]Inferencing: 290it [28:07,  5.84s/it]Inferencing: 291it [28:13,  5.85s/it]Inferencing: 291it [28:13,  5.85s/it]Inferencing: 292it [28:19,  5.86s/it]Inferencing: 292it [28:19,  5.86s/it]Inferencing: 293it [28:25,  5.86s/it]Inferencing: 293it [28:25,  5.86s/it]Inferencing: 294it [28:30,  5.87s/it]Inferencing: 294it [28:31,  5.87s/it]Inferencing: 295it [28:36,  5.87s/it]Inferencing: 295it [28:36,  5.87s/it]Inferencing: 296it [28:42,  5.88s/it]Inferencing: 296it [28:42,  5.88s/it]Inferencing: 297it [28:48,  5.89s/it]Inferencing: 297it [28:48,  5.88s/it]Inferencing: 298it [28:54,  5.90s/it]Inferencing: 298it [28:54,  5.89s/it]Inferencing: 299it [29:00,  5.90s/it]Inferencing: 299it [29:00,  5.89s/it]Inferencing: 300it [29:06,  5.91s/it]Inferencing: 300it [29:06,  5.90s/it]Inferencing: 301it [29:12,  5.92s/it]Inferencing: 301it [29:12,  5.91s/it]Inferencing: 302it [29:18,  5.93s/it]Inferencing: 302it [29:18,  5.92s/it]Inferencing: 303it [29:24,  5.93s/it]Inferencing: 303it [29:24,  5.93s/it]Inferencing: 304it [29:30,  5.93s/it]Inferencing: 304it [29:30,  5.93s/it]Inferencing: 305it [29:36,  5.93s/it]Inferencing: 305it [29:36,  5.93s/it]Inferencing: 306it [29:41,  5.93s/it]Inferencing: 306it [29:42,  5.93s/it]Inferencing: 307it [29:47,  5.93s/it]Inferencing: 307it [29:48,  5.93s/it]Inferencing: 308it [29:53,  5.92s/it]Inferencing: 308it [29:53,  5.93s/it]Inferencing: 309it [29:59,  5.92s/it]Inferencing: 309it [29:59,  5.92s/it]Inferencing: 310it [30:05,  5.92s/it]Inferencing: 310it [30:05,  5.92s/it]Inferencing: 311it [30:11,  5.94s/it]Inferencing: 311it [30:11,  5.94s/it]Inferencing: 312it [30:17,  5.93s/it]Inferencing: 312it [30:17,  5.93s/it]Inferencing: 313it [30:23,  5.93s/it]Inferencing: 313it [30:23,  5.93s/it]Inferencing: 314it [30:29,  5.92s/it]Inferencing: 314it [30:29,  5.92s/it]Inferencing: 315it [30:35,  5.92s/it]Inferencing: 315it [30:35,  5.92s/it]Inferencing: 316it [30:41,  5.91s/it]Inferencing: 316it [30:41,  5.91s/it]Inferencing: 317it [30:47,  5.91s/it]Inferencing: 317it [30:47,  5.91s/it]Inferencing: 318it [30:52,  5.90s/it]Inferencing: 318it [30:53,  5.90s/it]Inferencing: 319it [30:58,  5.89s/it]Inferencing: 319it [30:58,  5.90s/it]Inferencing: 320it [31:04,  5.89s/it]Inferencing: 320it [31:04,  5.89s/it]Inferencing: 321it [31:10,  5.89s/it]Inferencing: 321it [31:10,  5.89s/it]Inferencing: 322it [31:16,  5.88s/it]Inferencing: 322it [31:16,  5.89s/it]Inferencing: 323it [31:22,  5.88s/it]Inferencing: 323it [31:22,  5.88s/it]Inferencing: 324it [31:28,  5.88s/it]Inferencing: 324it [31:28,  5.88s/it]Inferencing: 325it [31:34,  5.87s/it]Inferencing: 325it [31:34,  5.87s/it]Inferencing: 326it [31:39,  5.87s/it]Inferencing: 326it [31:40,  5.87s/it]Inferencing: 327it [31:45,  5.86s/it]Inferencing: 327it [31:45,  5.87s/it]Inferencing: 328it [31:51,  5.86s/it]Inferencing: 328it [31:51,  5.86s/it]Inferencing: 329it [31:57,  5.85s/it]Inferencing: 329it [31:57,  5.86s/it]Inferencing: 330it [32:03,  5.85s/it]Inferencing: 330it [32:03,  5.85s/it]Inferencing: 331it [32:09,  5.85s/it]Inferencing: 331it [32:09,  5.85s/it]Inferencing: 332it [32:15,  5.86s/it]Inferencing: 332it [32:15,  5.86s/it]Inferencing: 333it [32:20,  5.86s/it]Inferencing: 333it [32:21,  5.86s/it]Inferencing: 334it [32:26,  5.87s/it]Inferencing: 334it [32:26,  5.87s/it]Inferencing: 335it [32:32,  5.87s/it]Inferencing: 335it [32:32,  5.87s/it]Inferencing: 336it [32:38,  5.88s/it]Inferencing: 336it [32:38,  5.88s/it]Inferencing: 337it [32:44,  5.88s/it]Inferencing: 337it [32:44,  5.88s/it]Inferencing: 338it [32:50,  5.88s/it]Inferencing: 338it [32:50,  5.88s/it]Inferencing: 339it [32:56,  5.89s/it]Inferencing: 339it [32:56,  5.89s/it]Inferencing: 340it [33:02,  5.88s/it]Inferencing: 340it [33:02,  5.88s/it]Inferencing: 341it [33:07,  5.86s/it]Inferencing: 341it [33:08,  5.87s/it]Inferencing: 342it [33:13,  5.85s/it]Inferencing: 342it [33:13,  5.86s/it]Inferencing: 343it [33:19,  5.84s/it]Inferencing: 343it [33:19,  5.85s/it]Inferencing: 344it [33:25,  5.83s/it]Inferencing: 344it [33:25,  5.84s/it]Inferencing: 345it [33:31,  5.82s/it]Inferencing: 345it [33:31,  5.83s/it]Inferencing: 346it [33:36,  5.82s/it]Inferencing: 346it [33:37,  5.82s/it]Inferencing: 347it [33:42,  5.81s/it]Inferencing: 347it [33:42,  5.82s/it]Inferencing: 348it [33:48,  5.81s/it]Inferencing: 348it [33:48,  5.81s/it]Inferencing: 349it [33:54,  5.80s/it]Inferencing: 349it [33:54,  5.81s/it]Inferencing: 350it [34:00,  5.80s/it]Inferencing: 350it [34:00,  5.80s/it]Inferencing: 351it [34:05,  5.80s/it]Inferencing: 351it [34:06,  5.80s/it]Inferencing: 352it [34:11,  5.81s/it]Inferencing: 352it [34:11,  5.81s/it]Inferencing: 353it [34:17,  5.82s/it]Inferencing: 353it [34:17,  5.81s/it]Inferencing: 354it [34:23,  5.82s/it]Inferencing: 354it [34:23,  5.82s/it]Inferencing: 355it [34:29,  5.82s/it]Inferencing: 355it [34:29,  5.82s/it]Inferencing: 356it [34:35,  5.82s/it]Inferencing: 356it [34:35,  5.82s/it]Inferencing: 357it [34:40,  5.84s/it]Inferencing: 357it [34:41,  5.83s/it]Inferencing: 358it [34:46,  5.85s/it]Inferencing: 358it [34:47,  5.84s/it]Inferencing: 359it [34:52,  5.86s/it]Inferencing: 359it [34:52,  5.85s/it]Inferencing: 360it [34:58,  5.87s/it]Inferencing: 360it [34:58,  5.86s/it]Inferencing: 361it [35:04,  5.87s/it]Inferencing: 361it [35:04,  5.87s/it]Inferencing: 362it [35:10,  5.88s/it]Inferencing: 362it [35:10,  5.87s/it]Inferencing: 363it [35:16,  5.88s/it]Inferencing: 363it [35:16,  5.88s/it]Inferencing: 364it [35:22,  5.88s/it]Inferencing: 364it [35:22,  5.88s/it]Inferencing: 365it [35:28,  5.90s/it]Inferencing: 365it [35:28,  5.89s/it]Inferencing: 366it [35:34,  5.90s/it]Inferencing: 366it [35:34,  5.90s/it]Inferencing: 367it [35:39,  5.92s/it]Inferencing: 367it [35:40,  5.92s/it]Inferencing: 368it [35:45,  5.92s/it]Inferencing: 368it [35:46,  5.91s/it]Inferencing: 369it [35:51,  5.91s/it]Inferencing: 369it [35:51,  5.91s/it]Inferencing: 370it [35:57,  5.91s/it]Inferencing: 370it [35:57,  5.91s/it]Inferencing: 371it [36:03,  5.90s/it]Inferencing: 371it [36:03,  5.91s/it]Inferencing: 372it [36:09,  5.90s/it]Inferencing: 372it [36:09,  5.90s/it]Inferencing: 373it [36:15,  5.89s/it]Inferencing: 373it [36:15,  5.90s/it]Inferencing: 374it [36:21,  5.89s/it]Inferencing: 374it [36:21,  5.89s/it]Inferencing: 375it [36:27,  5.89s/it]Inferencing: 375it [36:27,  5.89s/it]Inferencing: 376it [36:33,  5.89s/it]Inferencing: 376it [36:33,  5.89s/it]Inferencing: 377it [36:38,  5.89s/it]Inferencing: 377it [36:39,  5.89s/it]Inferencing: 378it [36:44,  5.90s/it]Inferencing: 378it [36:44,  5.90s/it]Inferencing: 379it [36:50,  5.90s/it]Inferencing: 379it [36:50,  5.90s/it]Inferencing: 380it [36:56,  5.90s/it]Inferencing: 380it [36:56,  5.90s/it]Inferencing: 381it [37:02,  5.90s/it]Inferencing: 381it [37:02,  5.90s/it]Inferencing: 382it [37:08,  5.90s/it]Inferencing: 382it [37:08,  5.90s/it]Inferencing: 383it [37:14,  5.90s/it]Inferencing: 383it [37:14,  5.90s/it]Inferencing: 384it [37:20,  5.90s/it]Inferencing: 384it [37:20,  5.90s/it]Inferencing: 385it [37:26,  5.90s/it]Inferencing: 385it [37:26,  5.90s/it]Inferencing: 386it [37:32,  5.90s/it]Inferencing: 386it [37:32,  5.90s/it]Inferencing: 387it [37:37,  5.90s/it]Inferencing: 387it [37:38,  5.90s/it]Inferencing: 388it [37:43,  5.90s/it]Inferencing: 388it [37:43,  5.90s/it]Inferencing: 389it [37:49,  5.90s/it]Inferencing: 389it [37:49,  5.90s/it]Inferencing: 390it [37:55,  5.90s/it]Inferencing: 390it [37:55,  5.90s/it]Inferencing: 391it [38:01,  5.91s/it]Inferencing: 391it [38:01,  5.90s/it]Inferencing: 392it [38:07,  5.91s/it]Inferencing: 392it [38:07,  5.91s/it]Inferencing: 393it [38:13,  5.92s/it]Inferencing: 393it [38:13,  5.91s/it]Inferencing: 394it [38:19,  5.94s/it]Inferencing: 394it [38:19,  5.93s/it]Inferencing: 395it [38:25,  5.94s/it]Inferencing: 395it [38:25,  5.93s/it]Inferencing: 396it [38:31,  5.93s/it]Inferencing: 396it [38:31,  5.93s/it]Inferencing: 397it [38:37,  5.93s/it]Inferencing: 397it [38:37,  5.93s/it]Inferencing: 398it [38:43,  5.93s/it]Inferencing: 398it [38:43,  5.93s/it]Inferencing: 399it [38:49,  5.92s/it]Inferencing: 399it [38:49,  5.93s/it]Inferencing: 400it [38:54,  5.92s/it]Inferencing: 400it [38:55,  5.92s/it]Inferencing: 401it [39:00,  5.92s/it]Inferencing: 401it [39:00,  5.92s/it]Inferencing: 402it [39:06,  5.91s/it]Inferencing: 402it [39:06,  5.92s/it]Inferencing: 403it [39:12,  5.91s/it]Inferencing: 403it [39:12,  5.91s/it]Inferencing: 404it [39:18,  5.91s/it]Inferencing: 404it [39:18,  5.91s/it]Inferencing: 405it [39:24,  5.92s/it]Inferencing: 405it [39:24,  5.92s/it]Inferencing: 406it [39:30,  5.93s/it]Inferencing: 406it [39:30,  5.92s/it]Inferencing: 407it [39:36,  5.93s/it]Inferencing: 407it [39:36,  5.93s/it]Inferencing: 408it [39:42,  5.93s/it]Inferencing: 408it [39:42,  5.93s/it]Inferencing: 409it [39:48,  5.93s/it]Inferencing: 409it [39:48,  5.93s/it]Inferencing: 410it [39:54,  5.93s/it]Inferencing: 410it [39:54,  5.93s/it]Inferencing: 411it [40:00,  5.94s/it]Inferencing: 411it [40:00,  5.94s/it]Inferencing: 412it [40:06,  5.94s/it]Inferencing: 412it [40:06,  5.94s/it]Inferencing: 413it [40:12,  5.94s/it]Inferencing: 413it [40:12,  5.94s/it]Inferencing: 414it [40:17,  5.94s/it]Inferencing: 414it [40:18,  5.94s/it]Inferencing: 415it [40:23,  5.94s/it]Inferencing: 415it [40:24,  5.94s/it]Inferencing: 416it [40:29,  5.95s/it]Inferencing: 416it [40:29,  5.94s/it]Inferencing: 417it [40:35,  5.95s/it]Inferencing: 417it [40:35,  5.95s/it]Inferencing: 418it [40:41,  5.96s/it]Inferencing: 418it [40:41,  5.95s/it]Inferencing: 419it [40:47,  5.97s/it]Inferencing: 419it [40:47,  5.96s/it]Inferencing: 420it [40:53,  5.99s/it]Inferencing: 420it [40:53,  5.98s/it]Inferencing: 421it [40:59,  6.00s/it]Inferencing: 421it [40:59,  5.99s/it]Inferencing: 422it [41:05,  6.01s/it]Inferencing: 422it [41:05,  6.00s/it]Inferencing: 423it [41:11,  6.02s/it]Inferencing: 423it [41:11,  6.02s/it]Inferencing: 424it [41:17,  6.02s/it]Inferencing: 424it [41:18,  6.02s/it]Inferencing: 425it [41:23,  6.02s/it]Inferencing: 425it [41:24,  6.02s/it]Inferencing: 426it [41:29,  6.02s/it]Inferencing: 426it [41:30,  6.01s/it]Inferencing: 427it [41:35,  6.01s/it]Inferencing: 427it [41:36,  6.01s/it]Inferencing: 428it [41:41,  6.01s/it]Inferencing: 428it [41:42,  6.01s/it]Inferencing: 429it [41:47,  6.01s/it]Inferencing: 429it [41:48,  6.01s/it]Inferencing: 430it [41:53,  6.00s/it]Inferencing: 430it [41:54,  6.00s/it]Inferencing: 431it [41:59,  6.00s/it]Inferencing: 431it [42:00,  6.01s/it]Inferencing: 432it [42:04,  5.51s/it]Inferencing: 432it [42:04,  5.84s/it]
+Inferencing: 432it [42:04,  5.51s/it]Inferencing: 432it [42:04,  5.84s/it]
+merging embeddings
+11/28/2024 00:47:26 - INFO - __main__ -   merging embeddings
+merging embeddings
+11/28/2024 00:47:26 - INFO - __main__ -   merging embeddings
+502939 -1
+502939 -1
+***** Done passage inference *****
+11/28/2024 00:47:38 - INFO - __main__ -   ***** Done passage inference *****
+***** inference of train query *****
+11/28/2024 00:47:38 - INFO - __main__ -   ***** inference of train query *****
+502939 -1
+502939 -1
+***** Running ANN Embedding Inference *****
+11/28/2024 00:47:38 - INFO - __main__ -   ***** Running ANN Embedding Inference *****
+  Batch size = 512
+11/28/2024 00:47:38 - INFO - __main__ -     Batch size = 512
+502939 -1
+502939 -1
+502939 -1
+***** Done passage inference *****
+11/28/2024 00:47:38 - INFO - __main__ -   ***** Done passage inference *****
+11/28/2024 00:47:38 - INFO - __main__ -   ***** inference of train query *****
+***** inference of train query *****
+502939 -1
+Inferencing: 0it [00:00, ?it/s]***** Running ANN Embedding Inference *****
+11/28/2024 00:47:38 - INFO - __main__ -   ***** Running ANN Embedding Inference *****
+11/28/2024 00:47:38 - INFO - __main__ -     Batch size = 512
+  Batch size = 512
+Inferencing: 0it [00:00, ?it/s]Inferencing: 0it [00:10, ?it/s]Inferencing: 14it [00:10,  1.31it/s]Inferencing: 0it [00:10, ?it/s]Inferencing: 14it [00:10,  1.30it/s]Inferencing: 15it [00:11,  1.32it/s]Inferencing: 15it [00:11,  1.31it/s]Inferencing: 16it [00:12,  1.33it/s]Inferencing: 16it [00:12,  1.32it/s]Inferencing: 17it [00:12,  1.34it/s]Inferencing: 17it [00:12,  1.33it/s]Inferencing: 18it [00:13,  1.35it/s]Inferencing: 18it [00:13,  1.34it/s]Inferencing: 19it [00:14,  1.35it/s]Inferencing: 19it [00:14,  1.34it/s]Inferencing: 20it [00:14,  1.37it/s]Inferencing: 20it [00:15,  1.36it/s]Inferencing: 21it [00:15,  1.39it/s]Inferencing: 21it [00:15,  1.38it/s]Inferencing: 22it [00:16,  1.42it/s]Inferencing: 22it [00:16,  1.40it/s]Inferencing: 23it [00:16,  1.44it/s]Inferencing: 23it [00:17,  1.43it/s]Inferencing: 24it [00:17,  1.46it/s]Inferencing: 24it [00:17,  1.45it/s]Inferencing: 25it [00:18,  1.48it/s]Inferencing: 25it [00:18,  1.47it/s]Inferencing: 26it [00:18,  1.50it/s]Inferencing: 26it [00:19,  1.49it/s]Inferencing: 27it [00:19,  1.52it/s]Inferencing: 27it [00:19,  1.51it/s]Inferencing: 28it [00:20,  1.54it/s]Inferencing: 28it [00:20,  1.53it/s]Inferencing: 29it [00:20,  1.56it/s]Inferencing: 29it [00:20,  1.55it/s]Inferencing: 30it [00:21,  1.58it/s]Inferencing: 30it [00:21,  1.57it/s]Inferencing: 31it [00:22,  1.58it/s]Inferencing: 31it [00:22,  1.57it/s]Inferencing: 32it [00:22,  1.61it/s]Inferencing: 32it [00:22,  1.59it/s]Inferencing: 33it [00:23,  1.63it/s]Inferencing: 33it [00:23,  1.61it/s]Inferencing: 34it [00:23,  1.65it/s]Inferencing: 34it [00:24,  1.63it/s]Inferencing: 35it [00:24,  1.67it/s]Inferencing: 35it [00:24,  1.65it/s]Inferencing: 36it [00:24,  1.69it/s]Inferencing: 36it [00:25,  1.67it/s]Inferencing: 37it [00:25,  1.71it/s]Inferencing: 37it [00:25,  1.70it/s]Inferencing: 38it [00:26,  1.72it/s]Inferencing: 38it [00:26,  1.71it/s]Inferencing: 39it [00:26,  1.73it/s]Inferencing: 39it [00:26,  1.72it/s]Inferencing: 40it [00:27,  1.74it/s]Inferencing: 40it [00:27,  1.73it/s]Inferencing: 41it [00:27,  1.74it/s]Inferencing: 41it [00:28,  1.74it/s]Inferencing: 42it [00:28,  1.74it/s]Inferencing: 42it [00:28,  1.74it/s]Inferencing: 43it [00:28,  1.74it/s]Inferencing: 43it [00:29,  1.74it/s]Inferencing: 44it [00:29,  1.75it/s]Inferencing: 44it [00:29,  1.74it/s]Inferencing: 45it [00:30,  1.75it/s]Inferencing: 45it [00:30,  1.75it/s]Inferencing: 46it [00:30,  1.75it/s]Inferencing: 46it [00:30,  1.75it/s]Inferencing: 47it [00:31,  1.75it/s]Inferencing: 47it [00:31,  1.75it/s]Inferencing: 48it [00:31,  1.75it/s]Inferencing: 48it [00:32,  1.75it/s]Inferencing: 49it [00:32,  1.72it/s]Inferencing: 49it [00:32,  1.72it/s]Inferencing: 50it [00:33,  1.71it/s]Inferencing: 50it [00:33,  1.71it/s]Inferencing: 51it [00:33,  1.72it/s]Inferencing: 51it [00:33,  1.72it/s]Inferencing: 52it [00:34,  1.73it/s]Inferencing: 52it [00:34,  1.73it/s]Inferencing: 53it [00:34,  1.74it/s]Inferencing: 53it [00:34,  1.74it/s]Inferencing: 54it [00:35,  1.74it/s]Inferencing: 54it [00:35,  1.74it/s]Inferencing: 55it [00:35,  1.74it/s]Inferencing: 55it [00:36,  1.74it/s]Inferencing: 56it [00:36,  1.75it/s]Inferencing: 56it [00:36,  1.75it/s]Inferencing: 57it [00:37,  1.75it/s]Inferencing: 57it [00:37,  1.75it/s]Inferencing: 58it [00:37,  1.75it/s]Inferencing: 58it [00:37,  1.75it/s]Inferencing: 59it [00:38,  1.75it/s]Inferencing: 59it [00:38,  1.75it/s]Inferencing: 60it [00:38,  1.75it/s]Inferencing: 60it [00:38,  1.75it/s]Inferencing: 61it [00:39,  1.75it/s]Inferencing: 61it [00:39,  1.75it/s]Inferencing: 62it [00:39,  1.75it/s]Inferencing: 62it [00:40,  1.75it/s]Inferencing: 63it [00:40,  1.75it/s]Inferencing: 63it [00:40,  1.75it/s]Inferencing: 64it [00:41,  1.75it/s]Inferencing: 64it [00:41,  1.75it/s]Inferencing: 65it [00:41,  1.75it/s]Inferencing: 65it [00:41,  1.75it/s]Inferencing: 66it [00:42,  1.75it/s]Inferencing: 66it [00:42,  1.75it/s]Inferencing: 67it [00:42,  1.75it/s]Inferencing: 67it [00:42,  1.75it/s]Inferencing: 68it [00:43,  1.75it/s]Inferencing: 68it [00:43,  1.75it/s]Inferencing: 69it [00:43,  1.75it/s]Inferencing: 69it [00:44,  1.73it/s]Inferencing: 70it [00:44,  1.75it/s]Inferencing: 70it [00:44,  1.74it/s]Inferencing: 71it [00:45,  1.75it/s]Inferencing: 71it [00:45,  1.74it/s]Inferencing: 72it [00:45,  1.75it/s]Inferencing: 72it [00:45,  1.74it/s]Inferencing: 73it [00:46,  1.75it/s]Inferencing: 73it [00:46,  1.74it/s]Inferencing: 74it [00:46,  1.75it/s]Inferencing: 74it [00:47,  1.74it/s]Inferencing: 75it [00:47,  1.75it/s]Inferencing: 75it [00:47,  1.75it/s]Inferencing: 76it [00:47,  1.72it/s]Inferencing: 76it [00:48,  1.70it/s]Inferencing: 77it [00:48,  1.73it/s]Inferencing: 77it [00:48,  1.72it/s]Inferencing: 78it [00:49,  1.73it/s]Inferencing: 78it [00:49,  1.73it/s]Inferencing: 79it [00:49,  1.74it/s]Inferencing: 79it [00:49,  1.73it/s]Inferencing: 80it [00:50,  1.74it/s]Inferencing: 80it [00:50,  1.74it/s]Inferencing: 81it [00:50,  1.74it/s]Inferencing: 81it [00:51,  1.74it/s]Inferencing: 82it [00:51,  1.75it/s]Inferencing: 82it [00:51,  1.74it/s]Inferencing: 83it [00:51,  1.75it/s]Inferencing: 83it [00:52,  1.75it/s]Inferencing: 84it [00:52,  1.75it/s]Inferencing: 84it [00:52,  1.75it/s]Inferencing: 85it [00:53,  1.75it/s]Inferencing: 85it [00:53,  1.75it/s]Inferencing: 86it [00:53,  1.75it/s]Inferencing: 86it [00:53,  1.75it/s]Inferencing: 87it [00:54,  1.75it/s]Inferencing: 87it [00:54,  1.75it/s]Inferencing: 88it [00:54,  1.75it/s]Inferencing: 88it [00:55,  1.75it/s]Inferencing: 89it [00:55,  1.73it/s]Inferencing: 89it [00:55,  1.75it/s]Inferencing: 90it [00:55,  1.74it/s]Inferencing: 90it [00:56,  1.75it/s]Inferencing: 91it [00:56,  1.74it/s]Inferencing: 91it [00:56,  1.75it/s]Inferencing: 92it [00:57,  1.74it/s]Inferencing: 92it [00:57,  1.75it/s]Inferencing: 93it [00:57,  1.75it/s]Inferencing: 93it [00:57,  1.75it/s]Inferencing: 94it [00:58,  1.75it/s]Inferencing: 94it [00:58,  1.75it/s]Inferencing: 95it [00:58,  1.75it/s]Inferencing: 95it [00:59,  1.75it/s]Inferencing: 96it [00:59,  1.75it/s]Inferencing: 96it [00:59,  1.75it/s]Inferencing: 97it [00:59,  1.75it/s]Inferencing: 97it [01:00,  1.75it/s]Inferencing: 98it [01:00,  1.75it/s]Inferencing: 98it [01:00,  1.75it/s]Inferencing: 99it [01:01,  1.75it/s]Inferencing: 99it [01:01,  1.75it/s]Inferencing: 100it [01:01,  1.75it/s]Inferencing: 100it [01:01,  1.75it/s]Inferencing: 101it [01:02,  1.75it/s]Inferencing: 101it [01:02,  1.75it/s]Inferencing: 102it [01:02,  1.75it/s]Inferencing: 102it [01:03,  1.75it/s]Inferencing: 103it [01:03,  1.75it/s]Inferencing: 103it [01:03,  1.75it/s]Inferencing: 104it [01:03,  1.75it/s]Inferencing: 104it [01:04,  1.75it/s]Inferencing: 105it [01:04,  1.72it/s]Inferencing: 105it [01:04,  1.72it/s]Inferencing: 106it [01:05,  1.72it/s]Inferencing: 106it [01:05,  1.73it/s]Inferencing: 107it [01:05,  1.73it/s]Inferencing: 107it [01:05,  1.73it/s]Inferencing: 108it [01:06,  1.72it/s]Inferencing: 108it [01:06,  1.72it/s]Inferencing: 109it [01:06,  1.73it/s]Inferencing: 109it [01:07,  1.73it/s]Inferencing: 110it [01:07,  1.74it/s]Inferencing: 110it [01:07,  1.74it/s]Inferencing: 111it [01:08,  1.74it/s]Inferencing: 111it [01:08,  1.74it/s]Inferencing: 112it [01:08,  1.74it/s]Inferencing: 112it [01:08,  1.74it/s]Inferencing: 113it [01:09,  1.74it/s]Inferencing: 113it [01:09,  1.75it/s]Inferencing: 114it [01:09,  1.75it/s]Inferencing: 114it [01:09,  1.75it/s]Inferencing: 115it [01:10,  1.75it/s]Inferencing: 115it [01:10,  1.75it/s]Inferencing: 116it [01:10,  1.75it/s]Inferencing: 116it [01:11,  1.75it/s]Inferencing: 117it [01:11,  1.75it/s]Inferencing: 117it [01:11,  1.75it/s]Inferencing: 118it [01:12,  1.75it/s]Inferencing: 118it [01:12,  1.75it/s]Inferencing: 119it [01:12,  1.75it/s]Inferencing: 119it [01:12,  1.75it/s]Inferencing: 120it [01:13,  1.75it/s]Inferencing: 120it [01:13,  1.75it/s]Inferencing: 121it [01:13,  1.75it/s]Inferencing: 121it [01:13,  1.75it/s]Inferencing: 122it [01:14,  1.75it/s]Inferencing: 122it [01:14,  1.75it/s]Inferencing: 123it [01:14,  1.75it/s]Inferencing: 123it [01:15,  1.75it/s]Inferencing: 124it [01:15,  1.75it/s]Inferencing: 124it [01:15,  1.75it/s]Inferencing: 125it [01:16,  1.75it/s]Inferencing: 125it [01:16,  1.75it/s]Inferencing: 126it [01:16,  1.75it/s]Inferencing: 126it [01:16,  1.75it/s]Inferencing: 127it [01:17,  1.75it/s]Inferencing: 127it [01:17,  1.73it/s]Inferencing: 128it [01:17,  1.75it/s]Inferencing: 128it [01:17,  1.74it/s]Inferencing: 129it [01:18,  1.75it/s]Inferencing: 129it [01:18,  1.74it/s]Inferencing: 130it [01:18,  1.75it/s]Inferencing: 130it [01:19,  1.74it/s]Inferencing: 131it [01:19,  1.75it/s]Inferencing: 131it [01:19,  1.74it/s]Inferencing: 132it [01:20,  1.75it/s]Inferencing: 132it [01:20,  1.75it/s]Inferencing: 133it [01:20,  1.71it/s]Inferencing: 133it [01:20,  1.71it/s]Inferencing: 134it [01:21,  1.72it/s]Inferencing: 134it [01:21,  1.72it/s]Inferencing: 135it [01:21,  1.73it/s]Inferencing: 135it [01:22,  1.73it/s]Inferencing: 136it [01:22,  1.73it/s]Inferencing: 136it [01:22,  1.74it/s]Inferencing: 137it [01:22,  1.74it/s]Inferencing: 137it [01:23,  1.74it/s]Inferencing: 138it [01:23,  1.74it/s]Inferencing: 138it [01:23,  1.74it/s]Inferencing: 139it [01:24,  1.74it/s]Inferencing: 139it [01:24,  1.75it/s]Inferencing: 140it [01:24,  1.74it/s]Inferencing: 140it [01:24,  1.75it/s]Inferencing: 141it [01:25,  1.75it/s]Inferencing: 141it [01:25,  1.75it/s]Inferencing: 142it [01:25,  1.75it/s]Inferencing: 142it [01:26,  1.75it/s]Inferencing: 143it [01:26,  1.75it/s]Inferencing: 143it [01:26,  1.75it/s]Inferencing: 144it [01:26,  1.75it/s]Inferencing: 144it [01:27,  1.75it/s]Inferencing: 145it [01:27,  1.75it/s]Inferencing: 145it [01:27,  1.75it/s]Inferencing: 146it [01:28,  1.75it/s]Inferencing: 146it [01:28,  1.75it/s]Inferencing: 147it [01:28,  1.75it/s]Inferencing: 147it [01:28,  1.75it/s]Inferencing: 148it [01:29,  1.75it/s]Inferencing: 148it [01:29,  1.75it/s]Inferencing: 149it [01:29,  1.75it/s]Inferencing: 149it [01:30,  1.75it/s]Inferencing: 150it [01:30,  1.75it/s]Inferencing: 150it [01:30,  1.75it/s]Inferencing: 151it [01:30,  1.75it/s]Inferencing: 151it [01:31,  1.75it/s]Inferencing: 152it [01:31,  1.75it/s]Inferencing: 152it [01:31,  1.75it/s]Inferencing: 153it [01:32,  1.75it/s]Inferencing: 153it [01:32,  1.75it/s]Inferencing: 154it [01:32,  1.75it/s]Inferencing: 154it [01:32,  1.75it/s]Inferencing: 155it [01:33,  1.75it/s]Inferencing: 155it [01:33,  1.75it/s]Inferencing: 156it [01:33,  1.75it/s]Inferencing: 156it [01:34,  1.75it/s]Inferencing: 157it [01:34,  1.75it/s]Inferencing: 157it [01:34,  1.75it/s]Inferencing: 158it [01:34,  1.75it/s]Inferencing: 158it [01:35,  1.75it/s]Inferencing: 159it [01:35,  1.75it/s]Inferencing: 159it [01:35,  1.75it/s]Inferencing: 160it [01:36,  1.75it/s]Inferencing: 160it [01:36,  1.75it/s]Inferencing: 161it [01:36,  1.71it/s]Inferencing: 161it [01:36,  1.72it/s]Inferencing: 162it [01:37,  1.72it/s]Inferencing: 162it [01:37,  1.73it/s]Inferencing: 163it [01:37,  1.73it/s]Inferencing: 163it [01:38,  1.73it/s]Inferencing: 164it [01:38,  1.74it/s]Inferencing: 164it [01:38,  1.74it/s]Inferencing: 165it [01:38,  1.74it/s]Inferencing: 165it [01:39,  1.74it/s]Inferencing: 166it [01:39,  1.73it/s]Inferencing: 166it [01:39,  1.74it/s]Inferencing: 167it [01:40,  1.73it/s]Inferencing: 167it [01:40,  1.74it/s]Inferencing: 168it [01:40,  1.74it/s]Inferencing: 168it [01:40,  1.74it/s]Inferencing: 169it [01:41,  1.74it/s]Inferencing: 169it [01:41,  1.74it/s]Inferencing: 170it [01:41,  1.74it/s]Inferencing: 170it [01:42,  1.75it/s]Inferencing: 171it [01:42,  1.75it/s]Inferencing: 171it [01:42,  1.75it/s]Inferencing: 172it [01:42,  1.75it/s]Inferencing: 172it [01:43,  1.75it/s]Inferencing: 173it [01:43,  1.75it/s]Inferencing: 173it [01:43,  1.75it/s]Inferencing: 174it [01:44,  1.75it/s]Inferencing: 174it [01:44,  1.75it/s]Inferencing: 175it [01:44,  1.75it/s]Inferencing: 175it [01:44,  1.75it/s]Inferencing: 176it [01:45,  1.75it/s]Inferencing: 176it [01:45,  1.75it/s]Inferencing: 177it [01:45,  1.75it/s]Inferencing: 177it [01:46,  1.75it/s]Inferencing: 178it [01:46,  1.75it/s]Inferencing: 178it [01:46,  1.75it/s]Inferencing: 179it [01:47,  1.75it/s]Inferencing: 179it [01:47,  1.75it/s]Inferencing: 180it [01:47,  1.75it/s]Inferencing: 180it [01:47,  1.75it/s]Inferencing: 181it [01:48,  1.75it/s]Inferencing: 181it [01:48,  1.75it/s]Inferencing: 182it [01:48,  1.75it/s]Inferencing: 182it [01:48,  1.75it/s]Inferencing: 183it [01:49,  1.75it/s]Inferencing: 183it [01:49,  1.75it/s]Inferencing: 184it [01:49,  1.75it/s]Inferencing: 184it [01:50,  1.75it/s]Inferencing: 185it [01:50,  1.73it/s]Inferencing: 185it [01:50,  1.73it/s]Inferencing: 186it [01:51,  1.74it/s]Inferencing: 186it [01:51,  1.74it/s]Inferencing: 187it [01:51,  1.74it/s]Inferencing: 187it [01:51,  1.74it/s]Inferencing: 188it [01:52,  1.71it/s]Inferencing: 188it [01:52,  1.70it/s]Inferencing: 189it [01:52,  1.72it/s]Inferencing: 189it [01:53,  1.71it/s]Inferencing: 190it [01:53,  1.73it/s]Inferencing: 190it [01:53,  1.72it/s]Inferencing: 191it [01:53,  1.74it/s]Inferencing: 191it [01:54,  1.73it/s]Inferencing: 192it [01:54,  1.74it/s]Inferencing: 192it [01:54,  1.74it/s]Inferencing: 193it [01:55,  1.74it/s]Inferencing: 193it [01:55,  1.74it/s]Inferencing: 194it [01:55,  1.74it/s]Inferencing: 194it [01:55,  1.74it/s]Inferencing: 195it [01:56,  1.75it/s]Inferencing: 195it [01:56,  1.74it/s]Inferencing: 196it [01:56,  1.75it/s]Inferencing: 196it [01:57,  1.75it/s]Inferencing: 197it [01:57,  1.75it/s]Inferencing: 197it [01:57,  1.75it/s]Inferencing: 198it [01:57,  1.75it/s]Inferencing: 198it [01:58,  1.75it/s]Inferencing: 199it [01:58,  1.75it/s]Inferencing: 199it [01:58,  1.75it/s]Inferencing: 200it [01:59,  1.75it/s]Inferencing: 200it [01:59,  1.75it/s]Inferencing: 201it [01:59,  1.75it/s]Inferencing: 201it [01:59,  1.75it/s]Inferencing: 202it [02:00,  1.75it/s]Inferencing: 202it [02:00,  1.75it/s]Inferencing: 203it [02:00,  1.75it/s]Inferencing: 203it [02:01,  1.75it/s]Inferencing: 204it [02:01,  1.75it/s]Inferencing: 204it [02:01,  1.73it/s]Inferencing: 205it [02:01,  1.75it/s]Inferencing: 205it [02:02,  1.74it/s]Inferencing: 206it [02:02,  1.75it/s]Inferencing: 206it [02:02,  1.74it/s]Inferencing: 207it [02:03,  1.75it/s]Inferencing: 207it [02:03,  1.74it/s]Inferencing: 208it [02:03,  1.75it/s]Inferencing: 208it [02:03,  1.75it/s]Inferencing: 209it [02:04,  1.75it/s]Inferencing: 209it [02:04,  1.75it/s]Inferencing: 210it [02:04,  1.74it/s]Inferencing: 210it [02:05,  1.75it/s]Inferencing: 211it [02:05,  1.75it/s]Inferencing: 211it [02:05,  1.75it/s]Inferencing: 212it [02:05,  1.75it/s]Inferencing: 212it [02:06,  1.75it/s]Inferencing: 213it [02:06,  1.75it/s]Inferencing: 213it [02:06,  1.75it/s]Inferencing: 214it [02:07,  1.75it/s]Inferencing: 214it [02:07,  1.75it/s]Inferencing: 215it [02:07,  1.75it/s]Inferencing: 215it [02:07,  1.75it/s]Inferencing: 216it [02:08,  1.75it/s]Inferencing: 216it [02:08,  1.75it/s]Inferencing: 217it [02:08,  1.70it/s]Inferencing: 217it [02:09,  1.71it/s]Inferencing: 218it [02:09,  1.71it/s]Inferencing: 218it [02:09,  1.73it/s]Inferencing: 219it [02:09,  1.72it/s]Inferencing: 219it [02:10,  1.73it/s]Inferencing: 220it [02:10,  1.73it/s]Inferencing: 220it [02:10,  1.74it/s]Inferencing: 221it [02:11,  1.74it/s]Inferencing: 221it [02:11,  1.74it/s]Inferencing: 222it [02:11,  1.74it/s]Inferencing: 222it [02:11,  1.74it/s]Inferencing: 223it [02:12,  1.74it/s]Inferencing: 223it [02:12,  1.74it/s]Inferencing: 224it [02:12,  1.73it/s]Inferencing: 224it [02:13,  1.74it/s]Inferencing: 225it [02:13,  1.73it/s]Inferencing: 225it [02:13,  1.74it/s]Inferencing: 226it [02:14,  1.74it/s]Inferencing: 226it [02:14,  1.74it/s]Inferencing: 227it [02:14,  1.74it/s]Inferencing: 227it [02:14,  1.75it/s]Inferencing: 228it [02:15,  1.74it/s]Inferencing: 228it [02:15,  1.75it/s]Inferencing: 229it [02:15,  1.75it/s]Inferencing: 229it [02:15,  1.75it/s]Inferencing: 230it [02:16,  1.75it/s]Inferencing: 230it [02:16,  1.75it/s]Inferencing: 231it [02:16,  1.75it/s]Inferencing: 231it [02:17,  1.75it/s]Inferencing: 232it [02:17,  1.75it/s]Inferencing: 232it [02:17,  1.75it/s]Inferencing: 233it [02:18,  1.75it/s]Inferencing: 233it [02:18,  1.75it/s]Inferencing: 234it [02:18,  1.75it/s]Inferencing: 234it [02:18,  1.75it/s]Inferencing: 235it [02:19,  1.75it/s]Inferencing: 235it [02:19,  1.75it/s]Inferencing: 236it [02:19,  1.75it/s]Inferencing: 236it [02:19,  1.75it/s]Inferencing: 237it [02:20,  1.75it/s]Inferencing: 237it [02:20,  1.75it/s]Inferencing: 238it [02:20,  1.75it/s]Inferencing: 238it [02:21,  1.75it/s]Inferencing: 239it [02:21,  1.75it/s]Inferencing: 239it [02:21,  1.75it/s]Inferencing: 240it [02:22,  1.75it/s]Inferencing: 240it [02:22,  1.75it/s]Inferencing: 241it [02:22,  1.75it/s]Inferencing: 241it [02:22,  1.75it/s]Inferencing: 242it [02:23,  1.75it/s]Inferencing: 242it [02:23,  1.75it/s]Inferencing: 243it [02:23,  1.73it/s]Inferencing: 243it [02:23,  1.73it/s]Inferencing: 244it [02:24,  1.74it/s]Inferencing: 244it [02:24,  1.74it/s]Inferencing: 245it [02:24,  1.71it/s]Inferencing: 245it [02:25,  1.67it/s]Inferencing: 246it [02:25,  1.93it/s]Inferencing: 246it [02:25,  1.69it/s]
+Inferencing: 246it [02:25,  1.94it/s]Inferencing: 246it [02:25,  1.69it/s]
+11/28/2024 00:50:03 - INFO - __main__ -   merging embeddings
+merging embeddings
+merging embeddings
+11/28/2024 00:50:04 - INFO - __main__ -   merging embeddings
+Inference Time -  2.8293936252593994 2536.6462786197662 150.14645743370056
+Inference Time -  2.830155849456787 2536.655121564865 150.1419813632965
+Inference Time -  2.8310844898223877 2536.6507411003113 150.14580631256104
+Inference Time -  2.823370933532715 2536.6617794036865 150.14816808700562
+Inference Time -  2.812408447265625 2536.7379066944122 150.23833179473877
+Inference Time -  2.8096516132354736 2536.7369334697723 150.24592065811157
+Inference Time -  2.8121469020843506 2536.7348594665527 150.25230526924133
+Inference Time -  2.8120949268341064 2536.735788822174 150.25164818763733
+***** Done ANN Index *****
+11/28/2024 00:50:09 - INFO - __main__ -   ***** Done ANN Index *****
+Indexing Time -  1.2228586673736572
+Evaluating... (6980, 768)
+***** Done ANN Index *****
+11/28/2024 00:50:09 - INFO - __main__ -   ***** Done ANN Index *****
+Indexing Time -  1.2369720935821533
+Evaluating... (6980, 768)
+ --- ANN NDCG@10:0.5981032093649599 433.02672358023096 724
+Eval Time -  256.41638112068176
+Chunked 25146 query from 502939
+11/28/2024 00:54:26 - INFO - __main__ -   Chunked 25146 query from 502939
+Search FAISS TOP K
+ --- ANN NDCG@10:0.5981032093649599 433.02672358023096 724
+Eval Time -  256.4488694667816
+Chunked 25146 query from 502939
+11/28/2024 00:54:26 - INFO - __main__ -   Chunked 25146 query from 502939
+Search FAISS TOP K
+0 th batch is processing.. out of 50 19.104791402816772
+0 th batch is processing.. out of 50 19.11688780784607
+1 th batch is processing.. out of 50 19.082207679748535
+1 th batch is processing.. out of 50 19.072253227233887
+2 th batch is processing.. out of 50 19.037059545516968
+2 th batch is processing.. out of 50 19.051377534866333
+3 th batch is processing.. out of 50 18.76357126235962
+3 th batch is processing.. out of 50 18.746834754943848
+4 th batch is processing.. out of 50 18.84667205810547
+4 th batch is processing.. out of 50 18.874850749969482
+5 th batch is processing.. out of 50 19.229581832885742
+5 th batch is processing.. out of 50 19.230480432510376
+6 th batch is processing.. out of 50 18.997151613235474
+6 th batch is processing.. out of 50 19.00129747390747
+7 th batch is processing.. out of 50 18.977065086364746
+7 th batch is processing.. out of 50 18.976995944976807
+8 th batch is processing.. out of 50 19.036306858062744
+8 th batch is processing.. out of 50 19.035804271697998
+9 th batch is processing.. out of 50 19.280099391937256
+9 th batch is processing.. out of 50 19.274668216705322
+10 th batch is processing.. out of 50 19.414355993270874
+10 th batch is processing.. out of 50 19.43099617958069
+11 th batch is processing.. out of 50 18.852073669433594
+11 th batch is processing.. out of 50 18.857441186904907
+12 th batch is processing.. out of 50 18.98381519317627
+12 th batch is processing.. out of 50 18.959378957748413
+13 th batch is processing.. out of 50 18.7555890083313
+13 th batch is processing.. out of 50 18.75918436050415
+14 th batch is processing.. out of 50 19.139424085617065
+14 th batch is processing.. out of 50 19.144495725631714
+15 th batch is processing.. out of 50 19.02545952796936
+15 th batch is processing.. out of 50 19.03134059906006
+16 th batch is processing.. out of 50 18.913995504379272
+16 th batch is processing.. out of 50 18.90038013458252
+17 th batch is processing.. out of 50 19.468241214752197
+17 th batch is processing.. out of 50 19.47990918159485
+18 th batch is processing.. out of 50 19.040146112442017
+18 th batch is processing.. out of 50 19.031976222991943
+19 th batch is processing.. out of 50 18.94246792793274
+19 th batch is processing.. out of 50 18.94603133201599
+20 th batch is processing.. out of 50 19.357380151748657
+20 th batch is processing.. out of 50 19.349809169769287
+21 th batch is processing.. out of 50 19.328596591949463
+21 th batch is processing.. out of 50 19.33142638206482
+22 th batch is processing.. out of 50 19.022411823272705
+22 th batch is processing.. out of 50 19.01991033554077
+23 th batch is processing.. out of 50 18.82188892364502
+23 th batch is processing.. out of 50 18.829424142837524
+24 th batch is processing.. out of 50 19.09536910057068
+24 th batch is processing.. out of 50 19.098047971725464
+25 th batch is processing.. out of 50 18.78159523010254
+25 th batch is processing.. out of 50 18.768447875976562
+26 th batch is processing.. out of 50 18.701904296875
+26 th batch is processing.. out of 50 18.708940744400024
+27 th batch is processing.. out of 50 18.930869340896606
+27 th batch is processing.. out of 50 18.935933351516724
+28 th batch is processing.. out of 50 19.042277336120605
+28 th batch is processing.. out of 50 19.04222559928894
+29 th batch is processing.. out of 50 19.06959366798401
+29 th batch is processing.. out of 50 19.071751594543457
+30 th batch is processing.. out of 50 18.983185291290283
+30 th batch is processing.. out of 50 18.977588653564453
+31 th batch is processing.. out of 50 18.655710458755493
+31 th batch is processing.. out of 50 18.656111240386963
+32 th batch is processing.. out of 50 19.100708484649658
+32 th batch is processing.. out of 50 19.09316349029541
+33 th batch is processing.. out of 50 18.658900260925293
+33 th batch is processing.. out of 50 18.65502953529358
+34 th batch is processing.. out of 50 18.731013774871826
+34 th batch is processing.. out of 50 18.754703044891357
+35 th batch is processing.. out of 50 18.902135848999023
+35 th batch is processing.. out of 50 18.90603017807007
+36 th batch is processing.. out of 50 19.179322719573975
+36 th batch is processing.. out of 50 19.180121898651123
+37 th batch is processing.. out of 50 19.48227286338806
+37 th batch is processing.. out of 50 19.499085664749146
+38 th batch is processing.. out of 50 19.486443519592285
+38 th batch is processing.. out of 50 19.478562116622925
+39 th batch is processing.. out of 50 19.549793004989624
+39 th batch is processing.. out of 50 19.55614137649536
+40 th batch is processing.. out of 50 19.56880497932434
+40 th batch is processing.. out of 50 19.581071138381958
+41 th batch is processing.. out of 50 19.289688110351562
+41 th batch is processing.. out of 50 19.302985668182373
+42 th batch is processing.. out of 50 18.96652054786682
+42 th batch is processing.. out of 50 18.95412588119507
+43 th batch is processing.. out of 50 19.550620079040527
+43 th batch is processing.. out of 50 19.526775360107422
+44 th batch is processing.. out of 50 19.288321256637573
+44 th batch is processing.. out of 50 19.291516304016113
+45 th batch is processing.. out of 50 19.396623134613037
+45 th batch is processing.. out of 50 19.39624333381653
+46 th batch is processing.. out of 50 19.511597156524658
+46 th batch is processing.. out of 50 19.511162757873535
+47 th batch is processing.. out of 50 19.331886053085327
+47 th batch is processing.. out of 50 19.332990407943726
+48 th batch is processing.. out of 50 18.950099229812622
+48 th batch is processing.. out of 50 18.954493522644043
+49 th batch is processing.. out of 50 19.009252548217773
+49 th batch is processing.. out of 50 19.01620316505432
+50 th batch is processing.. out of 50 8.176342964172363
+Train Query Search time 8.201431274414062
+num_skipped_query 22411
+ --- ANN MRR:0.550054554423841
+Save the constructed training data
+bottom_neg
+ANN training data saved to /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_random/ann_training_data_0.
+Construct Data Time -  963.0255510807037
+NDCG results saved to /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_random/ann_ndcg_0.
+Generating new dataset time :  8.349356651306152
+50 th batch is processing.. out of 50 8.128055572509766
+Train Query Search time 8.175628423690796
+finished generating ann data number 0
+11/28/2024 01:10:29 - INFO - __main__ -   finished generating ann data number 0
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+num_skipped_query 22411
+ --- ANN MRR:0.0005660021473549809
+Save the constructed training data
+bottom_neg
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+ANN training data saved to /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_bottom_neg_only/ann_training_data_0.
+Construct Data Time -  963.0460004806519
+NDCG results saved to /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_bottom_neg_only/ann_ndcg_0.
+Generating new dataset time :  8.255098819732666
+finished generating ann data number 0
+11/28/2024 01:10:29 - INFO - __main__ -   finished generating ann data number 0
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+next_checkpoint == last_checkpoint /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+slurmstepd-gpu026: error: *** JOB 26442342 ON gpu026 CANCELLED AT 2024-11-28T01:24:58 ***

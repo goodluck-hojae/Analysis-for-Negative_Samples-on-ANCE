@@ -1,0 +1,1186 @@
+Sun Nov 24 01:35:09 2024       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 550.90.07              Driver Version: 550.90.07      CUDA Version: 12.4     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA L40S                    On  |   00000000:4A:00.0 Off |                    0 |
+| N/A   31C    P8             32W /  350W |       1MiB /  46068MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   1  NVIDIA L40S                    On  |   00000000:CA:00.0 Off |                    0 |
+| N/A   29C    P8             32W /  350W |       1MiB /  46068MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+sbatch_initial_train_subset_10.sh
+Loading conda
+python -m torch.distributed.launch --nproc_per_node=2 drivers/run_ann_data_gen.py --training_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/checkpoints --init_model_dir /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000 --model_type rdot_nll --output_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data --cache_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/cache --data_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/preprocessed_data --max_seq_length 512 --per_gpu_eval_batch_size 1024 --topk_training 200 --negative_sample 10 --server_port 12345 --end_output_num -1 --ann_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data
+/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/distributed/launch.py:178: FutureWarning: The module torch.distributed.launch is deprecated
+and will be removed in future. Use torchrun.
+Note that --use_env is set by default in torchrun.
+If your script expects `--local_rank` argument to be set, please
+change it to read from `os.environ['LOCAL_RANK']` instead. See 
+https://pytorch.org/docs/stable/distributed.html#launch-utility for 
+further instructions
+
+  warnings.warn(
+WARNING:torch.distributed.run:
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+11/24/2024 01:35:28 - WARNING - __main__ -   Process rank: 0, device: cuda:0, n_gpu: 1, distributed training: True
+11/24/2024 01:35:28 - WARNING - __main__ -   Process rank: 1, device: cuda:1, n_gpu: 1, distributed training: True
+11/24/2024 01:35:28 - INFO - __main__ -   starting output number 0
+11/24/2024 01:35:28 - INFO - __main__ -   Loading query_2_pos_docid
+11/24/2024 01:35:28 - INFO - __main__ -   Loading dev query_2_pos_docid
+11/24/2024 01:35:28 - INFO - __main__ -   52887
+11/24/2024 01:35:28 - INFO - __main__ -   start generate ann data number 0
+11/24/2024 01:35:28 - INFO - __main__ -   next checkpoint at /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000
+11/24/2024 01:35:28 - INFO - transformers.configuration_utils -   loading configuration file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/config.json
+11/24/2024 01:35:28 - INFO - transformers.configuration_utils -   Model config {
+  "architectures": [
+    "RobertaForMaskedLM"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "bos_token_id": 0,
+  "eos_token_id": 2,
+  "finetuning_task": "MSMarco",
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "id2label": {
+    "0": "LABEL_0",
+    "1": "LABEL_1"
+  },
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "is_decoder": false,
+  "label2id": {
+    "LABEL_0": 0,
+    "LABEL_1": 1
+  },
+  "layer_norm_eps": 1e-05,
+  "max_position_embeddings": 514,
+  "model_type": "roberta",
+  "num_attention_heads": 12,
+  "num_hidden_layers": 12,
+  "num_labels": 2,
+  "output_attentions": false,
+  "output_hidden_states": false,
+  "output_past": true,
+  "pad_token_id": 1,
+  "pruned_heads": {},
+  "torchscript": false,
+  "type_vocab_size": 1,
+  "use_bfloat16": false,
+  "vocab_size": 50265
+}
+
+11/24/2024 01:35:28 - INFO - transformers.tokenization_utils -   Model name '/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000' not found in model shortcut name list (roberta-base, roberta-large, roberta-large-mnli, distilroberta-base, roberta-base-openai-detector, roberta-large-openai-detector). Assuming '/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000' is a path or url to a directory containing tokenizer files.
+11/24/2024 01:35:28 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/vocab.json
+11/24/2024 01:35:28 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/merges.txt
+11/24/2024 01:35:28 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/added_tokens.json
+11/24/2024 01:35:28 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/special_tokens_map.json
+11/24/2024 01:35:28 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/tokenizer_config.json
+Using mean: False
+11/24/2024 01:35:29 - INFO - transformers.modeling_utils -   loading weights file /home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000/pytorch_model.bin
+Using mean: False
+11/24/2024 01:35:43 - INFO - __main__ -   Inference parameters Namespace(ann_chunk_factor=5, ann_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data', ann_measure_topk_mrr=True, cache_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/cache', config_name='', data_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/preprocessed_data', device=device(type='cuda', index=0), end_output_num=-1, inference=False, init_model_dir='/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000', last_checkpoint_dir='', limit_total_number=100000, local_rank=0, max_doc_character=10000, max_query_length=64, max_seq_length=512, model_name_or_path='/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000', model_type='rdot_nll', n_gpu=1, negative_sample=10, no_cuda=False, only_keep_latest_embedding_file=False, output_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data', per_gpu_eval_batch_size=1024, rank=0, server_ip='', server_port='12345', tokenizer_name='', top_neg=0, topk_training=200, training_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/checkpoints', world_size=2)
+11/24/2024 01:35:43 - INFO - __main__ -   ***** inference of dev query *****
+6980 -1
+6980 -1
+11/24/2024 01:35:43 - INFO - __main__ -   ***** Running ANN Embedding Inference *****
+11/24/2024 01:35:43 - INFO - __main__ -     Batch size = 1024
+Inferencing: 0it [00:00, ?it/s]Inferencing: 4it [00:04,  1.03s/it]
+11/24/2024 01:35:48 - INFO - __main__ -   merging embeddings
+11/24/2024 01:35:48 - INFO - __main__ -   ***** inference of passages *****
+884182 -1
+884182 -1
+11/24/2024 01:35:48 - INFO - __main__ -   ***** Running ANN Embedding Inference *****
+11/24/2024 01:35:48 - INFO - __main__ -     Batch size = 1024
+Inferencing: 0it [00:00, ?it/s]Inferencing: 0it [00:15, ?it/s]Inferencing: 3it [00:17,  5.93s/it]Inferencing: 4it [00:23,  5.92s/it]Inferencing: 5it [00:29,  5.92s/it]Inferencing: 6it [00:35,  5.92s/it]Inferencing: 7it [00:41,  5.92s/it]Inferencing: 8it [00:47,  5.91s/it]Inferencing: 9it [00:53,  5.93s/it]Inferencing: 10it [00:59,  5.92s/it]Inferencing: 11it [01:05,  5.92s/it]Inferencing: 12it [01:11,  5.92s/it]Inferencing: 13it [01:16,  5.91s/it]Inferencing: 14it [01:22,  5.91s/it]Inferencing: 15it [01:28,  5.91s/it]Inferencing: 16it [01:34,  5.91s/it]Inferencing: 17it [01:40,  5.93s/it]Inferencing: 18it [01:46,  5.95s/it]Inferencing: 19it [01:52,  5.94s/it]Inferencing: 20it [01:58,  5.93s/it]Inferencing: 21it [02:04,  5.93s/it]Inferencing: 22it [02:10,  5.93s/it]Inferencing: 23it [02:16,  5.93s/it]Inferencing: 24it [02:22,  5.93s/it]Inferencing: 25it [02:28,  5.93s/it]Inferencing: 26it [02:34,  5.93s/it]Inferencing: 27it [02:39,  5.93s/it]Inferencing: 28it [02:45,  5.94s/it]Inferencing: 29it [02:51,  5.94s/it]Inferencing: 30it [02:57,  5.94s/it]Inferencing: 31it [03:03,  5.93s/it]Inferencing: 32it [03:09,  5.93s/it]Inferencing: 33it [03:15,  5.93s/it]Inferencing: 34it [03:21,  5.93s/it]Inferencing: 35it [03:27,  5.93s/it]Inferencing: 36it [03:33,  5.93s/it]Inferencing: 37it [03:39,  5.95s/it]Inferencing: 38it [03:45,  5.94s/it]Inferencing: 39it [03:51,  5.94s/it]Inferencing: 40it [03:57,  5.93s/it]Inferencing: 41it [04:03,  5.93s/it]Inferencing: 42it [04:09,  5.96s/it]Inferencing: 43it [04:15,  5.95s/it]Inferencing: 44it [04:20,  5.94s/it]Inferencing: 45it [04:26,  5.93s/it]Inferencing: 46it [04:32,  5.93s/it]Inferencing: 47it [04:38,  5.95s/it]Inferencing: 48it [04:44,  5.97s/it]Inferencing: 49it [04:50,  5.95s/it]Inferencing: 50it [04:56,  5.94s/it]Inferencing: 51it [05:02,  5.93s/it]Inferencing: 52it [05:08,  5.94s/it]Inferencing: 53it [05:14,  5.93s/it]Inferencing: 54it [05:20,  5.93s/it]Inferencing: 55it [05:26,  5.92s/it]Inferencing: 56it [05:32,  5.94s/it]Inferencing: 57it [05:38,  5.93s/it]Inferencing: 58it [05:44,  5.93s/it]Inferencing: 59it [05:49,  5.93s/it]Inferencing: 60it [05:55,  5.93s/it]Inferencing: 61it [06:01,  5.93s/it]Inferencing: 62it [06:07,  5.93s/it]Inferencing: 63it [06:13,  5.93s/it]Inferencing: 64it [06:19,  5.92s/it]Inferencing: 65it [06:25,  5.92s/it]Inferencing: 66it [06:31,  5.94s/it]Inferencing: 67it [06:37,  5.94s/it]Inferencing: 68it [06:43,  5.93s/it]Inferencing: 69it [06:49,  5.94s/it]Inferencing: 70it [06:55,  5.93s/it]Inferencing: 71it [07:01,  5.93s/it]Inferencing: 72it [07:07,  5.93s/it]Inferencing: 73it [07:12,  5.93s/it]Inferencing: 74it [07:18,  5.94s/it]Inferencing: 75it [07:24,  5.95s/it]Inferencing: 76it [07:30,  5.94s/it]Inferencing: 77it [07:36,  5.94s/it]Inferencing: 78it [07:42,  5.93s/it]Inferencing: 79it [07:48,  5.93s/it]Inferencing: 80it [07:54,  5.93s/it]Inferencing: 81it [08:00,  5.93s/it]Inferencing: 82it [08:06,  5.92s/it]Inferencing: 83it [08:12,  5.92s/it]Inferencing: 84it [08:18,  5.92s/it]Inferencing: 85it [08:24,  5.94s/it]Inferencing: 86it [08:30,  5.93s/it]Inferencing: 87it [08:36,  5.94s/it]Inferencing: 88it [08:42,  5.93s/it]Inferencing: 89it [08:47,  5.93s/it]Inferencing: 90it [08:53,  5.92s/it]Inferencing: 91it [08:59,  5.92s/it]Inferencing: 92it [09:05,  5.92s/it]Inferencing: 93it [09:11,  5.92s/it]Inferencing: 94it [09:17,  5.94s/it]Inferencing: 95it [09:23,  5.93s/it]Inferencing: 96it [09:29,  5.93s/it]Inferencing: 97it [09:35,  5.93s/it]Inferencing: 98it [09:41,  5.92s/it]Inferencing: 99it [09:47,  5.92s/it]Inferencing: 100it [09:53,  5.92s/it]Inferencing: 101it [09:59,  5.92s/it]Inferencing: 102it [10:04,  5.92s/it]Inferencing: 103it [10:10,  5.92s/it]Inferencing: 104it [10:16,  5.94s/it]Inferencing: 105it [10:22,  5.93s/it]Inferencing: 106it [10:28,  5.93s/it]Inferencing: 107it [10:34,  5.92s/it]Inferencing: 108it [10:40,  5.92s/it]Inferencing: 109it [10:46,  5.92s/it]Inferencing: 110it [10:52,  5.92s/it]Inferencing: 111it [10:58,  5.93s/it]Inferencing: 112it [11:04,  5.92s/it]Inferencing: 113it [11:10,  5.94s/it]Inferencing: 114it [11:16,  5.93s/it]Inferencing: 115it [11:22,  5.94s/it]Inferencing: 116it [11:27,  5.93s/it]Inferencing: 117it [11:33,  5.93s/it]Inferencing: 118it [11:39,  5.92s/it]Inferencing: 119it [11:45,  5.92s/it]Inferencing: 120it [11:51,  5.92s/it]Inferencing: 121it [11:57,  5.92s/it]Inferencing: 122it [12:03,  5.92s/it]Inferencing: 123it [12:09,  5.94s/it]Inferencing: 124it [12:15,  5.93s/it]Inferencing: 125it [12:21,  5.93s/it]Inferencing: 126it [12:27,  5.93s/it]Inferencing: 127it [12:33,  5.92s/it]Inferencing: 128it [12:39,  5.92s/it]Inferencing: 129it [12:44,  5.92s/it]Inferencing: 130it [12:50,  5.93s/it]Inferencing: 131it [12:56,  5.92s/it]Inferencing: 132it [13:02,  5.94s/it]Inferencing: 133it [13:08,  5.93s/it]Inferencing: 134it [13:14,  5.93s/it]Inferencing: 135it [13:20,  5.93s/it]Inferencing: 136it [13:26,  5.93s/it]Inferencing: 137it [13:32,  5.92s/it]Inferencing: 138it [13:38,  5.92s/it]Inferencing: 139it [13:44,  5.92s/it]Inferencing: 140it [13:50,  5.92s/it]Inferencing: 141it [13:56,  5.92s/it]Inferencing: 142it [14:02,  5.94s/it]Inferencing: 143it [14:07,  5.93s/it]Inferencing: 144it [14:13,  5.93s/it]Inferencing: 145it [14:19,  5.93s/it]Inferencing: 146it [14:25,  5.93s/it]Inferencing: 147it [14:31,  5.93s/it]Inferencing: 148it [14:37,  5.92s/it]Inferencing: 149it [14:43,  5.92s/it]Inferencing: 150it [14:49,  5.92s/it]Inferencing: 151it [14:55,  5.94s/it]Inferencing: 152it [15:01,  5.93s/it]Inferencing: 153it [15:07,  5.95s/it]Inferencing: 154it [15:13,  5.94s/it]Inferencing: 155it [15:19,  5.93s/it]Inferencing: 156it [15:25,  5.93s/it]Inferencing: 157it [15:30,  5.93s/it]Inferencing: 158it [15:36,  5.93s/it]Inferencing: 159it [15:42,  5.93s/it]Inferencing: 160it [15:48,  5.93s/it]Inferencing: 161it [15:54,  5.94s/it]Inferencing: 162it [16:00,  5.93s/it]Inferencing: 163it [16:06,  5.93s/it]Inferencing: 164it [16:12,  5.93s/it]Inferencing: 165it [16:18,  5.93s/it]Inferencing: 166it [16:24,  5.93s/it]Inferencing: 167it [16:30,  5.92s/it]Inferencing: 168it [16:36,  5.92s/it]Inferencing: 169it [16:42,  5.92s/it]Inferencing: 170it [16:48,  5.94s/it]Inferencing: 171it [16:54,  5.93s/it]Inferencing: 172it [16:59,  5.93s/it]Inferencing: 173it [17:05,  5.93s/it]Inferencing: 174it [17:11,  5.93s/it]Inferencing: 175it [17:17,  5.92s/it]Inferencing: 176it [17:23,  5.92s/it]Inferencing: 177it [17:29,  5.92s/it]Inferencing: 178it [17:35,  5.92s/it]Inferencing: 179it [17:41,  5.92s/it]Inferencing: 180it [17:47,  5.94s/it]Inferencing: 181it [17:53,  5.93s/it]Inferencing: 182it [17:59,  5.93s/it]Inferencing: 183it [18:05,  5.93s/it]Inferencing: 184it [18:11,  5.92s/it]Inferencing: 185it [18:16,  5.92s/it]Inferencing: 186it [18:22,  5.94s/it]Inferencing: 187it [18:28,  5.93s/it]Inferencing: 188it [18:34,  5.93s/it]Inferencing: 189it [18:40,  5.95s/it]Inferencing: 190it [18:46,  5.94s/it]Inferencing: 191it [18:52,  5.93s/it]Inferencing: 192it [18:58,  5.93s/it]Inferencing: 193it [19:04,  5.93s/it]Inferencing: 194it [19:10,  5.93s/it]Inferencing: 195it [19:16,  5.92s/it]Inferencing: 196it [19:22,  5.92s/it]Inferencing: 197it [19:28,  5.92s/it]Inferencing: 198it [19:34,  5.93s/it]Inferencing: 199it [19:40,  5.94s/it]Inferencing: 200it [19:45,  5.93s/it]Inferencing: 201it [19:51,  5.93s/it]Inferencing: 202it [19:57,  5.93s/it]Inferencing: 203it [20:03,  5.93s/it]Inferencing: 204it [20:09,  5.92s/it]Inferencing: 205it [20:15,  5.92s/it]Inferencing: 206it [20:21,  5.92s/it]Inferencing: 207it [20:27,  5.92s/it]Inferencing: 208it [20:33,  5.94s/it]Inferencing: 209it [20:39,  5.93s/it]Inferencing: 210it [20:45,  5.93s/it]Inferencing: 211it [20:51,  5.92s/it]Inferencing: 212it [20:57,  5.92s/it]Inferencing: 213it [21:02,  5.92s/it]Inferencing: 214it [21:08,  5.93s/it]Inferencing: 215it [21:14,  5.94s/it]Inferencing: 216it [21:20,  5.94s/it]Inferencing: 217it [21:26,  5.93s/it]Inferencing: 218it [21:32,  5.94s/it]Inferencing: 219it [21:38,  5.93s/it]Inferencing: 220it [21:44,  5.94s/it]Inferencing: 221it [21:50,  5.93s/it]Inferencing: 222it [21:56,  5.95s/it]Inferencing: 223it [22:02,  5.94s/it]Inferencing: 224it [22:08,  5.94s/it]Inferencing: 225it [22:14,  5.93s/it]Inferencing: 226it [22:20,  5.93s/it]Inferencing: 227it [22:26,  5.94s/it]Inferencing: 228it [22:32,  5.93s/it]Inferencing: 229it [22:37,  5.94s/it]Inferencing: 230it [22:43,  5.93s/it]Inferencing: 231it [22:49,  5.93s/it]Inferencing: 232it [22:55,  5.93s/it]Inferencing: 233it [23:01,  5.92s/it]Inferencing: 234it [23:07,  5.92s/it]Inferencing: 235it [23:13,  5.92s/it]Inferencing: 236it [23:19,  5.93s/it]Inferencing: 237it [23:25,  5.95s/it]Inferencing: 238it [23:31,  5.94s/it]Inferencing: 239it [23:37,  5.93s/it]Inferencing: 240it [23:43,  5.93s/it]Inferencing: 241it [23:49,  5.93s/it]Inferencing: 242it [23:55,  5.93s/it]Inferencing: 243it [24:00,  5.93s/it]Inferencing: 244it [24:06,  5.92s/it]Inferencing: 245it [24:12,  5.92s/it]Inferencing: 246it [24:18,  5.94s/it]Inferencing: 247it [24:24,  5.93s/it]Inferencing: 248it [24:30,  5.93s/it]Inferencing: 249it [24:36,  5.93s/it]Inferencing: 250it [24:42,  5.92s/it]Inferencing: 251it [24:48,  5.92s/it]Inferencing: 252it [24:54,  5.92s/it]Inferencing: 253it [25:00,  5.92s/it]Inferencing: 254it [25:06,  5.92s/it]Inferencing: 255it [25:12,  5.92s/it]Inferencing: 256it [25:18,  5.93s/it]Inferencing: 257it [25:23,  5.93s/it]Inferencing: 258it [25:29,  5.93s/it]Inferencing: 259it [25:35,  5.93s/it]Inferencing: 260it [25:41,  5.92s/it]Inferencing: 261it [25:47,  5.92s/it]Inferencing: 262it [25:53,  5.92s/it]Inferencing: 263it [25:59,  5.92s/it]Inferencing: 264it [26:05,  5.93s/it]Inferencing: 265it [26:11,  5.97s/it]Inferencing: 266it [26:17,  5.95s/it]Inferencing: 267it [26:23,  5.95s/it]Inferencing: 268it [26:29,  5.94s/it]Inferencing: 269it [26:35,  5.93s/it]Inferencing: 270it [26:41,  5.93s/it]Inferencing: 271it [26:47,  5.93s/it]Inferencing: 272it [26:52,  5.93s/it]Inferencing: 273it [26:58,  5.93s/it]Inferencing: 274it [27:04,  5.92s/it]Inferencing: 275it [27:10,  5.94s/it]Inferencing: 276it [27:16,  5.93s/it]Inferencing: 277it [27:22,  5.93s/it]Inferencing: 278it [27:28,  5.92s/it]Inferencing: 279it [27:34,  5.92s/it]Inferencing: 280it [27:40,  5.92s/it]Inferencing: 281it [27:46,  5.92s/it]Inferencing: 282it [27:52,  5.93s/it]Inferencing: 283it [27:58,  5.94s/it]Inferencing: 284it [28:04,  5.95s/it]Inferencing: 285it [28:10,  5.95s/it]Inferencing: 286it [28:16,  5.94s/it]Inferencing: 287it [28:21,  5.94s/it]Inferencing: 288it [28:27,  5.94s/it]Inferencing: 289it [28:33,  5.93s/it]Inferencing: 290it [28:39,  5.93s/it]Inferencing: 291it [28:45,  5.93s/it]Inferencing: 292it [28:51,  5.92s/it]Inferencing: 293it [28:57,  5.92s/it]Inferencing: 294it [29:03,  5.94s/it]Inferencing: 295it [29:09,  5.93s/it]Inferencing: 296it [29:15,  5.93s/it]Inferencing: 297it [29:21,  5.93s/it]Inferencing: 298it [29:27,  5.95s/it]Inferencing: 299it [29:33,  5.94s/it]Inferencing: 300it [29:39,  5.94s/it]Inferencing: 301it [29:45,  5.93s/it]Inferencing: 302it [29:50,  5.93s/it]Inferencing: 303it [29:56,  5.95s/it]Inferencing: 304it [30:02,  5.94s/it]Inferencing: 305it [30:08,  5.94s/it]Inferencing: 306it [30:14,  5.93s/it]Inferencing: 307it [30:20,  5.93s/it]Inferencing: 308it [30:26,  5.93s/it]Inferencing: 309it [30:32,  5.93s/it]Inferencing: 310it [30:38,  5.93s/it]Inferencing: 311it [30:44,  5.93s/it]Inferencing: 312it [30:50,  5.93s/it]Inferencing: 313it [30:56,  5.95s/it]Inferencing: 314it [31:02,  5.94s/it]Inferencing: 315it [31:08,  5.93s/it]Inferencing: 316it [31:14,  5.93s/it]Inferencing: 317it [31:19,  5.93s/it]Inferencing: 318it [31:25,  5.93s/it]Inferencing: 319it [31:31,  5.93s/it]Inferencing: 320it [31:37,  5.93s/it]Inferencing: 321it [31:43,  5.93s/it]Inferencing: 322it [31:49,  5.94s/it]Inferencing: 323it [31:55,  5.94s/it]Inferencing: 324it [32:01,  5.93s/it]Inferencing: 325it [32:07,  5.93s/it]Inferencing: 326it [32:13,  5.94s/it]Inferencing: 327it [32:19,  5.93s/it]Inferencing: 328it [32:25,  5.93s/it]Inferencing: 329it [32:31,  5.93s/it]Inferencing: 330it [32:37,  5.93s/it]Inferencing: 331it [32:42,  5.93s/it]Inferencing: 332it [32:48,  5.94s/it]Inferencing: 333it [32:54,  5.94s/it]Inferencing: 334it [33:00,  5.94s/it]Inferencing: 335it [33:06,  5.93s/it]Inferencing: 336it [33:12,  5.93s/it]Inferencing: 337it [33:18,  5.93s/it]Inferencing: 338it [33:24,  5.93s/it]Inferencing: 339it [33:30,  5.93s/it]Inferencing: 340it [33:36,  5.93s/it]Inferencing: 341it [33:42,  5.98s/it]Inferencing: 342it [33:48,  5.96s/it]Inferencing: 343it [33:54,  5.95s/it]Inferencing: 344it [34:00,  5.94s/it]Inferencing: 345it [34:06,  5.93s/it]Inferencing: 346it [34:12,  5.93s/it]Inferencing: 347it [34:17,  5.93s/it]Inferencing: 348it [34:23,  5.92s/it]Inferencing: 349it [34:29,  5.92s/it]Inferencing: 350it [34:35,  5.92s/it]Inferencing: 351it [34:41,  5.93s/it]Inferencing: 352it [34:47,  5.93s/it]Inferencing: 353it [34:53,  5.93s/it]Inferencing: 354it [34:59,  5.93s/it]Inferencing: 355it [35:05,  5.93s/it]Inferencing: 356it [35:11,  5.93s/it]Inferencing: 357it [35:17,  5.92s/it]Inferencing: 358it [35:23,  5.92s/it]Inferencing: 359it [35:29,  5.92s/it]Inferencing: 360it [35:35,  5.94s/it]Inferencing: 361it [35:41,  5.94s/it]Inferencing: 362it [35:46,  5.94s/it]Inferencing: 363it [35:52,  5.93s/it]Inferencing: 364it [35:58,  5.93s/it]Inferencing: 365it [36:04,  5.93s/it]Inferencing: 366it [36:10,  5.92s/it]Inferencing: 367it [36:16,  5.92s/it]Inferencing: 368it [36:22,  5.92s/it]Inferencing: 369it [36:28,  5.93s/it]Inferencing: 370it [36:34,  5.94s/it]Inferencing: 371it [36:40,  5.93s/it]Inferencing: 372it [36:46,  5.93s/it]Inferencing: 373it [36:52,  5.93s/it]Inferencing: 374it [36:58,  5.93s/it]Inferencing: 375it [37:04,  5.95s/it]Inferencing: 376it [37:10,  5.95s/it]Inferencing: 377it [37:15,  5.95s/it]Inferencing: 378it [37:21,  5.94s/it]Inferencing: 379it [37:27,  5.95s/it]Inferencing: 380it [37:33,  5.94s/it]Inferencing: 381it [37:39,  5.94s/it]Inferencing: 382it [37:45,  5.94s/it]Inferencing: 383it [37:51,  5.94s/it]Inferencing: 384it [37:57,  5.93s/it]Inferencing: 385it [38:03,  5.93s/it]Inferencing: 386it [38:09,  5.93s/it]Inferencing: 387it [38:15,  5.94s/it]Inferencing: 388it [38:21,  5.94s/it]Inferencing: 389it [38:27,  5.95s/it]Inferencing: 390it [38:33,  5.94s/it]Inferencing: 391it [38:39,  5.94s/it]Inferencing: 392it [38:45,  5.94s/it]Inferencing: 393it [38:50,  5.93s/it]Inferencing: 394it [38:56,  5.93s/it]Inferencing: 395it [39:02,  5.94s/it]Inferencing: 396it [39:08,  5.93s/it]Inferencing: 397it [39:14,  5.93s/it]Inferencing: 398it [39:20,  5.95s/it]Inferencing: 399it [39:26,  5.95s/it]Inferencing: 400it [39:32,  5.94s/it]Inferencing: 401it [39:38,  5.94s/it]Inferencing: 402it [39:44,  5.93s/it]Inferencing: 403it [39:50,  5.93s/it]Inferencing: 404it [39:56,  5.93s/it]Inferencing: 405it [40:02,  5.93s/it]Inferencing: 406it [40:08,  5.93s/it]Inferencing: 407it [40:14,  5.93s/it]Inferencing: 408it [40:20,  5.94s/it]Inferencing: 409it [40:25,  5.93s/it]Inferencing: 410it [40:31,  5.94s/it]Inferencing: 411it [40:37,  5.93s/it]Inferencing: 412it [40:43,  5.93s/it]Inferencing: 413it [40:49,  5.93s/it]Inferencing: 414it [40:55,  5.93s/it]Inferencing: 415it [41:01,  5.93s/it]Inferencing: 416it [41:07,  5.93s/it]Inferencing: 417it [41:13,  5.94s/it]Inferencing: 418it [41:19,  5.94s/it]Inferencing: 419it [41:25,  5.94s/it]Inferencing: 420it [41:31,  5.94s/it]Inferencing: 421it [41:37,  5.94s/it]Inferencing: 422it [41:43,  5.94s/it]Inferencing: 423it [41:49,  5.94s/it]Inferencing: 424it [41:55,  5.94s/it]Inferencing: 425it [42:00,  5.94s/it]Inferencing: 426it [42:06,  5.94s/it]Inferencing: 427it [42:12,  5.95s/it]Inferencing: 428it [42:18,  5.94s/it]Inferencing: 429it [42:24,  5.93s/it]Inferencing: 430it [42:30,  5.93s/it]Inferencing: 431it [42:36,  5.93s/it]Inferencing: 432it [42:40,  5.45s/it]Inferencing: 432it [42:40,  5.93s/it]
+11/24/2024 02:18:29 - INFO - __main__ -   merging embeddings
+11/24/2024 02:18:38 - INFO - __main__ -   ***** Done passage inference *****
+11/24/2024 02:18:38 - INFO - __main__ -   ***** inference of train query *****
+502939 -1
+502939 -1
+11/24/2024 02:18:38 - INFO - __main__ -   ***** Running ANN Embedding Inference *****
+11/24/2024 02:18:38 - INFO - __main__ -     Batch size = 1024
+Inferencing: 0it [00:00, ?it/s]Inferencing: 0it [00:15, ?it/s]Inferencing: 14it [00:16,  1.16s/it]Inferencing: 15it [00:17,  1.16s/it]Inferencing: 16it [00:18,  1.15s/it]Inferencing: 17it [00:19,  1.15s/it]Inferencing: 18it [00:20,  1.15s/it]Inferencing: 19it [00:21,  1.15s/it]Inferencing: 20it [00:23,  1.15s/it]Inferencing: 21it [00:24,  1.15s/it]Inferencing: 22it [00:25,  1.15s/it]Inferencing: 23it [00:26,  1.16s/it]Inferencing: 24it [00:27,  1.15s/it]Inferencing: 25it [00:28,  1.15s/it]Inferencing: 26it [00:29,  1.15s/it]Inferencing: 27it [00:31,  1.15s/it]Inferencing: 28it [00:32,  1.15s/it]Inferencing: 29it [00:33,  1.15s/it]Inferencing: 30it [00:34,  1.15s/it]Inferencing: 31it [00:35,  1.15s/it]Inferencing: 32it [00:36,  1.15s/it]Inferencing: 33it [00:38,  1.16s/it]Inferencing: 34it [00:39,  1.15s/it]Inferencing: 35it [00:40,  1.15s/it]Inferencing: 36it [00:41,  1.15s/it]Inferencing: 37it [00:42,  1.15s/it]Inferencing: 38it [00:43,  1.15s/it]Inferencing: 39it [00:44,  1.15s/it]Inferencing: 40it [00:46,  1.15s/it]Inferencing: 41it [00:47,  1.15s/it]Inferencing: 42it [00:48,  1.16s/it]Inferencing: 43it [00:49,  1.15s/it]Inferencing: 44it [00:50,  1.15s/it]Inferencing: 45it [00:51,  1.15s/it]Inferencing: 46it [00:52,  1.15s/it]Inferencing: 47it [00:54,  1.14s/it]Inferencing: 48it [00:55,  1.14s/it]Inferencing: 49it [00:56,  1.14s/it]Inferencing: 50it [00:57,  1.14s/it]Inferencing: 51it [00:58,  1.14s/it]Inferencing: 52it [00:59,  1.16s/it]Inferencing: 53it [01:00,  1.15s/it]Inferencing: 54it [01:02,  1.15s/it]Inferencing: 55it [01:03,  1.15s/it]Inferencing: 56it [01:04,  1.15s/it]Inferencing: 57it [01:05,  1.14s/it]Inferencing: 58it [01:06,  1.15s/it]Inferencing: 59it [01:07,  1.15s/it]Inferencing: 60it [01:08,  1.14s/it]Inferencing: 61it [01:10,  1.16s/it]Inferencing: 62it [01:11,  1.15s/it]Inferencing: 63it [01:12,  1.15s/it]Inferencing: 64it [01:13,  1.15s/it]Inferencing: 65it [01:14,  1.15s/it]Inferencing: 66it [01:15,  1.14s/it]Inferencing: 67it [01:17,  1.14s/it]Inferencing: 68it [01:18,  1.15s/it]Inferencing: 69it [01:19,  1.15s/it]Inferencing: 70it [01:20,  1.14s/it]Inferencing: 71it [01:21,  1.16s/it]Inferencing: 72it [01:22,  1.15s/it]Inferencing: 73it [01:23,  1.15s/it]Inferencing: 74it [01:25,  1.15s/it]Inferencing: 75it [01:26,  1.15s/it]Inferencing: 76it [01:27,  1.14s/it]Inferencing: 77it [01:28,  1.14s/it]Inferencing: 78it [01:29,  1.14s/it]Inferencing: 79it [01:30,  1.14s/it]Inferencing: 80it [01:31,  1.15s/it]Inferencing: 81it [01:33,  1.15s/it]Inferencing: 82it [01:34,  1.15s/it]Inferencing: 83it [01:35,  1.15s/it]Inferencing: 84it [01:36,  1.14s/it]Inferencing: 85it [01:37,  1.14s/it]Inferencing: 86it [01:38,  1.14s/it]Inferencing: 87it [01:39,  1.15s/it]Inferencing: 88it [01:41,  1.15s/it]Inferencing: 89it [01:42,  1.14s/it]Inferencing: 90it [01:43,  1.16s/it]Inferencing: 91it [01:44,  1.15s/it]Inferencing: 92it [01:45,  1.15s/it]Inferencing: 93it [01:46,  1.15s/it]Inferencing: 94it [01:48,  1.15s/it]Inferencing: 95it [01:49,  1.14s/it]Inferencing: 96it [01:50,  1.14s/it]Inferencing: 97it [01:51,  1.15s/it]Inferencing: 98it [01:52,  1.15s/it]Inferencing: 99it [01:53,  1.16s/it]Inferencing: 100it [01:54,  1.15s/it]Inferencing: 101it [01:56,  1.15s/it]Inferencing: 102it [01:57,  1.15s/it]Inferencing: 103it [01:58,  1.15s/it]Inferencing: 104it [01:59,  1.14s/it]Inferencing: 105it [02:00,  1.14s/it]Inferencing: 106it [02:01,  1.14s/it]Inferencing: 107it [02:02,  1.14s/it]Inferencing: 108it [02:04,  1.14s/it]Inferencing: 109it [02:05,  1.15s/it]Inferencing: 110it [02:06,  1.15s/it]Inferencing: 111it [02:07,  1.15s/it]Inferencing: 112it [02:08,  1.15s/it]Inferencing: 113it [02:09,  1.14s/it]Inferencing: 114it [02:10,  1.14s/it]Inferencing: 115it [02:12,  1.14s/it]Inferencing: 116it [02:13,  1.15s/it]Inferencing: 117it [02:14,  1.15s/it]Inferencing: 118it [02:15,  1.16s/it]Inferencing: 119it [02:16,  1.15s/it]Inferencing: 120it [02:17,  1.15s/it]Inferencing: 121it [02:18,  1.15s/it]Inferencing: 122it [02:20,  1.15s/it]Inferencing: 123it [02:21,  1.14s/it]Inferencing: 124it [02:22,  1.14s/it]Inferencing: 125it [02:23,  1.14s/it]Inferencing: 126it [02:24,  1.15s/it]Inferencing: 127it [02:25,  1.15s/it]Inferencing: 128it [02:27,  1.16s/it]Inferencing: 129it [02:28,  1.15s/it]Inferencing: 130it [02:29,  1.15s/it]Inferencing: 131it [02:30,  1.15s/it]Inferencing: 132it [02:31,  1.15s/it]Inferencing: 133it [02:32,  1.14s/it]Inferencing: 134it [02:33,  1.14s/it]Inferencing: 135it [02:35,  1.14s/it]Inferencing: 136it [02:36,  1.14s/it]Inferencing: 137it [02:37,  1.15s/it]Inferencing: 138it [02:38,  1.15s/it]Inferencing: 139it [02:39,  1.15s/it]Inferencing: 140it [02:40,  1.15s/it]Inferencing: 141it [02:41,  1.14s/it]Inferencing: 142it [02:43,  1.14s/it]Inferencing: 143it [02:44,  1.14s/it]Inferencing: 144it [02:45,  1.14s/it]Inferencing: 145it [02:46,  1.15s/it]Inferencing: 146it [02:47,  1.15s/it]Inferencing: 147it [02:48,  1.16s/it]Inferencing: 148it [02:49,  1.15s/it]Inferencing: 149it [02:51,  1.15s/it]Inferencing: 150it [02:52,  1.15s/it]Inferencing: 151it [02:53,  1.14s/it]Inferencing: 152it [02:54,  1.14s/it]Inferencing: 153it [02:55,  1.14s/it]Inferencing: 154it [02:56,  1.14s/it]Inferencing: 155it [02:57,  1.14s/it]Inferencing: 156it [02:59,  1.15s/it]Inferencing: 157it [03:00,  1.15s/it]Inferencing: 158it [03:01,  1.15s/it]Inferencing: 159it [03:02,  1.15s/it]Inferencing: 160it [03:03,  1.15s/it]Inferencing: 161it [03:04,  1.14s/it]Inferencing: 162it [03:05,  1.14s/it]Inferencing: 163it [03:07,  1.14s/it]Inferencing: 164it [03:08,  1.14s/it]Inferencing: 165it [03:09,  1.14s/it]Inferencing: 166it [03:10,  1.16s/it]Inferencing: 167it [03:11,  1.15s/it]Inferencing: 168it [03:12,  1.15s/it]Inferencing: 169it [03:14,  1.15s/it]Inferencing: 170it [03:15,  1.14s/it]Inferencing: 171it [03:16,  1.14s/it]Inferencing: 172it [03:17,  1.14s/it]Inferencing: 173it [03:18,  1.14s/it]Inferencing: 174it [03:19,  1.15s/it]Inferencing: 175it [03:20,  1.16s/it]Inferencing: 176it [03:22,  1.15s/it]Inferencing: 177it [03:23,  1.15s/it]Inferencing: 178it [03:24,  1.15s/it]Inferencing: 179it [03:25,  1.15s/it]Inferencing: 180it [03:26,  1.14s/it]Inferencing: 181it [03:27,  1.14s/it]Inferencing: 182it [03:28,  1.14s/it]Inferencing: 183it [03:30,  1.14s/it]Inferencing: 184it [03:31,  1.14s/it]Inferencing: 185it [03:32,  1.16s/it]Inferencing: 186it [03:33,  1.15s/it]Inferencing: 187it [03:34,  1.15s/it]Inferencing: 188it [03:35,  1.15s/it]Inferencing: 189it [03:36,  1.15s/it]Inferencing: 190it [03:38,  1.14s/it]Inferencing: 191it [03:39,  1.14s/it]Inferencing: 192it [03:40,  1.14s/it]Inferencing: 193it [03:41,  1.15s/it]Inferencing: 194it [03:42,  1.16s/it]Inferencing: 195it [03:43,  1.15s/it]Inferencing: 196it [03:45,  1.15s/it]Inferencing: 197it [03:46,  1.15s/it]Inferencing: 198it [03:47,  1.15s/it]Inferencing: 199it [03:48,  1.14s/it]Inferencing: 200it [03:49,  1.14s/it]Inferencing: 201it [03:50,  1.14s/it]Inferencing: 202it [03:51,  1.14s/it]Inferencing: 203it [03:53,  1.15s/it]Inferencing: 204it [03:54,  1.16s/it]Inferencing: 205it [03:55,  1.15s/it]Inferencing: 206it [03:56,  1.15s/it]Inferencing: 207it [03:57,  1.15s/it]Inferencing: 208it [03:58,  1.15s/it]Inferencing: 209it [03:59,  1.14s/it]Inferencing: 210it [04:01,  1.14s/it]Inferencing: 211it [04:02,  1.14s/it]Inferencing: 212it [04:03,  1.14s/it]Inferencing: 213it [04:04,  1.16s/it]Inferencing: 214it [04:05,  1.15s/it]Inferencing: 215it [04:06,  1.15s/it]Inferencing: 216it [04:07,  1.15s/it]Inferencing: 217it [04:09,  1.15s/it]Inferencing: 218it [04:10,  1.14s/it]Inferencing: 219it [04:11,  1.14s/it]Inferencing: 220it [04:12,  1.14s/it]Inferencing: 221it [04:13,  1.14s/it]Inferencing: 222it [04:14,  1.15s/it]Inferencing: 223it [04:16,  1.16s/it]Inferencing: 224it [04:17,  1.15s/it]Inferencing: 225it [04:18,  1.15s/it]Inferencing: 226it [04:19,  1.15s/it]Inferencing: 227it [04:20,  1.15s/it]Inferencing: 228it [04:21,  1.14s/it]Inferencing: 229it [04:22,  1.14s/it]Inferencing: 230it [04:23,  1.14s/it]Inferencing: 231it [04:25,  1.14s/it]Inferencing: 232it [04:26,  1.16s/it]Inferencing: 233it [04:27,  1.15s/it]Inferencing: 234it [04:28,  1.15s/it]Inferencing: 235it [04:29,  1.15s/it]Inferencing: 236it [04:30,  1.15s/it]Inferencing: 237it [04:32,  1.14s/it]Inferencing: 238it [04:33,  1.14s/it]Inferencing: 239it [04:34,  1.14s/it]Inferencing: 240it [04:35,  1.14s/it]Inferencing: 241it [04:36,  1.14s/it]Inferencing: 242it [04:37,  1.15s/it]Inferencing: 243it [04:38,  1.15s/it]Inferencing: 244it [04:40,  1.15s/it]Inferencing: 245it [04:41,  1.15s/it]Inferencing: 246it [04:41,  1.00it/s]Inferencing: 246it [04:41,  1.15s/it]
+11/24/2024 02:23:21 - INFO - __main__ -   merging embeddings
+Inference Time -  4.428279161453247 2570.3699691295624 286.21506786346436
+Inference Time -  4.432072401046753 2570.4683735370636 286.1113269329071
+11/24/2024 02:23:26 - INFO - __main__ -   ***** Done ANN Index *****
+Indexing Time -  1.0891053676605225
+Search FAISS TOP K
+0 th batch is processing.. out of 1005
+1 th batch is processing.. out of 1005
+2 th batch is processing.. out of 1005
+3 th batch is processing.. out of 1005
+4 th batch is processing.. out of 1005
+5 th batch is processing.. out of 1005
+6 th batch is processing.. out of 1005
+7 th batch is processing.. out of 1005
+8 th batch is processing.. out of 1005
+9 th batch is processing.. out of 1005
+10 th batch is processing.. out of 1005
+11 th batch is processing.. out of 1005
+12 th batch is processing.. out of 1005
+13 th batch is processing.. out of 1005
+14 th batch is processing.. out of 1005
+15 th batch is processing.. out of 1005
+16 th batch is processing.. out of 1005
+17 th batch is processing.. out of 1005
+18 th batch is processing.. out of 1005
+19 th batch is processing.. out of 1005
+20 th batch is processing.. out of 1005
+21 th batch is processing.. out of 1005
+22 th batch is processing.. out of 1005
+23 th batch is processing.. out of 1005
+24 th batch is processing.. out of 1005
+25 th batch is processing.. out of 1005
+26 th batch is processing.. out of 1005
+27 th batch is processing.. out of 1005
+28 th batch is processing.. out of 1005
+29 th batch is processing.. out of 1005
+30 th batch is processing.. out of 1005
+31 th batch is processing.. out of 1005
+32 th batch is processing.. out of 1005
+33 th batch is processing.. out of 1005
+34 th batch is processing.. out of 1005
+35 th batch is processing.. out of 1005
+36 th batch is processing.. out of 1005
+37 th batch is processing.. out of 1005
+38 th batch is processing.. out of 1005
+39 th batch is processing.. out of 1005
+40 th batch is processing.. out of 1005
+41 th batch is processing.. out of 1005
+42 th batch is processing.. out of 1005
+43 th batch is processing.. out of 1005
+44 th batch is processing.. out of 1005
+45 th batch is processing.. out of 1005
+46 th batch is processing.. out of 1005
+47 th batch is processing.. out of 1005
+48 th batch is processing.. out of 1005
+49 th batch is processing.. out of 1005
+50 th batch is processing.. out of 1005
+51 th batch is processing.. out of 1005
+52 th batch is processing.. out of 1005
+53 th batch is processing.. out of 1005
+54 th batch is processing.. out of 1005
+55 th batch is processing.. out of 1005
+56 th batch is processing.. out of 1005
+57 th batch is processing.. out of 1005
+58 th batch is processing.. out of 1005
+59 th batch is processing.. out of 1005
+60 th batch is processing.. out of 1005
+61 th batch is processing.. out of 1005
+62 th batch is processing.. out of 1005
+63 th batch is processing.. out of 1005
+64 th batch is processing.. out of 1005
+65 th batch is processing.. out of 1005
+66 th batch is processing.. out of 1005
+67 th batch is processing.. out of 1005
+68 th batch is processing.. out of 1005
+69 th batch is processing.. out of 1005
+70 th batch is processing.. out of 1005
+71 th batch is processing.. out of 1005
+72 th batch is processing.. out of 1005
+73 th batch is processing.. out of 1005
+74 th batch is processing.. out of 1005
+75 th batch is processing.. out of 1005
+76 th batch is processing.. out of 1005
+77 th batch is processing.. out of 1005
+78 th batch is processing.. out of 1005
+79 th batch is processing.. out of 1005
+80 th batch is processing.. out of 1005
+81 th batch is processing.. out of 1005
+82 th batch is processing.. out of 1005
+83 th batch is processing.. out of 1005
+84 th batch is processing.. out of 1005
+85 th batch is processing.. out of 1005
+86 th batch is processing.. out of 1005
+87 th batch is processing.. out of 1005
+88 th batch is processing.. out of 1005
+89 th batch is processing.. out of 1005
+90 th batch is processing.. out of 1005
+91 th batch is processing.. out of 1005
+92 th batch is processing.. out of 1005
+93 th batch is processing.. out of 1005
+94 th batch is processing.. out of 1005
+95 th batch is processing.. out of 1005
+96 th batch is processing.. out of 1005
+97 th batch is processing.. out of 1005
+98 th batch is processing.. out of 1005
+99 th batch is processing.. out of 1005
+100 th batch is processing.. out of 1005
+101 th batch is processing.. out of 1005
+102 th batch is processing.. out of 1005
+103 th batch is processing.. out of 1005
+104 th batch is processing.. out of 1005
+105 th batch is processing.. out of 1005
+106 th batch is processing.. out of 1005
+107 th batch is processing.. out of 1005
+108 th batch is processing.. out of 1005
+109 th batch is processing.. out of 1005
+110 th batch is processing.. out of 1005
+111 th batch is processing.. out of 1005
+112 th batch is processing.. out of 1005
+113 th batch is processing.. out of 1005
+114 th batch is processing.. out of 1005
+115 th batch is processing.. out of 1005
+116 th batch is processing.. out of 1005
+117 th batch is processing.. out of 1005
+118 th batch is processing.. out of 1005
+119 th batch is processing.. out of 1005
+120 th batch is processing.. out of 1005
+121 th batch is processing.. out of 1005
+122 th batch is processing.. out of 1005
+123 th batch is processing.. out of 1005
+124 th batch is processing.. out of 1005
+125 th batch is processing.. out of 1005
+126 th batch is processing.. out of 1005
+127 th batch is processing.. out of 1005
+128 th batch is processing.. out of 1005
+129 th batch is processing.. out of 1005
+130 th batch is processing.. out of 1005
+131 th batch is processing.. out of 1005
+132 th batch is processing.. out of 1005
+133 th batch is processing.. out of 1005
+134 th batch is processing.. out of 1005
+135 th batch is processing.. out of 1005
+136 th batch is processing.. out of 1005
+137 th batch is processing.. out of 1005
+138 th batch is processing.. out of 1005
+139 th batch is processing.. out of 1005
+140 th batch is processing.. out of 1005
+141 th batch is processing.. out of 1005
+142 th batch is processing.. out of 1005
+143 th batch is processing.. out of 1005
+144 th batch is processing.. out of 1005
+145 th batch is processing.. out of 1005
+146 th batch is processing.. out of 1005
+147 th batch is processing.. out of 1005
+148 th batch is processing.. out of 1005
+149 th batch is processing.. out of 1005
+150 th batch is processing.. out of 1005
+151 th batch is processing.. out of 1005
+152 th batch is processing.. out of 1005
+153 th batch is processing.. out of 1005
+154 th batch is processing.. out of 1005
+155 th batch is processing.. out of 1005
+156 th batch is processing.. out of 1005
+157 th batch is processing.. out of 1005
+158 th batch is processing.. out of 1005
+159 th batch is processing.. out of 1005
+160 th batch is processing.. out of 1005
+161 th batch is processing.. out of 1005
+162 th batch is processing.. out of 1005
+163 th batch is processing.. out of 1005
+164 th batch is processing.. out of 1005
+165 th batch is processing.. out of 1005
+166 th batch is processing.. out of 1005
+167 th batch is processing.. out of 1005
+168 th batch is processing.. out of 1005
+169 th batch is processing.. out of 1005
+170 th batch is processing.. out of 1005
+171 th batch is processing.. out of 1005
+172 th batch is processing.. out of 1005
+173 th batch is processing.. out of 1005
+174 th batch is processing.. out of 1005
+175 th batch is processing.. out of 1005
+176 th batch is processing.. out of 1005
+177 th batch is processing.. out of 1005
+178 th batch is processing.. out of 1005
+179 th batch is processing.. out of 1005
+180 th batch is processing.. out of 1005
+181 th batch is processing.. out of 1005
+182 th batch is processing.. out of 1005
+183 th batch is processing.. out of 1005
+184 th batch is processing.. out of 1005
+185 th batch is processing.. out of 1005
+186 th batch is processing.. out of 1005
+187 th batch is processing.. out of 1005
+188 th batch is processing.. out of 1005
+189 th batch is processing.. out of 1005
+190 th batch is processing.. out of 1005
+191 th batch is processing.. out of 1005
+192 th batch is processing.. out of 1005
+193 th batch is processing.. out of 1005
+194 th batch is processing.. out of 1005
+195 th batch is processing.. out of 1005
+196 th batch is processing.. out of 1005
+197 th batch is processing.. out of 1005
+198 th batch is processing.. out of 1005
+199 th batch is processing.. out of 1005
+200 th batch is processing.. out of 1005
+201 th batch is processing.. out of 1005
+202 th batch is processing.. out of 1005
+203 th batch is processing.. out of 1005
+204 th batch is processing.. out of 1005
+205 th batch is processing.. out of 1005
+206 th batch is processing.. out of 1005
+207 th batch is processing.. out of 1005
+208 th batch is processing.. out of 1005
+209 th batch is processing.. out of 1005
+210 th batch is processing.. out of 1005
+211 th batch is processing.. out of 1005
+212 th batch is processing.. out of 1005
+213 th batch is processing.. out of 1005
+214 th batch is processing.. out of 1005
+215 th batch is processing.. out of 1005
+216 th batch is processing.. out of 1005
+217 th batch is processing.. out of 1005
+218 th batch is processing.. out of 1005
+219 th batch is processing.. out of 1005
+220 th batch is processing.. out of 1005
+221 th batch is processing.. out of 1005
+222 th batch is processing.. out of 1005
+223 th batch is processing.. out of 1005
+224 th batch is processing.. out of 1005
+225 th batch is processing.. out of 1005
+226 th batch is processing.. out of 1005
+227 th batch is processing.. out of 1005
+228 th batch is processing.. out of 1005
+229 th batch is processing.. out of 1005
+230 th batch is processing.. out of 1005
+231 th batch is processing.. out of 1005
+232 th batch is processing.. out of 1005
+233 th batch is processing.. out of 1005
+234 th batch is processing.. out of 1005
+235 th batch is processing.. out of 1005
+236 th batch is processing.. out of 1005
+237 th batch is processing.. out of 1005
+238 th batch is processing.. out of 1005
+239 th batch is processing.. out of 1005
+240 th batch is processing.. out of 1005
+241 th batch is processing.. out of 1005
+242 th batch is processing.. out of 1005
+243 th batch is processing.. out of 1005
+244 th batch is processing.. out of 1005
+245 th batch is processing.. out of 1005
+246 th batch is processing.. out of 1005
+247 th batch is processing.. out of 1005
+248 th batch is processing.. out of 1005
+249 th batch is processing.. out of 1005
+250 th batch is processing.. out of 1005
+251 th batch is processing.. out of 1005
+252 th batch is processing.. out of 1005
+253 th batch is processing.. out of 1005
+254 th batch is processing.. out of 1005
+255 th batch is processing.. out of 1005
+256 th batch is processing.. out of 1005
+257 th batch is processing.. out of 1005
+258 th batch is processing.. out of 1005
+259 th batch is processing.. out of 1005
+260 th batch is processing.. out of 1005
+261 th batch is processing.. out of 1005
+262 th batch is processing.. out of 1005
+263 th batch is processing.. out of 1005
+264 th batch is processing.. out of 1005
+265 th batch is processing.. out of 1005
+266 th batch is processing.. out of 1005
+267 th batch is processing.. out of 1005
+268 th batch is processing.. out of 1005
+269 th batch is processing.. out of 1005
+270 th batch is processing.. out of 1005
+271 th batch is processing.. out of 1005
+272 th batch is processing.. out of 1005
+273 th batch is processing.. out of 1005
+274 th batch is processing.. out of 1005
+275 th batch is processing.. out of 1005
+276 th batch is processing.. out of 1005
+277 th batch is processing.. out of 1005
+278 th batch is processing.. out of 1005
+279 th batch is processing.. out of 1005
+280 th batch is processing.. out of 1005
+281 th batch is processing.. out of 1005
+282 th batch is processing.. out of 1005
+283 th batch is processing.. out of 1005
+284 th batch is processing.. out of 1005
+285 th batch is processing.. out of 1005
+286 th batch is processing.. out of 1005
+287 th batch is processing.. out of 1005
+288 th batch is processing.. out of 1005
+289 th batch is processing.. out of 1005
+290 th batch is processing.. out of 1005
+291 th batch is processing.. out of 1005
+292 th batch is processing.. out of 1005
+293 th batch is processing.. out of 1005
+294 th batch is processing.. out of 1005
+295 th batch is processing.. out of 1005
+296 th batch is processing.. out of 1005
+297 th batch is processing.. out of 1005
+298 th batch is processing.. out of 1005
+299 th batch is processing.. out of 1005
+300 th batch is processing.. out of 1005
+301 th batch is processing.. out of 1005
+302 th batch is processing.. out of 1005
+303 th batch is processing.. out of 1005
+304 th batch is processing.. out of 1005
+305 th batch is processing.. out of 1005
+306 th batch is processing.. out of 1005
+307 th batch is processing.. out of 1005
+308 th batch is processing.. out of 1005
+309 th batch is processing.. out of 1005
+310 th batch is processing.. out of 1005
+311 th batch is processing.. out of 1005
+312 th batch is processing.. out of 1005
+313 th batch is processing.. out of 1005
+314 th batch is processing.. out of 1005
+315 th batch is processing.. out of 1005
+316 th batch is processing.. out of 1005
+317 th batch is processing.. out of 1005
+318 th batch is processing.. out of 1005
+319 th batch is processing.. out of 1005
+320 th batch is processing.. out of 1005
+321 th batch is processing.. out of 1005
+322 th batch is processing.. out of 1005
+323 th batch is processing.. out of 1005
+324 th batch is processing.. out of 1005
+325 th batch is processing.. out of 1005
+326 th batch is processing.. out of 1005
+327 th batch is processing.. out of 1005
+328 th batch is processing.. out of 1005
+329 th batch is processing.. out of 1005
+330 th batch is processing.. out of 1005
+331 th batch is processing.. out of 1005
+332 th batch is processing.. out of 1005
+333 th batch is processing.. out of 1005
+334 th batch is processing.. out of 1005
+335 th batch is processing.. out of 1005
+336 th batch is processing.. out of 1005
+337 th batch is processing.. out of 1005
+338 th batch is processing.. out of 1005
+339 th batch is processing.. out of 1005
+340 th batch is processing.. out of 1005
+341 th batch is processing.. out of 1005
+342 th batch is processing.. out of 1005
+343 th batch is processing.. out of 1005
+344 th batch is processing.. out of 1005
+345 th batch is processing.. out of 1005
+346 th batch is processing.. out of 1005
+347 th batch is processing.. out of 1005
+348 th batch is processing.. out of 1005
+349 th batch is processing.. out of 1005
+350 th batch is processing.. out of 1005
+351 th batch is processing.. out of 1005
+352 th batch is processing.. out of 1005
+353 th batch is processing.. out of 1005
+354 th batch is processing.. out of 1005
+355 th batch is processing.. out of 1005
+356 th batch is processing.. out of 1005
+357 th batch is processing.. out of 1005
+358 th batch is processing.. out of 1005
+359 th batch is processing.. out of 1005
+360 th batch is processing.. out of 1005
+361 th batch is processing.. out of 1005
+362 th batch is processing.. out of 1005
+363 th batch is processing.. out of 1005
+364 th batch is processing.. out of 1005
+365 th batch is processing.. out of 1005
+366 th batch is processing.. out of 1005
+367 th batch is processing.. out of 1005
+368 th batch is processing.. out of 1005
+369 th batch is processing.. out of 1005
+370 th batch is processing.. out of 1005
+371 th batch is processing.. out of 1005
+372 th batch is processing.. out of 1005
+373 th batch is processing.. out of 1005
+374 th batch is processing.. out of 1005
+375 th batch is processing.. out of 1005
+376 th batch is processing.. out of 1005
+377 th batch is processing.. out of 1005
+378 th batch is processing.. out of 1005
+379 th batch is processing.. out of 1005
+380 th batch is processing.. out of 1005
+381 th batch is processing.. out of 1005
+382 th batch is processing.. out of 1005
+383 th batch is processing.. out of 1005
+384 th batch is processing.. out of 1005
+385 th batch is processing.. out of 1005
+386 th batch is processing.. out of 1005
+387 th batch is processing.. out of 1005
+388 th batch is processing.. out of 1005
+389 th batch is processing.. out of 1005
+390 th batch is processing.. out of 1005
+391 th batch is processing.. out of 1005
+392 th batch is processing.. out of 1005
+393 th batch is processing.. out of 1005
+394 th batch is processing.. out of 1005
+395 th batch is processing.. out of 1005
+396 th batch is processing.. out of 1005
+397 th batch is processing.. out of 1005
+398 th batch is processing.. out of 1005
+399 th batch is processing.. out of 1005
+400 th batch is processing.. out of 1005
+401 th batch is processing.. out of 1005
+402 th batch is processing.. out of 1005
+403 th batch is processing.. out of 1005
+404 th batch is processing.. out of 1005
+405 th batch is processing.. out of 1005
+406 th batch is processing.. out of 1005
+407 th batch is processing.. out of 1005
+408 th batch is processing.. out of 1005
+409 th batch is processing.. out of 1005
+410 th batch is processing.. out of 1005
+411 th batch is processing.. out of 1005
+412 th batch is processing.. out of 1005
+413 th batch is processing.. out of 1005
+414 th batch is processing.. out of 1005
+415 th batch is processing.. out of 1005
+416 th batch is processing.. out of 1005
+417 th batch is processing.. out of 1005
+418 th batch is processing.. out of 1005
+419 th batch is processing.. out of 1005
+420 th batch is processing.. out of 1005
+421 th batch is processing.. out of 1005
+422 th batch is processing.. out of 1005
+423 th batch is processing.. out of 1005
+424 th batch is processing.. out of 1005
+425 th batch is processing.. out of 1005
+426 th batch is processing.. out of 1005
+427 th batch is processing.. out of 1005
+428 th batch is processing.. out of 1005
+429 th batch is processing.. out of 1005
+430 th batch is processing.. out of 1005
+431 th batch is processing.. out of 1005
+432 th batch is processing.. out of 1005
+433 th batch is processing.. out of 1005
+434 th batch is processing.. out of 1005
+435 th batch is processing.. out of 1005
+436 th batch is processing.. out of 1005
+437 th batch is processing.. out of 1005
+438 th batch is processing.. out of 1005
+439 th batch is processing.. out of 1005
+440 th batch is processing.. out of 1005
+441 th batch is processing.. out of 1005
+442 th batch is processing.. out of 1005
+443 th batch is processing.. out of 1005
+444 th batch is processing.. out of 1005
+445 th batch is processing.. out of 1005
+446 th batch is processing.. out of 1005
+447 th batch is processing.. out of 1005
+448 th batch is processing.. out of 1005
+449 th batch is processing.. out of 1005
+450 th batch is processing.. out of 1005
+451 th batch is processing.. out of 1005
+452 th batch is processing.. out of 1005
+453 th batch is processing.. out of 1005
+454 th batch is processing.. out of 1005
+455 th batch is processing.. out of 1005
+456 th batch is processing.. out of 1005
+457 th batch is processing.. out of 1005
+458 th batch is processing.. out of 1005
+459 th batch is processing.. out of 1005
+460 th batch is processing.. out of 1005
+461 th batch is processing.. out of 1005
+462 th batch is processing.. out of 1005
+463 th batch is processing.. out of 1005
+464 th batch is processing.. out of 1005
+465 th batch is processing.. out of 1005
+466 th batch is processing.. out of 1005
+467 th batch is processing.. out of 1005
+468 th batch is processing.. out of 1005
+469 th batch is processing.. out of 1005
+470 th batch is processing.. out of 1005
+471 th batch is processing.. out of 1005
+472 th batch is processing.. out of 1005
+473 th batch is processing.. out of 1005
+474 th batch is processing.. out of 1005
+475 th batch is processing.. out of 1005
+476 th batch is processing.. out of 1005
+477 th batch is processing.. out of 1005
+478 th batch is processing.. out of 1005
+479 th batch is processing.. out of 1005
+480 th batch is processing.. out of 1005
+481 th batch is processing.. out of 1005
+482 th batch is processing.. out of 1005
+483 th batch is processing.. out of 1005
+484 th batch is processing.. out of 1005
+485 th batch is processing.. out of 1005
+486 th batch is processing.. out of 1005
+487 th batch is processing.. out of 1005
+488 th batch is processing.. out of 1005
+489 th batch is processing.. out of 1005
+490 th batch is processing.. out of 1005
+491 th batch is processing.. out of 1005
+492 th batch is processing.. out of 1005
+493 th batch is processing.. out of 1005
+494 th batch is processing.. out of 1005
+495 th batch is processing.. out of 1005
+496 th batch is processing.. out of 1005
+497 th batch is processing.. out of 1005
+498 th batch is processing.. out of 1005
+499 th batch is processing.. out of 1005
+500 th batch is processing.. out of 1005
+501 th batch is processing.. out of 1005
+502 th batch is processing.. out of 1005
+503 th batch is processing.. out of 1005
+504 th batch is processing.. out of 1005
+505 th batch is processing.. out of 1005
+506 th batch is processing.. out of 1005
+507 th batch is processing.. out of 1005
+508 th batch is processing.. out of 1005
+509 th batch is processing.. out of 1005
+510 th batch is processing.. out of 1005
+511 th batch is processing.. out of 1005
+512 th batch is processing.. out of 1005
+513 th batch is processing.. out of 1005
+514 th batch is processing.. out of 1005
+515 th batch is processing.. out of 1005
+516 th batch is processing.. out of 1005
+517 th batch is processing.. out of 1005
+518 th batch is processing.. out of 1005
+519 th batch is processing.. out of 1005
+520 th batch is processing.. out of 1005
+521 th batch is processing.. out of 1005
+522 th batch is processing.. out of 1005
+523 th batch is processing.. out of 1005
+524 th batch is processing.. out of 1005
+525 th batch is processing.. out of 1005
+526 th batch is processing.. out of 1005
+527 th batch is processing.. out of 1005
+528 th batch is processing.. out of 1005
+529 th batch is processing.. out of 1005
+530 th batch is processing.. out of 1005
+531 th batch is processing.. out of 1005
+532 th batch is processing.. out of 1005
+533 th batch is processing.. out of 1005
+534 th batch is processing.. out of 1005
+535 th batch is processing.. out of 1005
+536 th batch is processing.. out of 1005
+537 th batch is processing.. out of 1005
+538 th batch is processing.. out of 1005
+539 th batch is processing.. out of 1005
+540 th batch is processing.. out of 1005
+541 th batch is processing.. out of 1005
+542 th batch is processing.. out of 1005
+543 th batch is processing.. out of 1005
+544 th batch is processing.. out of 1005
+545 th batch is processing.. out of 1005
+546 th batch is processing.. out of 1005
+547 th batch is processing.. out of 1005
+548 th batch is processing.. out of 1005
+549 th batch is processing.. out of 1005
+550 th batch is processing.. out of 1005
+551 th batch is processing.. out of 1005
+552 th batch is processing.. out of 1005
+553 th batch is processing.. out of 1005
+554 th batch is processing.. out of 1005
+555 th batch is processing.. out of 1005
+556 th batch is processing.. out of 1005
+557 th batch is processing.. out of 1005
+558 th batch is processing.. out of 1005
+559 th batch is processing.. out of 1005
+560 th batch is processing.. out of 1005
+561 th batch is processing.. out of 1005
+562 th batch is processing.. out of 1005
+563 th batch is processing.. out of 1005
+564 th batch is processing.. out of 1005
+565 th batch is processing.. out of 1005
+566 th batch is processing.. out of 1005
+567 th batch is processing.. out of 1005
+568 th batch is processing.. out of 1005
+569 th batch is processing.. out of 1005
+570 th batch is processing.. out of 1005
+571 th batch is processing.. out of 1005
+572 th batch is processing.. out of 1005
+573 th batch is processing.. out of 1005
+574 th batch is processing.. out of 1005
+575 th batch is processing.. out of 1005
+576 th batch is processing.. out of 1005
+577 th batch is processing.. out of 1005
+578 th batch is processing.. out of 1005
+579 th batch is processing.. out of 1005
+580 th batch is processing.. out of 1005
+581 th batch is processing.. out of 1005
+582 th batch is processing.. out of 1005
+583 th batch is processing.. out of 1005
+584 th batch is processing.. out of 1005
+585 th batch is processing.. out of 1005
+586 th batch is processing.. out of 1005
+587 th batch is processing.. out of 1005
+588 th batch is processing.. out of 1005
+589 th batch is processing.. out of 1005
+590 th batch is processing.. out of 1005
+591 th batch is processing.. out of 1005
+592 th batch is processing.. out of 1005
+593 th batch is processing.. out of 1005
+594 th batch is processing.. out of 1005
+595 th batch is processing.. out of 1005
+596 th batch is processing.. out of 1005
+597 th batch is processing.. out of 1005
+598 th batch is processing.. out of 1005
+599 th batch is processing.. out of 1005
+600 th batch is processing.. out of 1005
+601 th batch is processing.. out of 1005
+602 th batch is processing.. out of 1005
+603 th batch is processing.. out of 1005
+604 th batch is processing.. out of 1005
+605 th batch is processing.. out of 1005
+606 th batch is processing.. out of 1005
+607 th batch is processing.. out of 1005
+608 th batch is processing.. out of 1005
+609 th batch is processing.. out of 1005
+610 th batch is processing.. out of 1005
+611 th batch is processing.. out of 1005
+612 th batch is processing.. out of 1005
+613 th batch is processing.. out of 1005
+614 th batch is processing.. out of 1005
+615 th batch is processing.. out of 1005
+616 th batch is processing.. out of 1005
+617 th batch is processing.. out of 1005
+618 th batch is processing.. out of 1005
+619 th batch is processing.. out of 1005
+620 th batch is processing.. out of 1005
+621 th batch is processing.. out of 1005
+622 th batch is processing.. out of 1005
+623 th batch is processing.. out of 1005
+624 th batch is processing.. out of 1005
+625 th batch is processing.. out of 1005
+626 th batch is processing.. out of 1005
+627 th batch is processing.. out of 1005
+628 th batch is processing.. out of 1005
+629 th batch is processing.. out of 1005
+630 th batch is processing.. out of 1005
+631 th batch is processing.. out of 1005
+632 th batch is processing.. out of 1005
+633 th batch is processing.. out of 1005
+634 th batch is processing.. out of 1005
+635 th batch is processing.. out of 1005
+636 th batch is processing.. out of 1005
+637 th batch is processing.. out of 1005
+638 th batch is processing.. out of 1005
+639 th batch is processing.. out of 1005
+640 th batch is processing.. out of 1005
+641 th batch is processing.. out of 1005
+642 th batch is processing.. out of 1005
+643 th batch is processing.. out of 1005
+644 th batch is processing.. out of 1005
+645 th batch is processing.. out of 1005
+646 th batch is processing.. out of 1005
+647 th batch is processing.. out of 1005
+648 th batch is processing.. out of 1005
+649 th batch is processing.. out of 1005
+650 th batch is processing.. out of 1005
+651 th batch is processing.. out of 1005
+652 th batch is processing.. out of 1005
+653 th batch is processing.. out of 1005
+654 th batch is processing.. out of 1005
+655 th batch is processing.. out of 1005
+656 th batch is processing.. out of 1005
+657 th batch is processing.. out of 1005
+658 th batch is processing.. out of 1005
+659 th batch is processing.. out of 1005
+660 th batch is processing.. out of 1005
+661 th batch is processing.. out of 1005
+662 th batch is processing.. out of 1005
+663 th batch is processing.. out of 1005
+664 th batch is processing.. out of 1005
+665 th batch is processing.. out of 1005
+666 th batch is processing.. out of 1005
+667 th batch is processing.. out of 1005
+668 th batch is processing.. out of 1005
+669 th batch is processing.. out of 1005
+670 th batch is processing.. out of 1005
+671 th batch is processing.. out of 1005
+672 th batch is processing.. out of 1005
+673 th batch is processing.. out of 1005
+674 th batch is processing.. out of 1005
+675 th batch is processing.. out of 1005
+676 th batch is processing.. out of 1005
+677 th batch is processing.. out of 1005
+678 th batch is processing.. out of 1005
+679 th batch is processing.. out of 1005
+680 th batch is processing.. out of 1005
+681 th batch is processing.. out of 1005
+682 th batch is processing.. out of 1005
+683 th batch is processing.. out of 1005
+684 th batch is processing.. out of 1005
+685 th batch is processing.. out of 1005
+686 th batch is processing.. out of 1005
+687 th batch is processing.. out of 1005
+688 th batch is processing.. out of 1005
+689 th batch is processing.. out of 1005
+690 th batch is processing.. out of 1005
+691 th batch is processing.. out of 1005
+692 th batch is processing.. out of 1005
+693 th batch is processing.. out of 1005
+694 th batch is processing.. out of 1005
+695 th batch is processing.. out of 1005
+696 th batch is processing.. out of 1005
+697 th batch is processing.. out of 1005
+698 th batch is processing.. out of 1005
+699 th batch is processing.. out of 1005
+700 th batch is processing.. out of 1005
+701 th batch is processing.. out of 1005
+702 th batch is processing.. out of 1005
+703 th batch is processing.. out of 1005
+704 th batch is processing.. out of 1005
+705 th batch is processing.. out of 1005
+706 th batch is processing.. out of 1005
+707 th batch is processing.. out of 1005
+708 th batch is processing.. out of 1005
+709 th batch is processing.. out of 1005
+710 th batch is processing.. out of 1005
+711 th batch is processing.. out of 1005
+712 th batch is processing.. out of 1005
+713 th batch is processing.. out of 1005
+714 th batch is processing.. out of 1005
+715 th batch is processing.. out of 1005
+716 th batch is processing.. out of 1005
+717 th batch is processing.. out of 1005
+718 th batch is processing.. out of 1005
+719 th batch is processing.. out of 1005
+720 th batch is processing.. out of 1005
+721 th batch is processing.. out of 1005
+722 th batch is processing.. out of 1005
+723 th batch is processing.. out of 1005
+724 th batch is processing.. out of 1005
+725 th batch is processing.. out of 1005
+726 th batch is processing.. out of 1005
+727 th batch is processing.. out of 1005
+728 th batch is processing.. out of 1005
+729 th batch is processing.. out of 1005
+730 th batch is processing.. out of 1005
+731 th batch is processing.. out of 1005
+732 th batch is processing.. out of 1005
+733 th batch is processing.. out of 1005
+734 th batch is processing.. out of 1005
+735 th batch is processing.. out of 1005
+736 th batch is processing.. out of 1005
+737 th batch is processing.. out of 1005
+738 th batch is processing.. out of 1005
+739 th batch is processing.. out of 1005
+740 th batch is processing.. out of 1005
+741 th batch is processing.. out of 1005
+742 th batch is processing.. out of 1005
+743 th batch is processing.. out of 1005
+744 th batch is processing.. out of 1005
+745 th batch is processing.. out of 1005
+746 th batch is processing.. out of 1005
+747 th batch is processing.. out of 1005
+748 th batch is processing.. out of 1005
+749 th batch is processing.. out of 1005
+750 th batch is processing.. out of 1005
+751 th batch is processing.. out of 1005
+752 th batch is processing.. out of 1005
+753 th batch is processing.. out of 1005
+754 th batch is processing.. out of 1005
+755 th batch is processing.. out of 1005
+756 th batch is processing.. out of 1005
+757 th batch is processing.. out of 1005
+758 th batch is processing.. out of 1005
+759 th batch is processing.. out of 1005
+760 th batch is processing.. out of 1005
+761 th batch is processing.. out of 1005
+762 th batch is processing.. out of 1005
+763 th batch is processing.. out of 1005
+764 th batch is processing.. out of 1005
+765 th batch is processing.. out of 1005
+766 th batch is processing.. out of 1005
+767 th batch is processing.. out of 1005
+768 th batch is processing.. out of 1005
+769 th batch is processing.. out of 1005
+770 th batch is processing.. out of 1005
+771 th batch is processing.. out of 1005
+772 th batch is processing.. out of 1005
+773 th batch is processing.. out of 1005
+774 th batch is processing.. out of 1005
+775 th batch is processing.. out of 1005
+776 th batch is processing.. out of 1005
+777 th batch is processing.. out of 1005
+778 th batch is processing.. out of 1005
+779 th batch is processing.. out of 1005
+780 th batch is processing.. out of 1005
+781 th batch is processing.. out of 1005
+782 th batch is processing.. out of 1005
+783 th batch is processing.. out of 1005
+784 th batch is processing.. out of 1005
+785 th batch is processing.. out of 1005
+786 th batch is processing.. out of 1005
+787 th batch is processing.. out of 1005
+788 th batch is processing.. out of 1005
+789 th batch is processing.. out of 1005
+790 th batch is processing.. out of 1005
+791 th batch is processing.. out of 1005
+792 th batch is processing.. out of 1005
+793 th batch is processing.. out of 1005
+794 th batch is processing.. out of 1005
+795 th batch is processing.. out of 1005
+796 th batch is processing.. out of 1005
+797 th batch is processing.. out of 1005
+798 th batch is processing.. out of 1005
+799 th batch is processing.. out of 1005
+800 th batch is processing.. out of 1005
+801 th batch is processing.. out of 1005
+802 th batch is processing.. out of 1005
+803 th batch is processing.. out of 1005
+804 th batch is processing.. out of 1005
+805 th batch is processing.. out of 1005
+806 th batch is processing.. out of 1005
+807 th batch is processing.. out of 1005
+808 th batch is processing.. out of 1005
+809 th batch is processing.. out of 1005
+810 th batch is processing.. out of 1005
+811 th batch is processing.. out of 1005
+812 th batch is processing.. out of 1005
+813 th batch is processing.. out of 1005
+814 th batch is processing.. out of 1005
+815 th batch is processing.. out of 1005
+816 th batch is processing.. out of 1005
+817 th batch is processing.. out of 1005
+818 th batch is processing.. out of 1005
+819 th batch is processing.. out of 1005
+820 th batch is processing.. out of 1005
+821 th batch is processing.. out of 1005
+822 th batch is processing.. out of 1005
+823 th batch is processing.. out of 1005
+824 th batch is processing.. out of 1005
+825 th batch is processing.. out of 1005
+826 th batch is processing.. out of 1005
+827 th batch is processing.. out of 1005
+828 th batch is processing.. out of 1005
+829 th batch is processing.. out of 1005
+830 th batch is processing.. out of 1005
+831 th batch is processing.. out of 1005
+832 th batch is processing.. out of 1005
+833 th batch is processing.. out of 1005
+834 th batch is processing.. out of 1005
+835 th batch is processing.. out of 1005
+836 th batch is processing.. out of 1005
+837 th batch is processing.. out of 1005
+838 th batch is processing.. out of 1005
+839 th batch is processing.. out of 1005
+840 th batch is processing.. out of 1005
+841 th batch is processing.. out of 1005
+842 th batch is processing.. out of 1005
+843 th batch is processing.. out of 1005
+844 th batch is processing.. out of 1005
+845 th batch is processing.. out of 1005
+846 th batch is processing.. out of 1005
+847 th batch is processing.. out of 1005
+848 th batch is processing.. out of 1005
+849 th batch is processing.. out of 1005
+850 th batch is processing.. out of 1005
+851 th batch is processing.. out of 1005
+852 th batch is processing.. out of 1005
+853 th batch is processing.. out of 1005
+854 th batch is processing.. out of 1005
+855 th batch is processing.. out of 1005
+856 th batch is processing.. out of 1005
+857 th batch is processing.. out of 1005
+858 th batch is processing.. out of 1005
+859 th batch is processing.. out of 1005
+860 th batch is processing.. out of 1005
+861 th batch is processing.. out of 1005
+862 th batch is processing.. out of 1005
+863 th batch is processing.. out of 1005
+864 th batch is processing.. out of 1005
+865 th batch is processing.. out of 1005
+866 th batch is processing.. out of 1005
+867 th batch is processing.. out of 1005
+868 th batch is processing.. out of 1005
+869 th batch is processing.. out of 1005
+870 th batch is processing.. out of 1005
+871 th batch is processing.. out of 1005
+872 th batch is processing.. out of 1005
+873 th batch is processing.. out of 1005
+874 th batch is processing.. out of 1005
+875 th batch is processing.. out of 1005
+876 th batch is processing.. out of 1005
+877 th batch is processing.. out of 1005
+878 th batch is processing.. out of 1005
+879 th batch is processing.. out of 1005
+880 th batch is processing.. out of 1005
+881 th batch is processing.. out of 1005
+882 th batch is processing.. out of 1005
+883 th batch is processing.. out of 1005
+884 th batch is processing.. out of 1005
+885 th batch is processing.. out of 1005
+886 th batch is processing.. out of 1005
+887 th batch is processing.. out of 1005
+888 th batch is processing.. out of 1005
+889 th batch is processing.. out of 1005
+890 th batch is processing.. out of 1005
+891 th batch is processing.. out of 1005
+892 th batch is processing.. out of 1005
+893 th batch is processing.. out of 1005
+894 th batch is processing.. out of 1005
+895 th batch is processing.. out of 1005
+896 th batch is processing.. out of 1005
+897 th batch is processing.. out of 1005
+898 th batch is processing.. out of 1005
+899 th batch is processing.. out of 1005
+900 th batch is processing.. out of 1005
+901 th batch is processing.. out of 1005
+902 th batch is processing.. out of 1005
+903 th batch is processing.. out of 1005
+904 th batch is processing.. out of 1005
+905 th batch is processing.. out of 1005
+906 th batch is processing.. out of 1005
+907 th batch is processing.. out of 1005
+908 th batch is processing.. out of 1005
+909 th batch is processing.. out of 1005
+910 th batch is processing.. out of 1005
+911 th batch is processing.. out of 1005
+912 th batch is processing.. out of 1005
+913 th batch is processing.. out of 1005
+914 th batch is processing.. out of 1005
+915 th batch is processing.. out of 1005
+916 th batch is processing.. out of 1005
+917 th batch is processing.. out of 1005
+918 th batch is processing.. out of 1005
+919 th batch is processing.. out of 1005
+920 th batch is processing.. out of 1005
+921 th batch is processing.. out of 1005
+922 th batch is processing.. out of 1005
+923 th batch is processing.. out of 1005
+924 th batch is processing.. out of 1005
+925 th batch is processing.. out of 1005
+926 th batch is processing.. out of 1005
+927 th batch is processing.. out of 1005
+928 th batch is processing.. out of 1005
+929 th batch is processing.. out of 1005
+930 th batch is processing.. out of 1005
+931 th batch is processing.. out of 1005
+932 th batch is processing.. out of 1005
+933 th batch is processing.. out of 1005
+934 th batch is processing.. out of 1005
+935 th batch is processing.. out of 1005
+936 th batch is processing.. out of 1005
+937 th batch is processing.. out of 1005
+938 th batch is processing.. out of 1005
+939 th batch is processing.. out of 1005
+940 th batch is processing.. out of 1005
+941 th batch is processing.. out of 1005
+942 th batch is processing.. out of 1005
+943 th batch is processing.. out of 1005
+944 th batch is processing.. out of 1005
+945 th batch is processing.. out of 1005
+946 th batch is processing.. out of 1005
+947 th batch is processing.. out of 1005
+948 th batch is processing.. out of 1005
+949 th batch is processing.. out of 1005
+950 th batch is processing.. out of 1005
+951 th batch is processing.. out of 1005
+952 th batch is processing.. out of 1005
+953 th batch is processing.. out of 1005
+954 th batch is processing.. out of 1005
+955 th batch is processing.. out of 1005
+956 th batch is processing.. out of 1005
+957 th batch is processing.. out of 1005
+958 th batch is processing.. out of 1005
+959 th batch is processing.. out of 1005
+960 th batch is processing.. out of 1005
+961 th batch is processing.. out of 1005
+962 th batch is processing.. out of 1005
+963 th batch is processing.. out of 1005
+964 th batch is processing.. out of 1005
+965 th batch is processing.. out of 1005
+966 th batch is processing.. out of 1005
+967 th batch is processing.. out of 1005
+968 th batch is processing.. out of 1005
+969 th batch is processing.. out of 1005
+970 th batch is processing.. out of 1005
+971 th batch is processing.. out of 1005
+972 th batch is processing.. out of 1005
+973 th batch is processing.. out of 1005
+974 th batch is processing.. out of 1005
+975 th batch is processing.. out of 1005
+976 th batch is processing.. out of 1005
+977 th batch is processing.. out of 1005
+978 th batch is processing.. out of 1005
+979 th batch is processing.. out of 1005
+980 th batch is processing.. out of 1005
+981 th batch is processing.. out of 1005
+982 th batch is processing.. out of 1005
+983 th batch is processing.. out of 1005
+984 th batch is processing.. out of 1005
+985 th batch is processing.. out of 1005
+986 th batch is processing.. out of 1005
+987 th batch is processing.. out of 1005
+988 th batch is processing.. out of 1005
+989 th batch is processing.. out of 1005
+990 th batch is processing.. out of 1005
+991 th batch is processing.. out of 1005
+992 th batch is processing.. out of 1005
+993 th batch is processing.. out of 1005
+994 th batch is processing.. out of 1005
+995 th batch is processing.. out of 1005
+996 th batch is processing.. out of 1005
+997 th batch is processing.. out of 1005
+998 th batch is processing.. out of 1005
+999 th batch is processing.. out of 1005
+1000 th batch is processing.. out of 1005
+1001 th batch is processing.. out of 1005
+1002 th batch is processing.. out of 1005
+1003 th batch is processing.. out of 1005
+1004 th batch is processing.. out of 1005
+1005 th batch is processing.. out of 1005
+Total earching time :  18567.40388083458
+Rank:0 --- ANN NDCG@10:0.5981032093649601 433.0267235802311 724
+Eval Time -  253.35388112068176
+11/24/2024 07:37:06 - INFO - __main__ -   Chunked 100587 query from 502939
+1
+2
+3
+Traceback (most recent call last):
+  File "drivers/run_ann_data_gen.py", line 1203, in <module>
+    main()
+  File "drivers/run_ann_data_gen.py", line 1199, in main
+    ann_data_gen(args)
+  File "drivers/run_ann_data_gen.py", line 1178, in ann_data_gen
+    generate_new_ann(
+  File "drivers/run_ann_data_gen.py", line 643, in generate_new_ann
+    query_negative_passage = GenerateNegativePassaageID(
+  File "drivers/run_ann_data_gen.py", line 727, in GenerateNegativePassaageID
+    pos_pid = training_query_positive_id[query_id]
+KeyError: 0
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 2384555 closing signal SIGTERM
+ERROR:torch.distributed.elastic.multiprocessing.api:failed (exitcode: 1) local_rank: 0 (pid: 2384554) of binary: /home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/bin/python
+Traceback (most recent call last):
+  File "/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/runpy.py", line 194, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/distributed/launch.py", line 193, in <module>
+    main()
+  File "/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/distributed/launch.py", line 189, in main
+    launch(args)
+  File "/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/distributed/launch.py", line 174, in launch
+    run(args)
+  File "/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/distributed/run.py", line 715, in run
+    elastic_launch(
+  File "/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/distributed/launcher/api.py", line 131, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/distributed/launcher/api.py", line 245, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+drivers/run_ann_data_gen.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2024-11-24_08:38:59
+  host      : gpu029.unity.rc.umass.edu
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 2384554)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+commands/sbatch_initial_train_subset_10.sh
