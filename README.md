@@ -13,7 +13,7 @@ Using a subset of MS MARCO, we conduct experiments
 comparing different ranking segments for negative sampling to
 understand their impact on training efficiency and model effectiveness.
 
-# Code Modifications
+## Code Modifications
 
 Our primary code changes are in `drivers/run_ann_data_gen.py`. Below is a summary of the key logic modifications:
 
