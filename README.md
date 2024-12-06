@@ -1,5 +1,5 @@
 # Impact Analysis of Hard Negative Sample Rankings in ANCE, 646 Project, Fall 2024
-Hojae Son*, Deepesh Suranjandass*, Ye Li, Kwok-Fung Tang, Jialin Liu, Paul Bennett, Junaid Ahmed, Arnold Overwijk
+Hojae Son*, Deepesh Suranjandass*
 
 This repo is inspired from the ANCE codebase [https://github.com/microsoft/ANCE/] & paper [Approximate Nearest Neighbor Negative Contrastive Learning for Dense Text Retrieval](https://arxiv.org/pdf/2007.00808.pdf) 
 
