@@ -17,10 +17,11 @@ understand their impact on training efficiency and model effectiveness.
 
 ## Code Modifications
 
-Our primary code changes are in `drivers/run_ann_data_gen.py`. Below is a summary of the key logic modifications:
+Our primary code changes are in `drivers/run_ann_data_gen.py`. \
+Below is a summary of the key logic modifications:
 
 ### Select Top K Samples
-The changes focus on how positive and negative samples are selected during data generation
+The changes focus on how positive and negative samples are selected during data generation \
 The following code block is a part of our modifications:
 
 ```python
