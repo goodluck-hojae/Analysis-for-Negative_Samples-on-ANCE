@@ -51,8 +51,6 @@ The logs are located in `results` directory with the following files
 - `subset_10_train-a40-26449628-ann_data_4_random.out`
 - `subset_10_train-a40-26456768-ann_data_4_bottom_neg_only.out`
 
-To reproduce the results in the `results` directory, execute the provided commands. The experiments were conducted using a SLURM cluster, so ensure your SLURM settings are configured correctly.
-
 ## Commands
 Run the following scripts for the experiments:
 - `commands/run_train_warmup.sh`
@@ -68,7 +66,8 @@ Run the following scripts for the experiments:
 <img src="https://github.com/user-attachments/assets/87250c8c-504b-4c6e-9617-c9ffb5b99ac3" alt="ndcg_comparison" width="500">
 
 ## SLURM Configurations
-Use these SLURM batch scripts to submit jobs for different experiment setups:
+To reproduce the results in the `results` directory, execute the provided commands. 
+The experiments were conducted using a SLURM cluster, so please refer the hardware settings and configurations
 - `drivers/10/sbatch_train_index-a40_subset_10.sh`
 - `drivers/10/sbatch_train_index-a40_subset_10_bottom_neg.sh`
 - `drivers/10/sbatch_train_index-a40_subset_10_bottom_neg_only.sh`
