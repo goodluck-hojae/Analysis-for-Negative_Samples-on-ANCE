@@ -1,0 +1,116 @@
+python -m torch.distributed.launch --nproc_per_node=4 ../drivers/run_ann.py --model_type rdot_nll --model_name_or_path /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained/checkpoint-150000 --task_name MSMarco --triplet --data_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/preprocessed_data --ann_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_bottom_neg --max_seq_length 512 --per_gpu_train_batch_size=16 --gradient_accumulation_steps 2 --learning_rate 1e-6 --output_dir /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/checkpoints_4_bottom_neg --warmup_steps 5000 --logging_steps 100 --save_steps 2000 --optimizer lamb --single_warmup
+/home/hojaeson_umass_edu/hojae_workspace/miniconda3/envs/ance/lib/python3.8/site-packages/torch/distributed/launch.py:178: FutureWarning: The module torch.distributed.launch is deprecated
+and will be removed in future. Use torchrun.
+Note that --use_env is set by default in torchrun.
+If your script expects `--local_rank` argument to be set, please
+change it to read from `os.environ['LOCAL_RANK']` instead. See 
+https://pytorch.org/docs/stable/distributed.html#launch-utility for 
+further instructions
+
+  warnings.warn(
+WARNING:torch.distributed.run:
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+11/26/2024 00:01:13 - WARNING - __main__ -   Process rank: 3, device: cuda:3, n_gpu: 1, distributed training: True, 16-bits training: False
+11/26/2024 00:01:13 - WARNING - __main__ -   Process rank: 0, device: cuda:0, n_gpu: 1, distributed training: True, 16-bits training: False
+11/26/2024 00:01:13 - WARNING - __main__ -   Process rank: 1, device: cuda:1, n_gpu: 1, distributed training: True, 16-bits training: False
+11/26/2024 00:01:13 - INFO - transformers.configuration_utils -   loading configuration file /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained/checkpoint-150000/config.json
+11/26/2024 00:01:13 - INFO - transformers.configuration_utils -   Model config {
+  "architectures": [
+    "RobertaForMaskedLM"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "bos_token_id": 0,
+  "eos_token_id": 2,
+  "finetuning_task": "msmarco",
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "id2label": {
+    "0": "LABEL_0",
+    "1": "LABEL_1"
+  },
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "is_decoder": false,
+  "label2id": {
+    "LABEL_0": 0,
+    "LABEL_1": 1
+  },
+  "layer_norm_eps": 1e-05,
+  "max_position_embeddings": 514,
+  "model_type": "roberta",
+  "num_attention_heads": 12,
+  "num_hidden_layers": 12,
+  "num_labels": 2,
+  "output_attentions": false,
+  "output_hidden_states": false,
+  "output_past": true,
+  "pad_token_id": 1,
+  "pruned_heads": {},
+  "torchscript": false,
+  "type_vocab_size": 1,
+  "use_bfloat16": false,
+  "vocab_size": 50265
+}
+
+11/26/2024 00:01:13 - INFO - transformers.tokenization_utils -   Model name '/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained/checkpoint-150000' not found in model shortcut name list (roberta-base, roberta-large, roberta-large-mnli, distilroberta-base, roberta-base-openai-detector, roberta-large-openai-detector). Assuming '/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained/checkpoint-150000' is a path or url to a directory containing tokenizer files.
+11/26/2024 00:01:13 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained/checkpoint-150000/vocab.json
+11/26/2024 00:01:13 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained/checkpoint-150000/merges.txt
+11/26/2024 00:01:13 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained/checkpoint-150000/added_tokens.json
+11/26/2024 00:01:13 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained/checkpoint-150000/special_tokens_map.json
+11/26/2024 00:01:13 - INFO - transformers.tokenization_utils -   loading file /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained/checkpoint-150000/tokenizer_config.json
+11/26/2024 00:01:13 - WARNING - __main__ -   Process rank: 2, device: cuda:2, n_gpu: 1, distributed training: True, 16-bits training: False
+11/26/2024 00:01:14 - INFO - transformers.modeling_utils -   loading weights file /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained/checkpoint-150000/pytorch_model.bin
+Using mean: False
+Using mean: False
+Using mean: False
+Using mean: False
+502939 -1
+884182 -1
+11/26/2024 00:01:20 - INFO - __main__ -   Training/evaluation parameters Namespace(adam_epsilon=1e-08, ann_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_bottom_neg', cache_dir='', config_name='', data_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/preprocessed_data', device=device(type='cuda', index=0), do_lower_case=False, fp16=False, fp16_opt_level='O1', gradient_accumulation_steps=2, learning_rate=1e-06, load_optimizer_scheduler=False, local_rank=0, log_dir=None, logging_steps=100, max_grad_norm=1.0, max_query_length=64, max_seq_length=512, max_steps=1000000, model_name_or_path='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/pretrained/checkpoint-150000', model_type='rdot_nll', n_gpu=1, no_cuda=False, optimizer='lamb', output_dir='/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/checkpoints_4_bottom_neg', output_mode='classification', per_gpu_train_batch_size=16, rank=0, save_steps=2000, seed=42, server_ip='', server_port='', single_warmup=True, task_name='msmarco', tokenizer_name='', top_neg=0, triplet=True, warmup_steps=5000, weight_decay=0.0, world_size=4)
+502939 -1
+884182 -1
+502939 -1
+502939 -1
+884182 -1
+884182 -1
+/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_bottom_neg/ann_training_data_0 2735
+/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_bottom_neg/ann_training_data_0 2732 2732
+/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_bottom_neg/ann_training_data_0 2735
+/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_bottom_neg/ann_training_data_0 2732 2732
+/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_bottom_neg/ann_training_data_0 2735
+/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_bottom_neg/ann_training_data_0 2732 2732
+11/26/2024 00:01:23 - INFO - __main__ -   ***** Running training *****
+11/26/2024 00:01:23 - INFO - __main__ -     Max steps = 1000000
+11/26/2024 00:01:23 - INFO - __main__ -     Instantaneous batch size per GPU = 16
+11/26/2024 00:01:23 - INFO - __main__ -     Total train batch size (w. parallel, distributed & accumulation) = 128
+11/26/2024 00:01:23 - INFO - __main__ -     Gradient Accumulation steps = 2
+11/26/2024 00:01:23 - INFO - __main__ -     Continuing training from checkpoint, will skip to saved global_step
+11/26/2024 00:01:23 - INFO - __main__ -     Continuing training from global step 150000
+11/26/2024 00:01:23 - INFO - __main__ -   Training on new add data at /home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_bottom_neg/ann_training_data_0
+/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_bottom_neg/ann_training_data_0 2735
+/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/data/10/ann_data_4_bottom_neg/ann_training_data_0 2732 2732
+11/26/2024 00:01:23 - INFO - __main__ -   Total ann queries: 2732
+dev_ndcg 0.5981032093649599 0
+/work/pi_mserafini_umass_edu/hojae/vector_database/ANCE/commands/../utils/lamb.py:125: UserWarning: This overload of add_ is deprecated:
+	add_(Number alpha, Tensor other)
+Consider using one of the following signatures instead:
+	add_(Tensor other, *, Number alpha) (Triggered internally at  ../torch/csrc/utils/python_arg_parser.cpp:1055.)
+  p.data.add_(-step_size * trust_ratio, adam_step)
+/work/pi_mserafini_umass_edu/hojae/vector_database/ANCE/commands/../utils/lamb.py:125: UserWarning: This overload of add_ is deprecated:
+	add_(Number alpha, Tensor other)
+Consider using one of the following signatures instead:
+	add_(Tensor other, *, Number alpha) (Triggered internally at  ../torch/csrc/utils/python_arg_parser.cpp:1055.)
+  p.data.add_(-step_size * trust_ratio, adam_step)
+/work/pi_mserafini_umass_edu/hojae/vector_database/ANCE/commands/../utils/lamb.py:125: UserWarning: This overload of add_ is deprecated:
+	add_(Number alpha, Tensor other)
+Consider using one of the following signatures instead:
+	add_(Tensor other, *, Number alpha) (Triggered internally at  ../torch/csrc/utils/python_arg_parser.cpp:1055.)
+  p.data.add_(-step_size * trust_ratio, adam_step)
+/work/pi_mserafini_umass_edu/hojae/vector_database/ANCE/commands/../utils/lamb.py:125: UserWarning: This overload of add_ is deprecated:
+	add_(Number alpha, Tensor other)
+Consider using one of the following signatures instead:
+	add_(Tensor other, *, Number alpha) (Triggered internally at  ../torch/csrc/utils/python_arg_parser.cpp:1055.)
+  p.data.add_(-step_size * trust_ratio, adam_step)
