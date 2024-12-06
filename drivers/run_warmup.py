@@ -113,6 +113,8 @@ def train(args, model, tokenizer, f, train_fn):
                 "Please install apex from https://www.github.com/nvidia/apex to use fp16 training.")
         model, optimizer = amp.initialize(
             model, optimizer, opt_level=args.fp16_opt_level)
+        
+
 
     # multi-gpu training (should be after apex fp16 initialization)
     if args.n_gpu > 1:
@@ -191,7 +193,6 @@ def train(args, model, tokenizer, f, train_fn):
                     outputs = model(*batch)
             # model outputs are always tuple in transformers (see doc)
             loss = outputs[0]
-
             if args.n_gpu > 1:
                 loss = loss.mean()  # mean() to average on multi-gpu parallel training
             if args.gradient_accumulation_steps > 1:

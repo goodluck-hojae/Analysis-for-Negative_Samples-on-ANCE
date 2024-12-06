@@ -43,6 +43,9 @@ except ImportError:
     from tensorboardX import SummaryWriter
 logger = logging.getLogger(__name__)
 
+# console_handler = logging.StreamHandler(sys.stdout)  # Send logs to stdout
+# logger.addHandler(console_handler)
+
 
 def train(args, model, tokenizer, query_cache, passage_cache):
     """ Train the model """
@@ -126,7 +129,6 @@ def train(args, model, tokenizer, query_cache, passage_cache):
             output_device=args.local_rank,
             find_unused_parameters=True,
         )
-
     # Train
     logger.info("***** Running training *****")
     logger.info("  Max steps = %d", args.max_steps)
@@ -178,22 +180,21 @@ def train(args, model, tokenizer, query_cache, passage_cache):
             num_training_steps=args.max_steps)
 
     while global_step < args.max_steps:
-
         if step % args.gradient_accumulation_steps == 0 and global_step % args.logging_steps == 0:
             # check if new ann training data is availabe
             ann_no, ann_path, ndcg_json = get_latest_ann_data(args.ann_dir)
             if ann_path is not None and ann_no != last_ann_no:
                 logger.info("Training on new add data at %s", ann_path)
                 with open(ann_path, 'r') as f:
-                    ann_training_data = f.readlines()
+                    ann_training_data = f.readlines()#[:100] #######
                 dev_ndcg = ndcg_json['ndcg']
                 ann_checkpoint_path = ndcg_json['checkpoint']
                 ann_checkpoint_no = get_checkpoint_no(ann_checkpoint_path)
-
+                print(ann_path, len(ann_training_data))
                 aligned_size = (len(ann_training_data) //
                                 args.world_size) * args.world_size
                 ann_training_data = ann_training_data[:aligned_size]
-
+                print(ann_path, len(ann_training_data), aligned_size)
                 logger.info("Total ann queries: %d", len(ann_training_data))
                 if args.triplet:
                     train_dataset = StreamingDataset(
@@ -219,6 +220,7 @@ def train(args, model, tokenizer, query_cache, passage_cache):
 
                 if is_first_worker():
                     # add ndcg at checkpoint step used instead of current step
+                    print("dev_ndcg", dev_ndcg, ann_checkpoint_no)
                     tb_writer.add_scalar(
                         "dev_ndcg", dev_ndcg, ann_checkpoint_no)
                     if last_ann_no != -1:
@@ -229,14 +231,18 @@ def train(args, model, tokenizer, query_cache, passage_cache):
 
         try:
             batch = next(train_dataloader_iter)
+            # len(train_dataloader_iter)
         except StopIteration:
             logger.info("Finished iterating current dataset, begin reiterate")
             train_dataloader_iter = iter(train_dataloader)
             batch = next(train_dataloader_iter)
-
         batch = tuple(t.to(args.device) for t in batch)
         step += 1
 
+        touched_ids = []
+        touched_ids.extend(list(set(batch[10].cpu().numpy())))
+        touched_ids.extend(list(set(batch[11].cpu().numpy())))
+        
         if args.triplet:
             inputs = {
                 "query_ids": batch[0].long(),
@@ -244,7 +250,8 @@ def train(args, model, tokenizer, query_cache, passage_cache):
                 "input_ids_a": batch[3].long(),
                 "attention_mask_a": batch[4].long(),
                 "input_ids_b": batch[6].long(),
-                "attention_mask_b": batch[7].long()}
+                "attention_mask_b": batch[7].long(),
+                }
         else:
             inputs = {
                 "input_ids_a": batch[0].long(),
@@ -256,6 +263,7 @@ def train(args, model, tokenizer, query_cache, passage_cache):
         # sync gradients only at gradient accumulation step
         if step % args.gradient_accumulation_steps == 0:
             outputs = model(**inputs)
+            # print(outputs, 'outputs') ##################
         else:
             with model.no_sync():
                 outputs = model(**inputs)
@@ -290,7 +298,6 @@ def train(args, model, tokenizer, query_cache, passage_cache):
             scheduler.step()  # Update learning rate schedule
             model.zero_grad()
             global_step += 1
-
             if args.logging_steps > 0 and global_step % args.logging_steps == 0:
                 logs = {}
                 loss_scalar = tr_loss / args.logging_steps
@@ -303,9 +310,11 @@ def train(args, model, tokenizer, query_cache, passage_cache):
                     for key, value in logs.items():
                         tb_writer.add_scalar(key, value, global_step)
                     logger.info(json.dumps({**logs, **{"step": global_step}}))
+                    print(json.dumps({**logs, **{"step": global_step}}))
 
             if is_first_worker() and args.save_steps > 0 and global_step % args.save_steps == 0:
                 # Save model checkpoint
+                print('Save model checkpoint')
                 output_dir = os.path.join(
                     args.output_dir, "checkpoint-{}".format(global_step))
                 if not os.path.exists(output_dir):
@@ -526,7 +535,7 @@ def get_arguments():
     parser.add_argument(
         "--save_steps",
         type=int,
-        default=500,
+        default=500, ############
         help="Save checkpoint every X updates steps.",
     )
 
