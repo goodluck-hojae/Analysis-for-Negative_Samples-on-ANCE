@@ -13,8 +13,33 @@ Using a subset of MS MARCO, we conduct experiments
 comparing different ranking segments for negative sampling to
 understand their impact on training efficiency and model effectiveness.
 
-# Reproducing Results with 10% subset data
+# Code Modifications
 
+Our primary code changes are in `drivers/run_ann_data_gen.py`. Below is a summary of the key logic modifications:
+
+### Select Top K Samples
+The changes focus on how positive and negative samples are selected during data generation:
+
+```python
+if SelectTopK:
+    selected_ann_idx = list(top_ann_pid[:args.negative_sample + 1])
+    count_negative_sample = args.negative_sample
+    
+    # Add bottom negative samples if enabled
+    if args.bottom_neg:                             
+        selected_ann_idx.extend(top_ann_pid[-args.negative_sample:])
+        count_negative_sample = 2 * args.negative_sample
+        # print('count_negative_sample = 2 * args.negative_sample')
+    
+    # Only use bottom negative samples if both flags are set
+    if args.bottom_neg and args.bottom_only:
+        selected_ann_idx = list(top_ann_pid[-args.negative_sample:])
+        count_negative_sample = 2 * args.negative_sample
+        # print('count_negative_sample = args.negative_sample')
+```
+
+
+# Reproducing Results with 10% subset data
 ### To download raw dataset, please refer commands/data_download.sh script
 ### To create subset, please refer data/create_subset.py 
 The logs are located in `results` directory with the following files
