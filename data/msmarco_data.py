@@ -310,7 +310,7 @@ def GetProcessingFn(args, query=False):
 
     return fn
 
-
+# This Function is to get the training data for processing with inputs as query and passage
 def GetTrainingDataProcessingFn(args, query_cache, passage_cache):
     def fn(line, i):
         line_arr = line.split('\t')
@@ -373,7 +373,7 @@ def GetTripletTrainingDataProcessingFn(args, query_cache, passage_cache):
             elif args.top_neg == 2:
                 neg_pids = bottom_neg_pids
             
-        # data 4th are ids
+        # data in the 4th position are ids
         for neg_pid in neg_pids:
             neg_data = GetProcessingFn(
                 args, query=False)(
