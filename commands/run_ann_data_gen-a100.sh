@@ -44,10 +44,10 @@ job_name="OSPass512"
 # model_dir="${base_data_dir}${job_name}/"
 model_dir="/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/checkpoints"
 # model_ann_data_dir="${model_dir}ann_data/"
-model_ann_data_dir="/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/ann_data_origin"
+model_ann_data_dir="/home/hojaeson_umass_edu/hojae_workspace/vector_database/ANCE/outcome/ann_data"
 
 # pretrained_checkpoint_dir="warmup checkpoint path"
-pretrained_checkpoint_dir="/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-150000"
+pretrained_checkpoint_dir="/home/hojaeson_umass_edu/hojae_workspace/shared/ance/pretrained_bm25-180000"
 
 MASTER_PORT=29501
 initial_data_gen_cmd="\
